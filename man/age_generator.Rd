@@ -4,12 +4,13 @@
 \alias{age_generator}
 \title{Calculate age from two dates}
 \usage{
-age_generator(x, db = "k6", rm_orig = TRUE)
+age_generator(x, software = c("epiinfo", "koch_6", "excel"), rm_orig = TRUE)
 }
 \arguments{
-\item{x}{data frame containing Koch 6 admission variables}
+\item{x}{data frame containing Koch 6 admission variables#'}
 
-\item{db}{define database being used - "k6", "epi_info"}
+\item{software}{define software used for data collection.
+Values can be "excel", "koch_6", "epiinfo"}
 
 \item{rm_orig}{remove original variables - TRUE or FALSE}
 }
