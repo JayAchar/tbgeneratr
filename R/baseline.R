@@ -1,20 +1,51 @@
 #' Calculate baseline culture or smear status
 #'
 #' This function takes a data frame and uses a unique patient identifier, dates of treatment start and sample submission and sample results to provide a baseline culture or smear result.  
-#' @param x data frame or data.table with combined admission and lab data
-#' @param id string variable representing patient unique ID number
-#' @param result variable within data frame with laboratory result of interest. Must be a binary variable with missing values pre-removed. 
-#' @param date sample submission date - fomatted as date
-#' @param start patient treatment start date - formatted as date
-#' @param neg string representing factor level for negative sample result
+#' @param x data frame or data.table with combined admission and lab data. Must contain
+#' patient ID number, start treatment date, sample date, and test result
+#' @param project define project location to apply.
+#' Values can be "kk", "chechnya".
+#' @param test define which baseline test result to check
 #' @param days criteria for using pre-treatment samples
 #' @keywords TB
+#' @seealso \code{\link{tbgeneratr}}
 #' @import data.table
-#' @import lubridate
 #' @export
 
-baseline <- function(x, id, result, date, start, neg, days = 90) {
+baseline <- function(x, project = c("kk", "chechnya"),
+						test = c("culture", "smear"),
+						days = 90) {
 
+# check input
+	if (!(is.data.frame(x))) {
+			stop("input paramter, x, must be a data frame")
+	}
+
+# check all args
+	project <- match.arg(project)
+	test <- match.arg(test)
+
+#=================================================================
+# define variable names
+	if (project == "chechnya") {
+		id <- "dstnumber"
+	} else {
+		id <- "id"
+	}
+
+# define common variable names
+		date <- "samp_date"
+		start <- "Starttre"
+		neg <- "Negative"
+
+# define test variables
+	if (test == "culture") {
+		result <- "culture"
+	} else if (test == "smear") {
+		result <- "smear"
+	}
+
+#=================================================================
 # convert to data.table
 x <- as.data.table(x)
 
@@ -28,6 +59,9 @@ x <- as.data.table(x)
 
 # filter out results with no date
 	x <- x[!is.na(get(date)),]
+
+# filter out rows with no result
+	x <- x[!is.na(get(result))]
 
 # remove ineligible records due to date
 	x <- x[get(start) - get(date) <= days, ]
@@ -59,5 +93,5 @@ x <- as.data.table(x)
 	x <- x[ , selvar, with = F]
 	x <- setnames(x, old = c(result, date), new = c("baseline", "date"))
 
-return(x)
+x
 }

@@ -7,7 +7,8 @@
 #' @param db define database being used - "k6", "epi_info"
 #' @param rm_orig remove original variables - TRUE or FALSE
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
-#' @seealso \code{\link{TB.funs}}
+#' @seealso \code{\link{tbgeneratr}}
+#' @importFrom lubridate is.Date
 #' @export
 #' @examples
 #' \dontrun{

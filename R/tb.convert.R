@@ -7,8 +7,9 @@
 #' @param start patient treatment start date (string)
 #' @param result laboratory result variable (string)
 #' @param days criteria for conversion
+#' @seealso \code{\link{tbgeneratr}}
+#' @import data.table
 #' @keywords TB
-#' @import zoo
 #' @export
 
 tb.convert <- function(x, id, date, start, result, days = 30) {
