@@ -2,7 +2,7 @@
 #'
 #' Use numerical height and weight variables to calculate BMI
 #' @param x data frame containing height and weight variables
-#' @param db define database being used - "k6", "epi_info"
+#' @param software define database being used - "koch_6", "epiinfo"
 #' @param rm_orig remove original variables - TRUE or FALSE
 #' @param ... further arguments passed to or from other methods
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
@@ -10,31 +10,27 @@
 #' @export
 #' @examples
 #' \dontrun{
-#' bmi_generator(p, weight = "weight", height = "height")
+#' bmi_generator(p, software = "koch_6", rm_orig = FALSE)
 #' }
 
-bmi_generator <- function(x, db = "k6", rm_orig = TRUE, ...) {
-
-# acceptable values for "set" arg
-	s <- c("k6", "epi_info")
+bmi_generator <- function(x, software = c("koch_6", "epiinfo"), 
+							rm_orig = TRUE, ...) {
 
 # check input
 	if (!(is.data.frame(x))) {
 			stop("input paramter, x, must be a data frame")
 	}
+# check all args
+	software <- match.arg(software)
 
-# check db is within acceptable values
-	if (! db %in% s) {
-		stop("Specify db argument within specified values")
-	}
 
 # =================================================================
-# set db specific variables 
-		if (db == "k6") {
+# set software specific variables 
+		if (software == "koch_6") {
 			weight <- "weight"
 			height <- "height"
 		}	
-		if (db == "epi_info") {
+		if (software == "epiinfo") {
 			weight <- "WEIGHT"
 			height <- "HEIGHT"
 		}
@@ -69,7 +65,7 @@ bmi_generator <- function(x, db = "k6", rm_orig = TRUE, ...) {
 	message(c1)
 
 # confirm that height values are in metres
-	if (mean(x[[height]], na.rm = T) > 2) {
+	if (max(x[[height]], na.rm = T) > 3) {
 		warning("Check height variable - either high outliers or reported in cms")
 	}
 
@@ -93,5 +89,5 @@ bmi_generator <- function(x, db = "k6", rm_orig = TRUE, ...) {
 		 		x[[weight]] <- NULL
 		 	}
 
-return(x)	
+x
 }

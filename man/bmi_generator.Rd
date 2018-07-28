@@ -4,12 +4,12 @@
 \alias{bmi_generator}
 \title{Calculate BMI from height and weight}
 \usage{
-bmi_generator(x, db = "k6", rm_orig = TRUE, ...)
+bmi_generator(x, software = c("koch_6", "epiinfo"), rm_orig = TRUE, ...)
 }
 \arguments{
 \item{x}{data frame containing height and weight variables}
 
-\item{db}{define database being used - "k6", "epi_info"}
+\item{software}{define database being used - "koch_6", "epiinfo"}
 
 \item{rm_orig}{remove original variables - TRUE or FALSE}
 
@@ -20,7 +20,7 @@ Use numerical height and weight variables to calculate BMI
 }
 \examples{
 \dontrun{
-bmi_generator(p, weight = "weight", height = "height")
+bmi_generator(p, software = "koch_6", rm_orig = FALSE)
 }
 }
 \seealso{
