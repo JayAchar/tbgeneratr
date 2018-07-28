@@ -50,9 +50,11 @@ baseline <- function(x, project = c("kk", "chechnya"),
 x <- as.data.table(x)
 
 # check if result variable is binary
-	if (summary(levels(factor(x[[result]])))[1] != 2) {
+if (test == "culture") {
+		if (summary(levels(factor(x[[result]])))[1] != 2) {
 		stop("Result variable must have 2 levels")
 	}
+}
 
 	keyvar <- c(id, start, date)
 	setkeyv(x, keyvar)			# set key to sort
@@ -80,7 +82,13 @@ x <- as.data.table(x)
 	x <- x[, dupvar := 1L * (.N > 1L), by = c(id, "abs_days")] 
 
 # remove negative culture if duplicated with positive on same day
-	x <- x[!(dupvar == 1L & get(result) == neg), ]
+	if (test == "culture") {
+		x <- x[!(dupvar == 1L & get(result) == neg), ]
+	} else {
+		# keep higher smear grade for duplicates on same day
+#		x <- x[!(dupvar == 1L & min(get(result))), ]
+		### error - min does not work for ordinal factor variables with '&'
+	}
 
 # add row id after sorting
 	x <- x[, row_id := 1:.N, by = c(id, start)]
@@ -91,7 +99,13 @@ x <- as.data.table(x)
 # rename result variable 
 	selvar <- c(id, start, date, result)
 	x <- x[ , selvar, with = F]
-	x <- setnames(x, old = c(result, date), new = c("baseline", "date"))
+	if (test == "culture") {
+		x <- setnames(x, old = c(result, date), new = c("baseline_culture", "date"))
+	}
+	if (test == "smear") {
+		x <- setnames(x, old = c(result, date), new = c("baseline_smear", "date"))
+	}
+	
 
 x
 }
