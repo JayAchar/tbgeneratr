@@ -16,7 +16,7 @@ from clean data sets.
 
 \code{\link{bmi_generator}}
 
-\code{\link{tb.convert}}
+\code{\link{converter}}
 }
 \author{
 Jay Achar \email{jay.achar@doctors.org.uk}

@@ -7,7 +7,7 @@
 #' @seealso \code{\link{age_generator}} 
 #' @seealso \code{\link{baseline}} 
 #' @seealso \code{\link{bmi_generator}}
-#' @seealso \code{\link{tb.convert}}  
+#' @seealso \code{\link{converter}}  
 #' 
 #' @docType package
 #' @name tbgeneratr
