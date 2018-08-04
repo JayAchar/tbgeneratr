@@ -112,7 +112,7 @@ dst_baseliner <- function(x, project = c("kk", "chechnya"),
 	# group data and find closest to treatment start
   		group_by(.data$idno) %>%
   		arrange(.data$idno, .data$abs) %>%
-  		filter(row_number() == 1) 
+  		filter(row_number() == 1) %>%
   	# select key variables
   		rename(baseline_date = .data$samp_date,
   				baseline_no = .data$labno,
