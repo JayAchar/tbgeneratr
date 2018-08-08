@@ -1,7 +1,25 @@
-
-
-# time arg to define how far to go historically to use samples
-
+#' Baseline DST calculator
+#'
+#' Takes a TB DST laboratory dataset with information on 
+#' treatment start time to output the baseline DST according
+#' to specific rules designed to reduce missingness
+#' @param x data frame with TB and treatmetn data
+#' @param project define which project this dataset refers to
+#' @param time absolute historical limit for including specimens
+#' @param days additional criteria for including non-rif results
+#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @seealso \code{\link{tbgeneratr}}
+#' @importFrom dplyr filter mutate select rename group_by slice
+#' ungroup arrange left_join
+#' @importFrom stringr str_which
+#' @importFrom purrr map_at
+#' @importFrom tidyr gather
+#' @importFrom rlang .data
+#' @export
+#' @examples
+#' \dontrun{
+#' dst_baseliner(lab, project = "kk")
+#' }
 
 dst_baseliner <- function(x, project = c("kk", "chechnya"), 
 							 time = 90, 
@@ -24,13 +42,13 @@ dst_baseliner <- function(x, project = c("kk", "chechnya"),
 # ===================================================
 # clean baseline data and define eligible period for consideration
 	x <- x %>%
-  		filter(! is.na(samp_date)) %>%
+  		filter(! is.na(.data$samp_date)) %>%
   	# remove specimens > 7 days sfter treatment start
-  		filter(samp_date - starttre < 7) %>%
+  		filter(.data$samp_date - .data$starttre < 7) %>%
   	# generate absolute days from sample to start treatment
-  		mutate(abs = as.numeric(abs(starttre - samp_date))) %>%
+  		mutate(abs = as.numeric(abs(.data$starttre - .data$samp_date))) %>%
   	# remove specimens > time from starttre
-  		filter(abs < time)
+  		filter(.data$abs < time)
 
 # convert all DST results to numerical - 1 = sens, 2 = res
   		hain <- str_which(names(x), pattern = "hain_")
@@ -134,29 +152,15 @@ dst_cat_all <- all_dst %>%
 
 
 dst_gather <- dst_cat_all %>%
-	select(idno, ds, mono_inh, rres, mdr, pre_fq, pre_sli, xdr) %>%
+	select(.data$idno, .data$ds, .data$mono_inh, .data$rres, 
+          .data$mdr, .data$pre_fq, .data$pre_sli, .data$xdr) %>%
 	gather(dst_base, count, -idno) %>%
-	filter(count >= 1) %>%
-	select(idno, dst_base) 
+	filter(.data$count >= 1) %>%
+	select(.data$idno, .data$dst_base) 
 
 final_dst <- left_join(dst_cat_all, dst_gather, by = "idno")
 
 
 final_dst
 }
-
-
-
-
-# Very clearly document the methods of this function
-# Adjust to ensure it works with K6 data too
-
-
-
-
-
-
-
-
-
 
