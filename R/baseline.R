@@ -26,17 +26,9 @@ baseline <- function(x, project = c("kk", "chechnya"),
 	baseline_test <- match.arg(baseline_test)
 
 #=================================================================
-# define variable names
-	if (project == "chechnya") {
-		id <- "dstnumber"
-	} else {
-		id <- "id"
-	}
-
-# define common variable names
-		date <- "samp_date"
-		start <- "Starttre"
-		neg <- "Negative"
+# rename variables	
+	x <- nse_renamer(x, roject = project,
+						fun = "baseline")
 
 # define test variables
 	if (baseline_test == "culture") {

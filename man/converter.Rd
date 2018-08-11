@@ -4,14 +4,14 @@
 \alias{converter}
 \title{Culture/smear conversion calculator}
 \usage{
-converter(x, type = c("culture", "smear"), software = c("excel", "koch_6",
-  "epiinfo"), project = c("kk", "chechnya"), file = c("adm", "lab",
-  "clinical_lab"))
+converter(x, convert_type = c("culture", "smear"), software = c("excel",
+  "koch_6", "epiinfo"), project = c("kk", "chechnya"), file = c("adm",
+  "lab", "clinical_lab"))
 }
 \arguments{
 \item{x}{data frame}
 
-\item{type}{define what type of culture conversion required.}
+\item{convert_type}{define what type of culture conversion required.}
 
 \item{software}{define software used for data collection.
 Values can be "excel", "koch_6", "epiinfo"}
@@ -30,7 +30,7 @@ calculates culture or smear conversion dates based on >30 days criteria
 }
 \examples{
 \dontrun{
-converter(p, type = "culture", software = "koch_6", project = "chechnya", file = "adm")
+converter(p, convert_type = "culture", software = "koch_6", project = "chechnya", file = "adm")
 }
 }
 \seealso{

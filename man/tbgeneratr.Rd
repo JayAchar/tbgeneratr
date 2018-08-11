@@ -12,6 +12,8 @@ from clean data sets.
 \seealso{
 \code{\link{adm_generator}}
 
+\code{\link{adm_lab_generator}}
+
 \code{\link{age_generator}}
 
 \code{\link{baseline}}

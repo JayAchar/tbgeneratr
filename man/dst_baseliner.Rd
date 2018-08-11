@@ -4,16 +4,17 @@
 \alias{dst_baseliner}
 \title{Baseline DST calculator}
 \usage{
-dst_baseliner(x, project = c("kk", "chechnya"), time = 90, days = 30)
+dst_baseliner(x, project = c("kk", "chechnya"), dst_time = 90,
+  dst_days = 30)
 }
 \arguments{
 \item{x}{data frame with TB and treatmetn data}
 
 \item{project}{define which project this dataset refers to}
 
-\item{time}{absolute historical limit for including specimens}
+\item{dst_time}{absolute historical limit for including specimens}
 
-\item{days}{additional criteria for including non-rif results}
+\item{dst_days}{additional criteria for including non-rif results}
 }
 \description{
 Takes a TB DST laboratory dataset with information on 

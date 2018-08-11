@@ -4,8 +4,8 @@
 \alias{baseline}
 \title{Calculate baseline culture or smear status}
 \usage{
-baseline(x, project = c("kk", "chechnya"), test = c("culture", "smear"),
-  days = 90)
+baseline(x, project = c("kk", "chechnya"), baseline_test = c("culture",
+  "smear"), baseline_days = 90)
 }
 \arguments{
 \item{x}{data frame or data.table with combined admission and lab data. Must contain
@@ -14,9 +14,9 @@ patient ID number, start treatment date, sample date, and test result}
 \item{project}{define project location to apply.
 Values can be "kk", "chechnya".}
 
-\item{test}{define which baseline test result to check}
+\item{baseline_test}{define which baseline test result to check}
 
-\item{days}{criteria for using pre-treatment samples}
+\item{baseline_days}{criteria for using pre-treatment samples}
 }
 \description{
 This function takes a data frame and uses a unique patient identifier, dates of treatment start and sample submission and sample results to provide a baseline culture or smear result.

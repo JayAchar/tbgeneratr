@@ -68,7 +68,7 @@ converter <- function(x, convert_type = c("culture", "smear"),
 # clean data
 x <- x %>%
 	# sort by id, sample date and result
-		arrange(.data$idno, .data$samp_date, .data$result) %>%
+		arrange(.data$id, .data$samp_date, .data$result) %>%
 	# remove pre-treatment samples
 		filter(.data$samp_date > .data$starttre) %>%
 	# remove post end of treatment samples
@@ -76,33 +76,33 @@ x <- x %>%
 	# remove samples with no result
 		filter(!is.na(.data$result)) %>%
 	# remove idno, samp_date, and result duplicats
-		distinct(.data$idno, .data$samp_date, .data$result, .keep_all = TRUE) %>%
+		distinct(.data$id, .data$samp_date, .data$result, .keep_all = TRUE) %>%
 	# remove negative result when idno and date are duplicated 
 		# and positive result present
-			group_by(.data$idno, .data$samp_date) %>%
+			group_by(.data$id, .data$samp_date) %>%
 			top_n(1, .data$result) %>%
 			ungroup() %>%
 	# generate result sequence variable
-		arrange(.data$idno, .data$samp_date) %>%
-		group_by(.data$idno) %>%
+		arrange(.data$id, .data$samp_date) %>%
+		group_by(.data$id) %>%
 		mutate(seq = row_number())
 
 # calculate days between consecutive negative results
 x <- x %>%
-  arrange(.data$idno, .data$samp_date) %>%
+  arrange(.data$id, .data$samp_date) %>%
   # find consecutive same results
   mutate(result_grp = cumsum(as.character(.data$result)!=lag(as.character(.data$result),default=""))) %>%
   ungroup() %>%
-  group_by(.data$idno, .data$result_grp) %>%
+  group_by(.data$id, .data$result_grp) %>%
   # keep all consecutive results which are negative and have total > 30 days
   filter(.data$result == "Negative" & (max(.data$samp_date) - min(.data$samp_date) )>=30) %>%
   ungroup() %>%
   # keep only the first episode of culture conversion
-  group_by(.data$idno) %>%
+  group_by(.data$id) %>%
   filter(.data$result_grp == min(.data$result_grp)) %>%
   top_n(1, desc(.data$seq)) %>%
   ungroup() %>%
-  select(.data$idno, .data$samp_date) %>%
+  select(.data$id, .data$samp_date) %>%
   rename(cc_date = .data$samp_date)
 
 # rename output variable

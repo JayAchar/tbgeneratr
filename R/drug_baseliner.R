@@ -10,6 +10,7 @@
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom stringr str_remove
 #' @importFrom dplyr group_by select mutate arrange filter slice rename
+#' @importFrom rlang enquo quo_name
 #' @examples
 #' \dontrun{
 #' drug_baseliner(p, dst_p_pza)
