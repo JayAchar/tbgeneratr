@@ -3,7 +3,7 @@
 #' Takes laboratory data with start and end treatment informaiton and
 #' calculates culture or smear conversion dates based on >30 days criteria
 #' @param x data frame
-#' @param type define what type of culture conversion required.
+#' @param convert_type define what type of culture conversion required.
 #' @param software define software used for data collection.
 #' Values can be "excel", "koch_6", "epiinfo"
 #' @param project define project location to apply.
@@ -19,11 +19,11 @@
 #' @seealso \code{\link{tbgeneratr}}
 #' @examples
 #' \dontrun{
-#' converter(p, type = "culture", software = "koch_6", project = "chechnya", file = "adm")
+#' converter(p, convert_type = "culture", software = "koch_6", project = "chechnya", file = "adm")
 #' }
 
 
-converter <- function(x, type = c("culture", "smear"), 
+converter <- function(x, convert_type = c("culture", "smear"), 
 						software = c("excel", "koch_6", "epiinfo"),
 						project = c("kk", "chechnya"),
 						file = c("adm", "lab", "clinical_lab")) {
@@ -35,7 +35,7 @@ converter <- function(x, type = c("culture", "smear"),
 	}
 
 # check args
-	type <- match.arg(type)
+	convert_type <- match.arg(convert_type)
 	software <- match.arg(software)
 	project <- match.arg(project)
 	file <- match.arg(file)
@@ -46,7 +46,7 @@ converter <- function(x, type = c("culture", "smear"),
 	x <- nse_renamer(x, software = software, project = project,
 						file = file, fun = "converter")
 
-	if (type == "culture") {
+	if (convert_type == "culture") {
 		# rename culture variable
 		place <- match("culture", names(x))
 	} else {
@@ -57,7 +57,7 @@ converter <- function(x, type = c("culture", "smear"),
 		names(x)[place] <- "result"
 # ====================================================
 # convert smear to binary result
-	if (type == "smear") {
+	if (convert_type == "smear") {
 		x <- x %>%
 			mutate(result = recode_factor(.data$result, '1+' = "Positive", 
 										'2+' = "Positive", 
@@ -105,6 +105,10 @@ x <- x %>%
   select(.data$idno, .data$samp_date) %>%
   rename(cc_date = .data$samp_date)
 
+# rename output variable
+if (convert_type == "smear") {
+		x <- rename(x, sc_date = cc_date)
+	}
 
 x
 }

@@ -5,8 +5,8 @@
 #' to specific rules designed to reduce missingness
 #' @param x data frame with TB and treatmetn data
 #' @param project define which project this dataset refers to
-#' @param time absolute historical limit for including specimens
-#' @param days additional criteria for including non-rif results
+#' @param dst_time absolute historical limit for including specimens
+#' @param dst_days additional criteria for including non-rif results
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom dplyr filter mutate select rename group_by slice
@@ -22,8 +22,8 @@
 #' }
 
 dst_baseliner <- function(x, project = c("kk", "chechnya"), 
-							 time = 90, 
-							 days = 30) {
+							 dst_time = 90, 
+							 dst_days = 30) {
 
 # checks
 # check input
@@ -48,7 +48,7 @@ dst_baseliner <- function(x, project = c("kk", "chechnya"),
   	# generate absolute days from sample to start treatment
   		mutate(abs = as.numeric(abs(.data$starttre - .data$samp_date))) %>%
   	# remove specimens > time from starttre
-  		filter(.data$abs < time)
+  		filter(.data$abs < dst_time)
 
 # convert all DST results to numerical - 1 = sens, 2 = res
   		hain <- str_which(names(x), pattern = "hain_")
@@ -114,15 +114,15 @@ dst_baseliner <- function(x, project = c("kk", "chechnya"),
 #	dst_drugs <- str_which(names(merged), pattern = "dst_p_")
 #	drg_var <- quos(names(merged)[dst_drugs])
 #	drugs <- map_dfc(.f = drug_baseliner)
-	h_dst <- drug_baseliner(merged, dst_p_inh, days = days)
-  	z_dst <- drug_baseliner(merged, dst_p_pza, days = days)
-  	e_dst <- drug_baseliner(merged, dst_p_eth, days = days)
-  	cm_dst <- drug_baseliner(merged, dst_p_cm, days = days)
-  	km_dst <- drug_baseliner(merged, dst_p_km, days = days)
-  	ofx_dst <- drug_baseliner(merged, dst_p_ofx, days = days)
-  	mfx_dst <- drug_baseliner(merged, dst_p_mfx, days = days)
-  	sli_dst <- drug_baseliner(merged, dst_p_sli, days = days)
-  	fq_dst <- drug_baseliner(merged, dst_p_fq, days = days)
+	h_dst <- drug_baseliner(merged, dst_p_inh, days = dst_days)
+  	z_dst <- drug_baseliner(merged, dst_p_pza, days = dst_days)
+  	e_dst <- drug_baseliner(merged, dst_p_eth, days = dst_days)
+  	cm_dst <- drug_baseliner(merged, dst_p_cm, days = dst_days)
+  	km_dst <- drug_baseliner(merged, dst_p_km, days = dst_days)
+  	ofx_dst <- drug_baseliner(merged, dst_p_ofx, days = dst_days)
+  	mfx_dst <- drug_baseliner(merged, dst_p_mfx, days = dst_days)
+  	sli_dst <- drug_baseliner(merged, dst_p_sli, days = dst_days)
+  	fq_dst <- drug_baseliner(merged, dst_p_fq, days = dst_days)
 
 all_dst <- baseline_spec %>%
 	left_join(h_dst, by = "idno") %>%

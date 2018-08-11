@@ -5,16 +5,16 @@
 #' patient ID number, start treatment date, sample date, and test result
 #' @param project define project location to apply.
 #' Values can be "kk", "chechnya".
-#' @param test define which baseline test result to check
-#' @param days criteria for using pre-treatment samples
+#' @param baseline_test define which baseline test result to check
+#' @param baseline_days criteria for using pre-treatment samples
 #' @keywords TB
 #' @seealso \code{\link{tbgeneratr}}
 #' @import data.table
 #' @export
 
 baseline <- function(x, project = c("kk", "chechnya"),
-						test = c("culture", "smear"),
-						days = 90) {
+						baseline_test = c("culture", "smear"),
+						baseline_days = 90) {
 
 # check input
 	if (!(is.data.frame(x))) {
@@ -23,7 +23,7 @@ baseline <- function(x, project = c("kk", "chechnya"),
 
 # check all args
 	project <- match.arg(project)
-	test <- match.arg(test)
+	baseline_test <- match.arg(baseline_test)
 
 #=================================================================
 # define variable names
@@ -39,9 +39,9 @@ baseline <- function(x, project = c("kk", "chechnya"),
 		neg <- "Negative"
 
 # define test variables
-	if (test == "culture") {
+	if (baseline_test == "culture") {
 		result <- "culture"
-	} else if (test == "smear") {
+	} else if (baseline_test == "smear") {
 		result <- "smear"
 	}
 
@@ -50,7 +50,7 @@ baseline <- function(x, project = c("kk", "chechnya"),
 x <- as.data.table(x)
 
 # check if result variable is binary
-if (test == "culture") {
+if (baseline_test == "culture") {
 		if (summary(levels(factor(x[[result]])))[1] != 2) {
 		stop("Result variable must have 2 levels")
 	}
@@ -66,7 +66,7 @@ if (test == "culture") {
 	x <- x[!is.na(get(result))]
 
 # remove ineligible records due to date
-	x <- x[get(start) - get(date) <= days, ]
+	x <- x[get(start) - get(date) <= baseline_days, ]
 	x <- x[get(start) - get(date) >= -7, ]
 
 # absolute days from treatment start to specimen collection
@@ -82,7 +82,7 @@ if (test == "culture") {
 	x <- x[, dupvar := 1L * (.N > 1L), by = c(id, "abs_days")] 
 
 # remove negative culture if duplicated with positive on same day
-	if (test == "culture") {
+	if (baseline_test == "culture") {
 		x <- x[!(dupvar == 1L & get(result) == neg), ]
 	} else {
 		# keep higher smear grade for duplicates on same day
@@ -99,10 +99,10 @@ if (test == "culture") {
 # rename result variable 
 	selvar <- c(id, start, date, result)
 	x <- x[ , selvar, with = F]
-	if (test == "culture") {
+	if (baseline_test == "culture") {
 		x <- setnames(x, old = c(result, date), new = c("baseline_culture", "date"))
 	}
-	if (test == "smear") {
+	if (baseline_test == "smear") {
 		x <- setnames(x, old = c(result, date), new = c("baseline_smear", "date"))
 	}
 	

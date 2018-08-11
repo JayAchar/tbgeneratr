@@ -10,6 +10,8 @@ The tbgeneratr package provides functions to generate TB data
 from clean data sets.
 }
 \seealso{
+\code{\link{adm_generator}}
+
 \code{\link{age_generator}}
 
 \code{\link{baseline}}

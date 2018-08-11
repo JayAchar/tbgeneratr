@@ -4,6 +4,7 @@
 #' from clean data sets.
 #' 
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @seealso \code{\link{adm_generator}} 
 #' @seealso \code{\link{age_generator}} 
 #' @seealso \code{\link{baseline}} 
 #' @seealso \code{\link{bmi_generator}}
