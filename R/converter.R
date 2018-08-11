@@ -15,7 +15,7 @@
 #' @export
 #' @importFrom tbcleanr nse_renamer
 #' @importFrom dplyr mutate filter group_by recode_factor distinct slice arrange ungroup lag
-#' row_number desc select rename %>%
+#' row_number desc select rename %>% top_n
 #' @seealso \code{\link{tbgeneratr}}
 #' @examples
 #' \dontrun{
@@ -59,7 +59,7 @@ converter <- function(x, type = c("culture", "smear"),
 # convert smear to binary result
 	if (type == "smear") {
 		x <- x %>%
-			mutate(result = recode_factor(result, '1+' = "Positive", 
+			mutate(result = recode_factor(.data$result, '1+' = "Positive", 
 										'2+' = "Positive", 
 										'3+' = "Positive")) 
 	}
@@ -68,41 +68,42 @@ converter <- function(x, type = c("culture", "smear"),
 # clean data
 x <- x %>%
 	# sort by id, sample date and result
-		arrange(idno, samp_date, result) %>%
+		arrange(.data$idno, .data$samp_date, .data$result) %>%
 	# remove pre-treatment samples
-		filter(samp_date > starttre) %>%
+		filter(.data$samp_date > .data$starttre) %>%
 	# remove post end of treatment samples
-		filter(samp_date < dateend) %>%
+		filter(.data$samp_date < .data$dateend) %>%
 	# remove samples with no result
-		filter(!is.na(result)) %>%
+		filter(!is.na(.data$result)) %>%
 	# remove idno, samp_date, and result duplicats
-		distinct(idno, samp_date, result, .keep_all = TRUE) %>%
+		distinct(.data$idno, .data$samp_date, .data$result, .keep_all = TRUE) %>%
 	# remove negative result when idno and date are duplicated 
 		# and positive result present
-			group_by(idno, samp_date) %>%
-			arrange(desc(result)) %>%
-			slice(1) %>%
+			group_by(.data$idno, .data$samp_date) %>%
+			top_n(1, .data$result) %>%
+			ungroup() %>%
 	# generate result sequence variable
-		arrange(idno, samp_date) %>%
-		group_by(idno) %>%
+		arrange(.data$idno, .data$samp_date) %>%
+		group_by(.data$idno) %>%
 		mutate(seq = row_number())
 
 # calculate days between consecutive negative results
 x <- x %>%
-  group_by(idno) %>%
-  arrange(idno, samp_date) %>%
+  arrange(.data$idno, .data$samp_date) %>%
   # find consecutive same results
-  mutate(result_grp = cumsum(as.character(result)!=lag(as.character(result),default=""))) %>%
-  group_by(idno, result_grp) %>%
-  # keep all consecutive results which are negative and have total > 30 days
-  filter(result == "Negative" & (max(samp_date) - min(samp_date) )>=30) %>%
-  # keep only the first episode of culture conversion
-  group_by(idno) %>%
-  filter(result_grp == min(result_grp)) %>%
-  slice(1) %>%
+  mutate(result_grp = cumsum(as.character(.data$result)!=lag(as.character(.data$result),default=""))) %>%
   ungroup() %>%
-  select(idno, samp_date) %>%
-  rename(cc_date = samp_date)
+  group_by(.data$idno, .data$result_grp) %>%
+  # keep all consecutive results which are negative and have total > 30 days
+  filter(.data$result == "Negative" & (max(.data$samp_date) - min(.data$samp_date) )>=30) %>%
+  ungroup() %>%
+  # keep only the first episode of culture conversion
+  group_by(.data$idno) %>%
+  filter(.data$result_grp == min(.data$result_grp)) %>%
+  top_n(1, desc(.data$seq)) %>%
+  ungroup() %>%
+  select(.data$idno, .data$samp_date) %>%
+  rename(cc_date = .data$samp_date)
 
 
 x

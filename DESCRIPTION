@@ -1,8 +1,8 @@
 Package: tbgeneratr
 Type: Package
 Title: Tools for Generating new TB variables
-Version: 0.0.0.3
-Date: 2018-08-10
+Version: 0.0.0.4
+Date: 2018-08-11
 Authors@R: person("Jay", "Achar", email = "jay.achar@doctors.org.uk", role = c("aut", "cre"))
 Description: Contains multiple tools for generating TB variables from cleaned data. Tools are designed for data collection tools used by MSF such as Excel-based tools, Koch 6, and Epi Info. 
 Depends: R (>= 3.4.0)
