@@ -74,7 +74,7 @@ baseliner <- function(x,
 		# keep closest result to treatment start
 		group_by(.data$id) %>%
 		top_n(1, desc(.data$abs_days)) %>%
-		ungroup()
+		ungroup() %>%
 		# select output variables
 		select(.data$id, .data$result)
 
