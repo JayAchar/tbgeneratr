@@ -125,15 +125,15 @@ dst_baseliner <- function(x, project = c("kk", "chechnya"),
   	fq_dst <- drug_baseliner(merged, dst_p_fq, days = dst_days)
 
 all_dst <- baseline_spec %>%
-	left_join(h_dst, by = "idno") %>%
-	left_join(z_dst, by = "idno") %>%
-	left_join(e_dst, by = "idno") %>%
-	left_join(cm_dst, by = "idno") %>%
-	left_join(km_dst, by = "idno") %>%
-	left_join(ofx_dst, by = "idno") %>%
-	left_join(mfx_dst, by = "idno") %>%
-	left_join(sli_dst, by = "idno") %>%
-	left_join(fq_dst, by = "idno")
+	left_join(.data$h_dst, by = "idno") %>%
+	left_join(.data$z_dst, by = "idno") %>%
+	left_join(.data$e_dst, by = "idno") %>%
+	left_join(.data$cm_dst, by = "idno") %>%
+	left_join(.data$km_dst, by = "idno") %>%
+	left_join(.data$ofx_dst, by = "idno") %>%
+	left_join(.data$mfx_dst, by = "idno") %>%
+	left_join(.data$sli_dst, by = "idno") %>%
+	left_join(.data$fq_dst, by = "idno")
 
 dst_cat_all <- all_dst %>%
 	mutate(ds = as.numeric(.data$base_rif == 1 & (.data$base_inh == 1 | is.na(.data$base_inh))),
