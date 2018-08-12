@@ -10,9 +10,9 @@
 #' @keywords TB
 #' @seealso \code{\link{tbgeneratr}}
 #' @import data.table
-#' @export
 
-baseline <- function(x, project = c("kk", "chechnya"),
+
+baseline_old <- function(x, project = c("kk", "chechnya"),
 						baseline_test = c("culture", "smear"),
 						baseline_days = 90) {
 
@@ -27,7 +27,7 @@ baseline <- function(x, project = c("kk", "chechnya"),
 
 #=================================================================
 # rename variables	
-	x <- nse_renamer(x, roject = project,
+	x <- nse_renamer(x, project = project,
 						fun = "baseline")
 
 # define test variables
