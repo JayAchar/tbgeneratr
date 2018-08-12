@@ -27,33 +27,33 @@ drug_baseliner <- function(x, drug, days = 30) {
 
 # generate baseline dst for specific drug
  	x <- x %>%
- 			group_by(idno) %>%
+ 			group_by(id) %>%
   	# select relevent variables
-  		select(idno, samp_date, baseline_date, baseline_no, labno, base_rif, rif_res, !! drug) %>%
+  		select(id, samp_date, baseline_date, baseline_no, labno, base_rif, rif_res, !! drug) %>%
   	# generate absolute days from baseline specimen collection
   		mutate(base_abs = as.numeric(abs(baseline_date - samp_date))) %>%
     # keep specimens within 'days' arg of baseline specimen
       filter(base_abs <= days) %>%
   	# sort by absolute days from sample to treatment start
-  		arrange(idno, base_abs) %>%
+  		arrange(id, base_abs) %>%
   	# keep specimens with same rifampicin result as baseline
   		filter(base_rif == rif_res) %>%
   	# remove all pza results == NA
   		filter(! is.na(!! drug)) %>%
-  	# remove duplicates by idno, date and result
-  		group_by(idno, base_abs, !! drug) %>%
+  	# remove duplicates by id, date and result
+  		group_by(id, base_abs, !! drug) %>%
   		slice(1) %>%
   	# keep more resistant if same base_abs
- 		group_by(idno, base_abs) %>%
- 		arrange(idno, base_abs, desc(!! drug)) %>%
+ 		group_by(id, base_abs) %>%
+ 		arrange(id, base_abs, desc(!! drug)) %>%
  		slice(1) %>%
  	# keep closest to baseline specimen with same rif result
  		# prioritise duplicated if discordant
- 		group_by(idno) %>%
- 		arrange(idno, base_abs) %>%
+ 		group_by(id) %>%
+ 		arrange(id, base_abs) %>%
  		slice(1) %>%
  	# keep variables
- 		select(idno, !! drug) %>%
+ 		select(id, !! drug) %>%
  		rename(!! drug_var := !! drug)
 
 x

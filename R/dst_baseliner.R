@@ -86,29 +86,31 @@ dst_baseliner <- function(x, project = c("kk", "chechnya"),
 	# find rif result closest to treatment start
   	baseline_spec <- x %>%	
   	# remove un-used variables	
-  		select(.data$idno, .data$labno, .data$starttre, .data$samp_date,
+  		select(.data$id, .data$labno, .data$starttre, .data$samp_date,
          .data$abs, .data$rif_res) %>%
 
   	# remove identical results from the same day
-  		distinct(.data$idno, .data$abs, .data$rif_res, .keep_all = T) %>%
+  		distinct(.data$id, .data$abs, .data$rif_res, .keep_all = T) %>%
 
   	# take more resistant specimen when discordant results on same day
-  		group_by(.data$idno, .data$abs) %>%
+  		group_by(.data$id, .data$abs) %>%
   		top_n(1, .data$rif_res) %>%
+      ungroup() %>%
 
 	# group data and find closest to treatment start
-  		group_by(idno) %>%
+  		group_by(.data$id) %>%
   		top_n(1, desc(.data$abs)) %>%
+      ungroup() %>%
 
   	# select key variables
   		rename(baseline_date = .data$samp_date,
   				baseline_no = .data$labno,
   				base_rif = .data$rif_res) %>%
-  		select(.data$idno, .data$baseline_no, .data$baseline_date, .data$base_rif)
+  		select(.data$id, .data$baseline_no, .data$baseline_date, .data$base_rif)
 
 # ===================================================
 # merge baseline_spec with original data
-	merged <- left_join(x, baseline_spec, by = "idno")
+	merged <- left_join(x, baseline_spec, by = "id")
 
 # generate drug specific baseline DSTs
 #	dst_drugs <- str_which(names(merged), pattern = "dst_p_")
@@ -125,15 +127,15 @@ dst_baseliner <- function(x, project = c("kk", "chechnya"),
   	fq_dst <- drug_baseliner(merged, dst_p_fq, days = dst_days)
 
 all_dst <- baseline_spec %>%
-	left_join(.data$h_dst, by = "idno") %>%
-	left_join(.data$z_dst, by = "idno") %>%
-	left_join(.data$e_dst, by = "idno") %>%
-	left_join(.data$cm_dst, by = "idno") %>%
-	left_join(.data$km_dst, by = "idno") %>%
-	left_join(.data$ofx_dst, by = "idno") %>%
-	left_join(.data$mfx_dst, by = "idno") %>%
-	left_join(.data$sli_dst, by = "idno") %>%
-	left_join(.data$fq_dst, by = "idno")
+	left_join(h_dst, by = "id") %>%
+	left_join(z_dst, by = "id") %>%
+	left_join(e_dst, by = "id") %>%
+	left_join(cm_dst, by = "id") %>%
+	left_join(km_dst, by = "id") %>%
+	left_join(ofx_dst, by = "id") %>%
+	left_join(mfx_dst, by = "id") %>%
+	left_join(sli_dst, by = "id") %>%
+	left_join(fq_dst, by = "id")
 
 dst_cat_all <- all_dst %>%
 	mutate(ds = as.numeric(.data$base_rif == 1 & (.data$base_inh == 1 | is.na(.data$base_inh))),
@@ -153,13 +155,13 @@ dst_cat_all <- all_dst %>%
 
 
 dst_gather <- dst_cat_all %>%
-	select(.data$idno, .data$ds, .data$mono_inh, .data$rres, 
+	select(.data$id, .data$ds, .data$mono_inh, .data$rres, 
           .data$mdr, .data$pre_fq, .data$pre_sli, .data$xdr) %>%
-	gather(dst_base, count, -.data$idno) %>%
+	gather(dst_base, count, -.data$id) %>%
 	filter(.data$count >= 1) %>%
-	select(.data$idno, .data$dst_base) 
+	select(.data$id, .data$dst_base) 
 
-final_dst <- left_join(dst_cat_all, dst_gather, by = "idno")
+final_dst <- left_join(dst_cat_all, dst_gather, by = "id")
 
 
 final_dst
