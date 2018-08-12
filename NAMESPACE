@@ -3,7 +3,7 @@
 export(adm_generator)
 export(adm_lab_generator)
 export(age_generator)
-export(baseline)
+export(baseliner)
 export(bmi_generator)
 export(converter)
 export(dst_baseliner)

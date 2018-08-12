@@ -8,6 +8,7 @@
 #' @seealso \code{\link{adm_lab_generator}} 
 #' @seealso \code{\link{age_generator}} 
 #' @seealso \code{\link{baseline_old}} 
+#' @seealso \code{\link{baseliner}} 
 #' @seealso \code{\link{bmi_generator}}
 #' @seealso \code{\link{converter}}  
 #' 

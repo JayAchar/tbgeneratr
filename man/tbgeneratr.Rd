@@ -16,7 +16,9 @@ from clean data sets.
 
 \code{\link{age_generator}}
 
-\code{\link{baseline}}
+\code{\link{baseline_old}}
+
+\code{\link{baseliner}}
 
 \code{\link{bmi_generator}}
 
