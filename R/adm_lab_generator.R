@@ -45,10 +45,14 @@ adm_lab_generator <- function(x,
 	final <- data.frame(id = unique(x$id), stringsAsFactors = F)
 
 # baseline smear and culture status
-#	sm_base <- baseline(x, project = project, baseline_test = "smear", 
-#							baseline_days = baseline_days)
-#	cult_base <- baseline(x, project = project, baseline_test = "culture", 
-#							baseline_days = baseline_days)
+	sm_base <- baseliner(x, software = software, project = project, 
+							file = "lab",
+							baseline_test = "smear", 
+							baseline_days = baseline_days)
+	cult_base <- baseliner(x, software = software, project = project, 
+							file = "lab",
+							baseline_test = "culture", 
+							baseline_days = baseline_days)
 
 
 # baseline DST calculator
@@ -64,9 +68,11 @@ adm_lab_generator <- function(x,
 
 # join all to id numbers
 	final <- final %>%
+		left_join(sm_base, by = "id") %>%
+		left_join(cult_base, by = "id") %>%
 		left_join(cc, by = "id") %>%
 		left_join(sc, by = "id") %>%
-		left_join(base_dst, by = c("id" = "idno"))
+		left_join(base_dst, by = c("id" = "id"))
 
 
 final
