@@ -23,6 +23,7 @@
 #' \dontrun{
 #' dst_baseliner(lab, project = "kk")
 #' }
+#' 
 
 dst_baseliner <- function(x, 
                software = c("excel", "koch_6", "epiinfo"),
