@@ -17,6 +17,7 @@
 #' @importFrom purrr map_at
 #' @importFrom tidyr gather
 #' @importFrom rlang .data
+#' @importFrom assertive assert_is_data.frame
 #' @export
 #' @examples
 #' \dontrun{
@@ -30,10 +31,7 @@ dst_baseliner <- function(x,
 							 dst_days = 30) {
 
 # checks
-# check input
-	if (!(is.data.frame(x))) {
-			stop("input paramter, x, must be a data frame")
-	}
+assert_is_data.frame(x)
 
 # check args
 	project <- match.arg(project)
@@ -55,8 +53,9 @@ dst_baseliner <- function(x,
   	# remove specimens > time from starttre
   		filter(.data$abs < dst_time)
 
+
 # convert all DST results to numerical - 1 = sens, 2 = res
-  		hain <- str_which(names(x), pattern = "hain_")
+  		hain <- str_which(names(x), pattern = "^hain_(rif|inh)$")
   		x_rif <- str_which(names(x), pattern = "xpert_rif")
   		dst_p <- str_which(names(x), pattern = "dst_p_")
   			recode_dst <- c(hain, x_rif, dst_p)
@@ -79,9 +78,16 @@ dst_baseliner <- function(x,
  		select(- .data$p_inh, - .data$hain_inh)
 
  # aggregate SLI & FQ results
- 	x <- x %>%
- 		mutate(dst_p_sli = pmax(.data$dst_p_cm, .data$dst_p_km, na.rm = T)) %>%
- 		mutate(dst_p_fq = pmax(.data$dst_p_ofx, .data$dst_p_mfx, na.rm = T))
+ if (project == "kk") {
+    x <- x %>%
+    mutate(dst_p_sli = pmax(.data$dst_p_cm, .data$dst_p_km, na.rm = T)) %>%
+    mutate(dst_p_fq = pmax(.data$dst_p_ofx, .data$dst_p_mfx, na.rm = T))  
+ } else if (project == "chechnya") {
+    x <- x %>%
+    mutate(dst_p_sli = pmax(.data$dst_p_cm, .data$dst_p_am, na.rm = T)) %>%
+    mutate(dst_p_fq = pmax(.data$dst_p_lfx, .data$dst_p_mfx, na.rm = T))  
+ }
+
 
 # ===================================================
 # Johanna's method
@@ -125,22 +131,40 @@ dst_baseliner <- function(x,
   	z_dst <- drug_baseliner(merged, dst_p_pza, days = dst_days)
   	e_dst <- drug_baseliner(merged, dst_p_eth, days = dst_days)
   	cm_dst <- drug_baseliner(merged, dst_p_cm, days = dst_days)
-  	km_dst <- drug_baseliner(merged, dst_p_km, days = dst_days)
-  	ofx_dst <- drug_baseliner(merged, dst_p_ofx, days = dst_days)
   	mfx_dst <- drug_baseliner(merged, dst_p_mfx, days = dst_days)
   	sli_dst <- drug_baseliner(merged, dst_p_sli, days = dst_days)
   	fq_dst <- drug_baseliner(merged, dst_p_fq, days = dst_days)
+
+if (project == "kk") {
+    km_dst <- drug_baseliner(merged, dst_p_km, days = dst_days)
+    ofx_dst <- drug_baseliner(merged, dst_p_ofx, days = dst_days)
+} else if (project == "chechnya") {
+    am_dst <- drug_baseliner(merged, dst_p_am, days = dst_days)
+    lfx_dst <- drug_baseliner(merged, dst_p_lfx, days = dst_days)
+}
+
 
 all_dst <- baseline_spec %>%
 	left_join(h_dst, by = "id") %>%
 	left_join(z_dst, by = "id") %>%
 	left_join(e_dst, by = "id") %>%
 	left_join(cm_dst, by = "id") %>%
-	left_join(km_dst, by = "id") %>%
-	left_join(ofx_dst, by = "id") %>%
+
+
 	left_join(mfx_dst, by = "id") %>%
 	left_join(sli_dst, by = "id") %>%
 	left_join(fq_dst, by = "id")
+
+if (project == "kk") {
+all_dst <- all_dst %>%
+  left_join(km_dst, by = "id") %>%
+  left_join(ofx_dst, by = "id")
+} else if (project == "chechnya") {
+all_dst <- all_dst %>%
+  left_join(am_dst, by = "id") %>%
+  left_join(lfx_dst, by = "id")
+}
+
 
 dst_cat_all <- all_dst %>%
 	mutate(ds = as.numeric(.data$base_rif == 1 & (.data$base_inh == 1 | is.na(.data$base_inh))),
