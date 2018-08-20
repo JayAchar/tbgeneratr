@@ -41,7 +41,7 @@ dst_baseliner <- function(x,
 
 # ====================================================
 # rename variables for NSE
-	x <- nse_renamer(x, softwre = software, project = project,
+	x <- nse_renamer(x, software = software, project = project,
 						file = "lab", fun = "dst_baseliner")
 
 # ===================================================
