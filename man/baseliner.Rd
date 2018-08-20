@@ -4,9 +4,9 @@
 \alias{baseliner}
 \title{Calculate baseline culture or smear status}
 \usage{
-baseliner(x, software = c("koch_6", "epiinfo", "excel"), project = c("kk",
-  "chechnya"), file = c("adm", "lab"), baseline_test = c("culture",
-  "smear"), baseline_days = 90)
+baseliner(x, software = c("koch_6", "epiinfo", "excel"),
+  project = c("kk", "chechnya"), file = c("adm", "lab"),
+  baseline_test = c("culture", "smear"), baseline_days = 90)
 }
 \arguments{
 \item{x}{data frame or data.table with combined admission and lab data. Must contain

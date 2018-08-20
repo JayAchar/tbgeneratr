@@ -4,7 +4,8 @@
 \alias{bmi_generator}
 \title{Calculate BMI from height and weight}
 \usage{
-bmi_generator(x, software = c("koch_6", "epiinfo"), rm_orig = TRUE, ...)
+bmi_generator(x, software = c("koch_6", "epiinfo"), rm_orig = TRUE,
+  ...)
 }
 \arguments{
 \item{x}{data frame containing height and weight variables}

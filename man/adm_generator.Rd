@@ -4,8 +4,8 @@
 \alias{adm_generator}
 \title{Admission TB generator}
 \usage{
-adm_generator(x, software = c("epiinfo", "koch_6", "excel"), rm_orig = TRUE,
-  ...)
+adm_generator(x, software = c("epiinfo", "koch_6", "excel"),
+  rm_orig = TRUE, ...)
 }
 \arguments{
 \item{x}{data frame of cleaned TB admission data}

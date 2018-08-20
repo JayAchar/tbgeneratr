@@ -4,9 +4,9 @@
 \alias{converter}
 \title{Culture/smear conversion calculator}
 \usage{
-converter(x, convert_type = c("culture", "smear"), software = c("excel",
-  "koch_6", "epiinfo"), project = c("kk", "chechnya"), file = c("adm",
-  "lab", "clinical_lab"))
+converter(x, convert_type = c("culture", "smear"),
+  software = c("excel", "koch_6", "epiinfo"), project = c("kk",
+  "chechnya"), file = c("adm", "lab", "clinical_lab"))
 }
 \arguments{
 \item{x}{data frame}

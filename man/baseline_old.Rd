@@ -4,8 +4,8 @@
 \alias{baseline_old}
 \title{Calculate baseline culture or smear status}
 \usage{
-baseline_old(x, project = c("kk", "chechnya"), baseline_test = c("culture",
-  "smear"), baseline_days = 90)
+baseline_old(x, project = c("kk", "chechnya"),
+  baseline_test = c("culture", "smear"), baseline_days = 90)
 }
 \arguments{
 \item{x}{data frame or data.table with combined admission and lab data. Must contain

@@ -4,11 +4,14 @@
 \alias{dst_baseliner}
 \title{Baseline DST calculator}
 \usage{
-dst_baseliner(x, project = c("kk", "chechnya"), dst_time = 90,
-  dst_days = 30)
+dst_baseliner(x, software = c("excel", "koch_6", "epiinfo"),
+  project = c("kk", "chechnya"), dst_time = 90, dst_days = 30)
 }
 \arguments{
 \item{x}{data frame with TB and treatmetn data}
+
+\item{software}{define software used for data collection.
+Values can be "excel", "koch_6", "epiinfo"}
 
 \item{project}{define which project this dataset refers to}
 

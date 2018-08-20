@@ -4,6 +4,8 @@
 #' treatment start time to output the baseline DST according
 #' to specific rules designed to reduce missingness
 #' @param x data frame with TB and treatmetn data
+#' @param software define software used for data collection.
+#' Values can be "excel", "koch_6", "epiinfo"
 #' @param project define which project this dataset refers to
 #' @param dst_time absolute historical limit for including specimens
 #' @param dst_days additional criteria for including non-rif results
@@ -21,7 +23,9 @@
 #' dst_baseliner(lab, project = "kk")
 #' }
 
-dst_baseliner <- function(x, project = c("kk", "chechnya"), 
+dst_baseliner <- function(x, 
+               software = c("excel", "koch_6", "epiinfo"),
+               project = c("kk", "chechnya"), 
 							 dst_time = 90, 
 							 dst_days = 30) {
 
@@ -33,10 +37,11 @@ dst_baseliner <- function(x, project = c("kk", "chechnya"),
 
 # check args
 	project <- match.arg(project)
+  software <- match.arg(software)
 
 # ====================================================
 # rename variables for NSE
-	x <- nse_renamer(x, softwre = "koch_6", project = project,
+	x <- nse_renamer(x, softwre = software, project = project,
 						file = "lab", fun = "dst_baseliner")
 
 # ===================================================

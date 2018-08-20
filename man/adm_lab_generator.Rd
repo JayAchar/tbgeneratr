@@ -5,8 +5,8 @@
 \title{Admission and lab merged TB generator}
 \usage{
 adm_lab_generator(x, software = c("excel", "koch_6", "epiinfo"),
-  project = c("kk", "chechnya"), file = c("adm", "lab", "clinical_lab"),
-  dst_time = 90, dst_days = 30, baseline_days = 90)
+  project = c("kk", "chechnya"), file = c("adm", "lab",
+  "clinical_lab"), dst_time = 90, dst_days = 30, baseline_days = 90)
 }
 \arguments{
 \item{x}{data frame of cleaned and merged TB admission and lab data}
