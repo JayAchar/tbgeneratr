@@ -56,7 +56,9 @@ adm_lab_generator <- function(x,
 
 
 # baseline DST calculator
-	base_dst <- dst_baseliner(x, project = project, dst_time = dst_time,
+	base_dst <- dst_baseliner(x, software = software, 
+								project = project, 
+								dst_time = dst_time,
 								dst_days = dst_days)
 
 # culture convertor
