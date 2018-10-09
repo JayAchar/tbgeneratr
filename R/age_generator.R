@@ -9,7 +9,7 @@
 #' @param rm_orig remove original variables - TRUE or FALSE
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
-#' @importFrom lubridate is.Date
+#' @importFrom lubridate is.Date years interval
 #' @export
 #' @examples
 #' \dontrun{
@@ -50,12 +50,11 @@ age_generator <- function(x, software = c("epiinfo", "koch_6", "excel"), rm_orig
 	}
 
 # generate age variable
-	x$age <- as.numeric(difftime(x[[start]], x[[dob]],
-								units = "weeks")) / 52.25
+	x$age <- interval(x[[dob]], x[[start]]) / years(1)
 
 
 # remove original variables
- 	if (rm_orig %in% c("TRUE", "T")) {
+ 	if (rm_orig) {
  		x[[dob]] <- NULL
  	}
 
