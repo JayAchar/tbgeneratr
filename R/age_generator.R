@@ -3,7 +3,7 @@
 #' Use date of birth and date of starting treatment to calculate 
 #' age at baseline. Takes data frame with date of birth and start 
 #' of treatment date to generate age variable in years. 
-#' @param x data frame containing Koch 6 admission variables#' 
+#' @param x data frame containing Koch 6 admission variables 
 #' @param software define software used for data collection.
 #' Values can be "excel", "koch_6", "epiinfo"
 #' @param rm_orig remove original variables - TRUE or FALSE
