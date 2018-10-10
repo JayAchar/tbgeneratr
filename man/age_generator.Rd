@@ -8,7 +8,7 @@ age_generator(x, software = c("epiinfo", "koch_6", "excel"),
   rm_orig = TRUE)
 }
 \arguments{
-\item{x}{data frame containing Koch 6 admission variables#'}
+\item{x}{data frame containing Koch 6 admission variables}
 
 \item{software}{define software used for data collection.
 Values can be "excel", "koch_6", "epiinfo"}
