@@ -18,6 +18,7 @@
 #' @importFrom rlang enquo .data
 #' @importFrom dplyr filter distinct mutate group_by top_n ungroup select
 #' @importFrom magrittr %>%
+#' @importFrom checkr check_data
 
 
 baseliner <- function(x, 
@@ -28,9 +29,7 @@ baseliner <- function(x,
 						baseline_days = 90) {
 
 # check input
-	if (!(is.data.frame(x))) {
-			stop("input paramter, x, must be a data frame")
-	}
+    check_data(x)
 
 # check all args
 	project <- match.arg(project)

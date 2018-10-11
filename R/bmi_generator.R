@@ -7,6 +7,7 @@
 #' @param ... further arguments passed to or from other methods
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
+#' @importFrom checkr check_data
 #' @export
 #' @examples
 #' \dontrun{
@@ -15,11 +16,7 @@
 
 bmi_generator <- function(x, software = c("koch_6", "epiinfo"), 
 							rm_orig = TRUE, ...) {
-
-# check input
-	if (!(is.data.frame(x))) {
-			stop("input paramter, x, must be a data frame")
-	}
+    
 # check all args
 	software <- match.arg(software)
 
@@ -35,11 +32,9 @@ bmi_generator <- function(x, software = c("koch_6", "epiinfo"),
 			height <- "HEIGHT"
 		}
 # =================================================================
-
-# check args are valid
-	if (! all(c(weight, height) %in% names(x))) {
-		stop("Height and weight variables not available - check function args")
-	}
+# check input
+	check_data(x, values = c(weight, height))
+	
 
 # check variables are numericals
 	if (! all(is.numeric(x[[weight]]) & is.numeric(x[[height]]) ) ) {
@@ -84,7 +79,7 @@ bmi_generator <- function(x, software = c("koch_6", "epiinfo"),
 	}
 
 # remove original variables
-		 	if (rm_orig %in% c("TRUE", "T")) {
+		 	if (rm_orig) {
 		 		x[[height]] <- NULL
 		 		x[[weight]] <- NULL
 		 	}

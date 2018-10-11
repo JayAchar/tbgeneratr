@@ -10,6 +10,7 @@
 #' @param ... further arguments passed to or from other methods
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
+#' @importFrom checkr check_data
 #' @export
 #' @examples
 #' \dontrun{
@@ -22,9 +23,7 @@ adm_generator <- function(x,
 						rm_orig = TRUE,
 						...) {
 # check input
-	if (!(is.data.frame(x))) {
-			stop("input paramter, x, must be a data frame")
-	}
+    check_data(x)
 
 # check all args
 	software <- match.arg(software)

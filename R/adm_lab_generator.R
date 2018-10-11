@@ -19,6 +19,7 @@
 #' @importFrom tbcleanr nse_renamer
 #' @importFrom magrittr %>%
 #' @importFrom dplyr left_join
+#' @importFrom checkr check_data
 #' @export
 
 
@@ -31,9 +32,7 @@ adm_lab_generator <- function(x,
 								baseline_days = 90) {
 # checks
 # check input
-	if (!(is.data.frame(x))) {
-			stop("input paramter, x, must be a data frame")
-	}
+    check_data(x)
 
 # check args
 	software <- match.arg(software)

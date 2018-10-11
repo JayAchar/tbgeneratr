@@ -16,6 +16,7 @@
 #' @importFrom tbcleanr nse_renamer
 #' @importFrom dplyr mutate filter group_by recode_factor distinct slice arrange ungroup lag
 #' row_number desc select rename %>% top_n
+#' @importFrom checkr check_data
 #' @seealso \code{\link{tbgeneratr}}
 #' @examples
 #' \dontrun{
@@ -27,12 +28,6 @@ converter <- function(x, convert_type = c("culture", "smear"),
 						software = c("excel", "koch_6", "epiinfo"),
 						project = c("kk", "chechnya"),
 						file = c("adm", "lab", "clinical_lab")) {
-
-# checks
-# check input
-	if (!(is.data.frame(x))) {
-			stop("input paramter, x, must be a data frame")
-	}
 
 # check args
 	convert_type <- match.arg(convert_type)
@@ -56,6 +51,11 @@ converter <- function(x, convert_type = c("culture", "smear"),
 		# rename to "result" variable
 		names(x)[place] <- "result"
 # ====================================================
+# checks
+	# check input
+		check_data(x, values = c("id", "samp_date", "result", "starttre",
+		                         "dateend"))		
+		
 # convert smear to binary result
 	if (convert_type == "smear") {
 		x <- x %>%
