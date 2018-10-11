@@ -10,6 +10,7 @@
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom lubridate is.Date years interval
+#' @importFrom checkr check_data check_classes
 #' @export
 #' @examples
 #' \dontrun{
@@ -17,12 +18,9 @@
 #' }
 
 age_generator <- function(x, software = c("epiinfo", "koch_6", "excel"), rm_orig = TRUE) {
-# check input
-	if (!(is.data.frame(x))) {
-			stop("input paramter, x, must be a data frame")
-	}
 
-# check all args
+
+# check args
 	software <- match.arg(software)
 
 # =================================================================
@@ -38,16 +36,12 @@ age_generator <- function(x, software = c("epiinfo", "koch_6", "excel"), rm_orig
 
 		}
 # =================================================================
-
-# check args are valid
-	if (! all(c(dob, start) %in% names(x))) {
-		stop("Age variables not available - check function args")
-	}
+# check input
+	check_data(x, values = c(dob, start))
 
 # check variables are dates
-	if (! all(is.Date(x[[dob]]) & is.Date(x[[start]]) ) ) {
-		stop("Variables are not formatted as dates")
-	}
+    check_classes(x[[dob]], "Date")
+    check_classes(x[[start]], "Date")
 
 # generate age variable
 	x$age <- interval(x[[dob]], x[[start]]) / years(1)

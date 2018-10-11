@@ -27,11 +27,18 @@ k6_data3$Starttre <- as.character(k6_data3$Starttre)
 k6_data4 <- k6_data
 k6_data4[1, 3] <- Sys.Date() + 5
 k4 <- age_generator(k6_data4, "koch_6", rm_orig = TRUE)
+
+# age > Starttre
+k6_data5 <- k6_data
+k6_data5[1, 2] <- k6_data5$Starttre[1] + 1
+k5 <- age_generator(k6_data5, "koch_6", rm_orig = TRUE)
  
+# check rm_orig argument
+k6_data6 <- k6_data
+k6 <- age_generator(k6_data6, "koch_6", rm_orig = FALSE)
 
 
-
-test_that("perfect data: structure is ok", {
+test_that("structure is ok", {
   expect_match(class(k1), "data.frame")
   expect_equal(ncol(k1), 3)
   expect_equal(nrow(k1), 10)
@@ -40,14 +47,14 @@ test_that("perfect data: structure is ok", {
   expect_match(class(k1$age), "numeric")
 })
 
-test_that("perfect data: content is ok", {
+test_that("content is ok", {
   expect_equal(length(unique(k1$id)), 10)
   expect_equal(round(k1$age[1], 2), 4.59)
   expect_equal(round(median(k1$age), 2), 6.83)
   expect_true(all(k1$age > 0))
 })
 
-test_that("DoB NA: content is ok", {
+test_that("DoB NA", {
     expect_equal(length(unique(k2$id)), 10)
     expect_equal(round(k2$age[1], 2), 4.59)
     expect_equal(round(median(k2$age, na.rm = TRUE), 2), 6.60)
@@ -55,7 +62,14 @@ test_that("DoB NA: content is ok", {
 })
 
 test_that("Expect errors", {
-    expect_error(age_generator(k6_data3, "koch_6", rm_orig = TRUE),
-                 "Variables are not formatted as dates")
+    expect_error(age_generator(x = list(0), "koch_6"))
+expect_error(age_generator(k6_data3, "koch_6", rm_orig = TRUE),
+                 "inherit from class Date")
 #    expect_message(age_generator(k6_data4, "koch_6", rm_orig = TRUE))
+#  expect_error(age_generator(k6_data5, "koch_6, rm_orig = TRUE))    
+})
+
+test_that("test rm_orig arg", {
+  expect_equal(ncol(k6), 4)  
+  expect_true("age" %in% names(k6))    
 })
