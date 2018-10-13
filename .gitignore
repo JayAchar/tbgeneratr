@@ -8,3 +8,6 @@
 *.csv
 *.rda
 inst/doc
+
+# Travis CI
+docs/*
