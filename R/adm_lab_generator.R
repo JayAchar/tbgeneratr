@@ -19,7 +19,7 @@
 #' @importFrom tbcleanr nse_renamer
 #' @importFrom magrittr %>%
 #' @importFrom dplyr left_join
-#' @importFrom checkr check_data
+#' @importFrom assertthat assert_that
 #' @export
 
 
@@ -32,7 +32,13 @@ adm_lab_generator <- function(x,
 								baseline_days = 90) {
 # checks
 # check input
-    check_data(x)
+  assert_that(is.data.frame(x))
+  assert_that(is.numeric(dst_time))
+  assert_that(is.numeric(dst_days))
+  assert_that(is.numeric(baseline_days))
+  assert_that(dst_time >= 0)
+  assert_that(dst_days >= 0)
+  assert_that(baseline_days >= 0)
 
 # check args
 	software <- match.arg(software)

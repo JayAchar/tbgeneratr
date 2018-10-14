@@ -10,7 +10,7 @@
 #' @param ... further arguments passed to or from other methods
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
-#' @importFrom checkr check_data
+#' @importFrom assertthat assert_that
 #' @export
 #' @examples
 #' \dontrun{
@@ -23,7 +23,7 @@ adm_generator <- function(x,
 						rm_orig = TRUE,
 						...) {
 # check input
-    check_data(x)
+    assert_that(is.data.frame(x))
 
 # check all args
 	software <- match.arg(software)

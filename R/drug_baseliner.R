@@ -11,6 +11,7 @@
 #' @importFrom stringr str_remove
 #' @importFrom dplyr group_by select mutate arrange filter slice rename
 #' @importFrom rlang enquo quo_name
+#' @importFrom assertthat assert_that
 #' @examples
 #' \dontrun{
 #' drug_baseliner(p, dst_p_pza)
@@ -19,6 +20,11 @@
 
 drug_baseliner <- function(x, drug, days = 30) {
 
+# checks
+  assert_that(is.data.frame(x))
+  assert_that(is.numeric(days))
+  assert_that(days >= 0)
+  
  	drug <- enquo(drug)
 
 # build final drug dst variable name

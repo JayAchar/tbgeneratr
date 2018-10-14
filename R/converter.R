@@ -16,7 +16,7 @@
 #' @importFrom tbcleanr nse_renamer
 #' @importFrom dplyr mutate filter group_by recode_factor distinct slice arrange ungroup lag
 #' row_number desc select rename %>% top_n
-#' @importFrom checkr check_data
+#' @importFrom assertthat assert_that
 #' @seealso \code{\link{tbgeneratr}}
 #' @examples
 #' \dontrun{
@@ -29,6 +29,10 @@ converter <- function(x, convert_type = c("culture", "smear"),
 						project = c("kk", "chechnya"),
 						file = c("adm", "lab", "clinical_lab")) {
 
+# checks
+  assert_that(is.data.frame(x))
+  
+  
 # check args
 	convert_type <- match.arg(convert_type)
 	software <- match.arg(software)
@@ -44,17 +48,19 @@ converter <- function(x, convert_type = c("culture", "smear"),
 	if (convert_type == "culture") {
 		# rename culture variable
 		place <- match("culture", names(x))
+		assert_that(is.numeric(place))
 	} else {
 		# rename smear variable
 		place <- match("smear", names(x))
+		assert_that(is.numeric(place))
 	}
 		# rename to "result" variable
 		names(x)[place] <- "result"
 # ====================================================
 # checks
 	# check input
-		check_data(x, values = c("id", "samp_date", "result", "starttre",
-		                         "dateend"))		
+		assert_that(all(c("id", "samp_date", "result", "starttre",
+		                  "dateend") %in% names(x)))
 		
 # convert smear to binary result
 	if (convert_type == "smear") {

@@ -7,7 +7,7 @@
 #' @param ... further arguments passed to or from other methods
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
-#' @importFrom checkr check_data
+#' @importFrom assertthat assert_that
 #' @export
 #' @examples
 #' \dontrun{
@@ -17,6 +17,10 @@
 bmi_generator <- function(x, software = c("koch_6", "epiinfo"), 
 							rm_orig = TRUE, ...) {
     
+# checks
+  assert_that(is.data.frame(x))
+  assert_that(is.logical(rm_orig))
+  
 # check all args
 	software <- match.arg(software)
 
@@ -24,17 +28,16 @@ bmi_generator <- function(x, software = c("koch_6", "epiinfo"),
 # =================================================================
 # set software specific variables 
 		if (software == "koch_6") {
+		  assert_that(all(c("weight", "height") %in% names(x)))
 			weight <- "weight"
 			height <- "height"
 		}	
 		if (software == "epiinfo") {
+		  assert_that(all(c("WEIGHT", "HEIGHT") %in% names(x)))
 			weight <- "WEIGHT"
 			height <- "HEIGHT"
 		}
 # =================================================================
-# check input
-	check_data(x, values = c(weight, height))
-	
 
 # check variables are numericals
 	if (! all(is.numeric(x[[weight]]) & is.numeric(x[[height]]) ) ) {
@@ -75,7 +78,7 @@ bmi_generator <- function(x, software = c("koch_6", "epiinfo"),
 # check for introduction of new NA
 	bmi <- sum(is.na(x$bmi))
 	if (! bmi == c) {
-		warning("New NAs included in BMI variable")
+		warning("Likely error - new NAs included in BMI variable")
 	}
 
 # remove original variables

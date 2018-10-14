@@ -17,7 +17,7 @@
 #' @importFrom purrr map_at
 #' @importFrom tidyr gather
 #' @importFrom rlang .data
-#' @importFrom assertive assert_is_data.frame
+#' @importFrom assertthat assert_that
 #' @export
 #' @examples
 #' \dontrun{
@@ -32,7 +32,11 @@ dst_baseliner <- function(x,
 							 dst_days = 30) {
 
 # checks
-assert_is_data.frame(x)
+  assert_that(is.data.frame(x))
+  assert_that(is.numeric(dst_time))
+    assert_that(dst_time >= 0)
+  assert_that(is.numeric(dst_days))
+    assert_that(dst_days >= 0)
 
 # check args
 	project <- match.arg(project)

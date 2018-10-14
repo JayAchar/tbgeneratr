@@ -12,9 +12,7 @@ LazyData: true
 RoxygenNote: 6.1.0
 BugReports: http://github.com/JayAchar/tbgeneratr/issues
 Imports:
-  assertive (>= 0.3.5), 
-  checkr (>= 0.3.0),
-	data.table (>= 1.11.4),
+  assertthat (>= 0.2.0),
 	dplyr (>= 0.7.6),
 	lubridate (>= 1.7.4),
 	tbcleanr (>= 0.0.1.7), 

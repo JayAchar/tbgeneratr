@@ -18,7 +18,7 @@
 #' @importFrom rlang enquo .data
 #' @importFrom dplyr filter distinct mutate group_by top_n ungroup select
 #' @importFrom magrittr %>%
-#' @importFrom checkr check_data
+#' @importFrom assertthat assert_that
 
 
 baseliner <- function(x, 
@@ -29,11 +29,16 @@ baseliner <- function(x,
 						baseline_days = 90) {
 
 # check input
-    check_data(x)
+  assert_that(is.data.frame(x))
+  assert_that(is.numeric(baseline_days))
+  assert_that(baseline_days >= 0)
+  assert_that(baseline_days %% 1 == 0)
 
 # check all args
 	project <- match.arg(project)
 	baseline_test <- match.arg(baseline_test)
+	software <- match.arg(software)
+	file <- match.arg(file)
 
 #=================================================================
 # rename variables for NSE

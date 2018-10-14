@@ -10,11 +10,11 @@
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom lubridate is.Date years interval
-#' @importFrom checkr check_data check_classes
+#' @importFrom assertthat assert_that
 #' @export
 #' @examples
 #' \dontrun{
-#' age_generator(p, dob = "dateofbirth", start = "Starttre")
+#' age_generator(p, software = "koch_6", rm_orig = FALSE)
 #' }
 
 age_generator <- function(x, software = c("epiinfo", "koch_6", "excel"), rm_orig = TRUE) {
@@ -37,15 +37,15 @@ age_generator <- function(x, software = c("epiinfo", "koch_6", "excel"), rm_orig
 		}
 # =================================================================
 # check input
-	check_data(x, values = c(dob, start))
+	assert_that(is.data.frame(x))
+	assert_that(all(c(dob, start) %in% names(x)))
 
 # check variables are dates
-    check_classes(x[[dob]], "Date")
-    check_classes(x[[start]], "Date")
+	assert_that(class(x[[dob]]) == "Date")
+	assert_that(class(x[[start]]) == "Date")
 
 # generate age variable
 	x$age <- interval(x[[dob]], x[[start]]) / years(1)
-
 
 # remove original variables
  	if (rm_orig) {

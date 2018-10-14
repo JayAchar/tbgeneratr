@@ -22,7 +22,7 @@ of treatment date to generate age variable in years.
 }
 \examples{
 \dontrun{
-age_generator(p, dob = "dateofbirth", start = "Starttre")
+age_generator(p, software = "koch_6", rm_orig = FALSE)
 }
 }
 \seealso{
