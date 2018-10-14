@@ -113,7 +113,7 @@ x <- x %>%
 
 # rename output variable
 if (convert_type == "smear") {
-		x <- rename(x, sc_date = cc_date)
+		x <- rename(x, sc_date = .data$cc_date)
 	}
 
 x

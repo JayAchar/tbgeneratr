@@ -63,8 +63,8 @@ test_that("DoB NA", {
 
 test_that("Expect errors", {
     expect_error(age_generator(x = list(0), "koch_6"))
-expect_error(age_generator(k6_data3, "koch_6", rm_orig = TRUE),
-                 "inherit from class Date")
+    expect_error(age_generator(k6_data3, "koch_6", rm_orig = TRUE),
+                 "not equal to")  # start date as character variable
 #    expect_message(age_generator(k6_data4, "koch_6", rm_orig = TRUE))
 #  expect_error(age_generator(k6_data5, "koch_6, rm_orig = TRUE))    
 })
