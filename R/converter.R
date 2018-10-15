@@ -2,7 +2,7 @@
 #'
 #' Takes laboratory data with start and end treatment informaiton and
 #' calculates culture or smear conversion dates based on >30 days criteria
-#' @param x data frame
+#' @param x data frame containing cleaned merged adm and lab data
 #' @param convert_type define what type of culture conversion required.
 #' @param software define software used for data collection.
 #' Values can be "excel", "koch_6", "epiinfo"
@@ -31,7 +31,25 @@ converter <- function(x, convert_type = c("culture", "smear"),
 
 # checks
   assert_that(is.data.frame(x))
-  
+  if (software == "epiinfo") {
+      assert_that(all(c("id", "STARTTRE", "DATEN", "culture", 
+                        "samp_date", "smear") %in% names(x)))
+      assert_that(class(x$samp_date) == "Date")
+      assert_that(class(x$STARTTRE) == "Date")
+      assert_that(class(x$DATEN) == "Date")
+      assert_that(any(class(x$culture) == "factor"))
+      assert_that(any(class(x$smear) == "factor"))
+      
+  }
+  if (software == "koch_6") {
+      assert_that(all(c("id", "Starttre", "dateend", "culture", 
+                        "samp_date", "smear") %in% names(x))) 
+      assert_that(class(x$samp_date) == "Date")
+      assert_that(class(x$Starttre) == "Date")
+      assert_that(class(x$dateend) == "Date")
+      assert_that(any(class(x$culture) == "factor"))
+      assert_that(any(class(x$smear) == "factor"))
+  }
   
 # check args
 	convert_type <- match.arg(convert_type)

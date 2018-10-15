@@ -9,7 +9,7 @@ converter(x, convert_type = c("culture", "smear"),
   "chechnya"), file = c("adm", "lab", "clinical_lab"))
 }
 \arguments{
-\item{x}{data frame}
+\item{x}{data frame containing cleaned merged adm and lab data}
 
 \item{convert_type}{define what type of culture conversion required.}
 
