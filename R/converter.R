@@ -15,7 +15,7 @@
 #' @export
 #' @importFrom tbcleanr nse_renamer
 #' @importFrom dplyr mutate filter group_by recode_factor distinct slice arrange ungroup lag
-#' row_number desc select rename %>% top_n
+#' row_number desc select rename %>% top_n bind_rows
 #' @importFrom assertthat assert_that
 #' @seealso \code{\link{tbgeneratr}}
 #' @examples
@@ -23,116 +23,124 @@
 #' converter(p, convert_type = "culture", software = "koch_6", project = "chechnya", file = "adm")
 #' }
 
-
 converter <- function(x, convert_type = c("culture", "smear"), 
-						software = c("excel", "koch_6", "epiinfo"),
-						project = c("kk", "chechnya"),
-						file = c("adm", "lab", "clinical_lab")) {
-
-# checks
+                      software = c("excel", "koch_6", "epiinfo"),
+                      project = c("kk", "chechnya"),
+                      file = c("adm", "lab", "clinical_lab")) {
+  
+  # checks
   assert_that(is.data.frame(x))
   if (software == "epiinfo") {
-      assert_that(all(c("id", "STARTTRE", "DATEN", "culture", 
-                        "samp_date", "smear") %in% names(x)))
-      assert_that(class(x$samp_date) == "Date")
-      assert_that(class(x$STARTTRE) == "Date")
-      assert_that(class(x$DATEN) == "Date")
-      assert_that(any(class(x$culture) == "factor"))
-      assert_that(any(class(x$smear) == "factor"))
-      
+    assert_that(all(c("id", "STARTTRE", "DATEN", "culture", 
+                      "samp_date", "smear") %in% names(x)))
+    assert_that(class(x$samp_date) == "Date")
+    assert_that(class(x$STARTTRE) == "Date")
+    assert_that(class(x$DATEN) == "Date")
+    assert_that(any(class(x$culture) == "factor"))
+    assert_that(any(class(x$smear) == "factor"))
+    
   }
   if (software == "koch_6") {
-      assert_that(all(c("id", "Starttre", "dateend", "culture", 
-                        "samp_date", "smear") %in% names(x))) 
-      assert_that(class(x$samp_date) == "Date")
-      assert_that(class(x$Starttre) == "Date")
-      assert_that(class(x$dateend) == "Date")
-      assert_that(any(class(x$culture) == "factor"))
-      assert_that(any(class(x$smear) == "factor"))
+    assert_that(all(c("id", "Starttre", "dateend", "culture", 
+                      "samp_date", "smear") %in% names(x))) 
+    assert_that(class(x$samp_date) == "Date")
+    assert_that(class(x$Starttre) == "Date")
+    assert_that(class(x$dateend) == "Date")
+    assert_that(any(class(x$culture) == "factor"))
+    assert_that(any(class(x$smear) == "factor"))
   }
   
-# check args
-	convert_type <- match.arg(convert_type)
-	software <- match.arg(software)
-	project <- match.arg(project)
-	file <- match.arg(file)
-
-# ====================================================
-# rename variables for NSE
-
-	x <- nse_renamer(x, software = software, project = project,
-						file = file, fun = "converter")
-
-	if (convert_type == "culture") {
-		# rename culture variable
-		place <- match("culture", names(x))
-		assert_that(is.numeric(place))
-	} else {
-		# rename smear variable
-		place <- match("smear", names(x))
-		assert_that(is.numeric(place))
-	}
-		# rename to "result" variable
-		names(x)[place] <- "result"
-# ====================================================
-# checks
-	# check input
-		assert_that(all(c("id", "samp_date", "result", "starttre",
-		                  "dateend") %in% names(x)))
-		
-# convert smear to binary result
-	if (convert_type == "smear") {
-		x <- x %>%
-			mutate(result = recode_factor(.data$result, '1+' = "Positive", 
-										'2+' = "Positive", 
-										'3+' = "Positive")) 
-	}
-
-# ====================================================
-# clean data
-x <- x %>%
-	# sort by id, sample date and result
-		arrange(.data$id, .data$samp_date, .data$result) %>%
-	# remove pre-treatment samples
-		filter(.data$samp_date > .data$starttre) %>%
-	# remove post end of treatment samples
-		filter(.data$samp_date < .data$dateend) %>%
-	# remove samples with no result
-		filter(!is.na(.data$result)) %>%
-	# remove idno, samp_date, and result duplicats
-		distinct(.data$id, .data$samp_date, .data$result, .keep_all = TRUE) %>%
-	# remove negative result when idno and date are duplicated 
-		# and positive result present
-			group_by(.data$id, .data$samp_date) %>%
-			top_n(1, .data$result) %>%
-			ungroup() %>%
-	# generate result sequence variable
-		arrange(.data$id, .data$samp_date) %>%
-		group_by(.data$id) %>%
-		mutate(seq = row_number())
-
-# calculate days between consecutive negative results
-x <- x %>%
-  arrange(.data$id, .data$samp_date) %>%
-  # find consecutive same results
-  mutate(result_grp = cumsum(as.character(.data$result)!=lag(as.character(.data$result),default=""))) %>%
-  ungroup() %>%
-  group_by(.data$id, .data$result_grp) %>%
-  # keep all consecutive results which are negative and have total > 30 days
-  filter(.data$result == "Negative" & (max(.data$samp_date) - min(.data$samp_date) )>=30) %>%
-  ungroup() %>%
-  # keep only the first episode of culture conversion
-  group_by(.data$id) %>%
-  filter(.data$result_grp == min(.data$result_grp)) %>%
-  top_n(1, desc(.data$seq)) %>%
-  ungroup() %>%
-  select(.data$id, .data$samp_date) %>%
-  rename(cc_date = .data$samp_date)
-
-# rename output variable
-if (convert_type == "smear") {
-		x <- rename(x, sc_date = .data$cc_date)
-	}
-
-x
+  # check args
+  convert_type <- match.arg(convert_type)
+  software <- match.arg(software)
+  project <- match.arg(project)
+  file <- match.arg(file)
+  
+  # ====================================================
+  # rename variables for NSE
+  
+  x <- nse_renamer(x, software = software, project = project,
+                   file = file, fun = "converter")
+  
+  if (convert_type == "culture") {
+    # rename culture variable
+    place <- match("culture", names(x))
+    assert_that(is.numeric(place))
+  } else {
+    # rename smear variable
+    place <- match("smear", names(x))
+    assert_that(is.numeric(place))
+  }
+  # rename to "result" variable
+  names(x)[place] <- "result"
+  # ====================================================
+  # checks
+  # check input
+  assert_that(all(c("id", "samp_date", "result", "starttre",
+                    "dateend") %in% names(x)))
+  
+  # convert smear to binary result
+  if (convert_type == "smear") {
+    x <- x %>%
+      mutate(result = recode_factor(.data$result, '1+' = "Positive", 
+                                    '2+' = "Positive", 
+                                    '3+' = "Positive")) 
+  }
+  
+  # ====================================================
+  # clean data
+  df <- x %>%
+    # sort by id, sample date and result
+    arrange(.data$id, .data$samp_date, .data$result) %>%
+    # remove pre-treatment samples
+    filter(.data$samp_date > .data$starttre) %>%
+    # remove post end of treatment samples
+    filter(.data$samp_date < .data$dateend) %>%
+    # remove samples with no result
+    filter(!is.na(.data$result)) %>%
+    # remove idno, samp_date, and result duplicats
+    distinct(.data$id, .data$samp_date, .data$result, .keep_all = TRUE) %>%
+    # remove negative result when idno and date are duplicated 
+    # and positive result present
+    group_by(.data$id, .data$samp_date) %>%
+    top_n(1, .data$result) %>%
+    ungroup() %>%
+    # generate result sequence variable
+    arrange(.data$id, .data$samp_date) %>%
+    group_by(.data$id) %>%
+    mutate(seq = row_number())
+  
+  # calculate days between consecutive negative results
+  df <- df %>%
+    arrange(.data$id, .data$samp_date) %>%
+    # find consecutive same results
+    mutate(result_grp = cumsum(as.character(.data$result)!=lag(as.character(.data$result),default=""))) %>%
+    ungroup() %>%
+    group_by(.data$id, .data$result_grp) %>%
+    # keep all consecutive results which are negative and have total > 30 days
+    filter(.data$result == "Negative" & (max(.data$samp_date) - min(.data$samp_date) )>=30) %>%
+    ungroup() %>%
+    # keep only the first episode of culture conversion
+    group_by(.data$id) %>%
+    filter(.data$result_grp == min(.data$result_grp)) %>%
+    top_n(1, desc(.data$seq)) %>%
+    ungroup() %>%
+    select(.data$id, .data$samp_date) %>%
+    rename(cc_date = .data$samp_date)
+  
+  # re-bind ID numbers with no culture conversion as NA
+  missing_id <- unique(x$id)[! unique(x$id) %in% unique(df$id)]
+  add <- data.frame(id = missing_id, 
+                    cc_date = NA_integer_,
+                    stringsAsFactors = FALSE)
+  df <- df %>% 
+    bind_rows(add) %>% 
+    arrange(.data$id)
+  
+  # rename output variable
+  if (convert_type == "smear") {
+    df <- rename(df, sc_date = .data$cc_date)
+  }
+  
+  df
 }
