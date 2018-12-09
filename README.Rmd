@@ -6,25 +6,23 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+# tbgeneratr
+[![Travis build status](https://travis-ci.org/JayAchar/tbgeneratr.svg?branch=master)](https://travis-ci.org/JayAchar/tbgeneratr)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/JayAchar/tbgeneratr?branch=master&svg=true)](https://ci.appveyor.com/project/JayAchar/tbgeneratr)
+[![Coverage status](https://codecov.io/gh/JayAchar/tbgeneratr/branch/master/graph/badge.svg)](https://codecov.io/github/JayAchar/tbgeneratr?branch=master)
+[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 
-## GitHub Documents
+Generate variables from cleaned MSF TB programme data
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+## Introduction
 
-## Including Code
 
-You can include R code in the document as follows:
+## Installation
 
-```{r cars}
-summary(cars)
+You can install the released version of tbcleanr from [Github](http://www.github.com/JayAchar) with:
+
+``` r
+library(devtools)
+install_github("JayAchar/tbcleanr")
+library(tbcleanr)
 ```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
