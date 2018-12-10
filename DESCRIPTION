@@ -1,8 +1,8 @@
 Package: tbgeneratr
 Type: Package
 Title: tbgenratr: tools for generating new TB variables
-Version: 0.0.0.14
-Date: 2018-12-09
+Version: 0.0.0.15
+Date: 2018-12-10
 Authors@R: person("Jay", "Achar", 
     email = "jay.achar@doctors.org.uk", 
     role = c("aut", "cre"),
@@ -19,6 +19,7 @@ Imports:
   assertthat (>= 0.2.0),
 	dplyr (>= 0.7.6),
 	lubridate (>= 1.7.4),
+	naniar (>= 0.4.1),
 	tbcleanr (>= 0.0.1.7), 
 	tidyr (>= 0.8.1),
 	purrr (>= 0.2.5),
