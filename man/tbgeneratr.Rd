@@ -21,6 +21,8 @@ from clean data sets.
 \code{\link{bmi_generator}}
 
 \code{\link{converter}}
+
+\code{\link{start_splittr}}
 }
 \author{
 Jay Achar \email{jay.achar@doctors.org.uk}

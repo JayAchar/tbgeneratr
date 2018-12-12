@@ -9,7 +9,8 @@
 #' @seealso \code{\link{age_generator}} 
 #' @seealso \code{\link{baseliner}} 
 #' @seealso \code{\link{bmi_generator}}
-#' @seealso \code{\link{converter}}  
+#' @seealso \code{\link{converter}}
+#' @seealso \code{\link{start_splittr}}
 #' 
 #' @docType package
 #' @name tbgeneratr
