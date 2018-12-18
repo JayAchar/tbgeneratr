@@ -2,8 +2,9 @@ context("test-bmi_generator")
 library(tbgeneratr)
 
 # Koch 6
-system.file("data", "bmi_k6.rda", package = "tbgeneratr") %>% 
-  load()
+bmi_k6 <- system.file("testdata", "bmi_k6.rds", 
+                      package = "tbgeneratr") %>% 
+  readRDS()
 
 k6 <- bmi_generator(bmi_k6, rm_orig = F)
 
@@ -17,8 +18,9 @@ test_that("Koch 6 works", {
 
 
 # EpiInfo
-system.file("data", "bmi_epi.rda", package = "tbgeneratr") %>% 
-  load()
+bmi_epi <- system.file("testdata", "bmi_epi.rds", 
+                       package = "tbgeneratr") %>% 
+  readRDS()
 
 epi <- bmi_generator(bmi_epi, rm_orig = F)
 

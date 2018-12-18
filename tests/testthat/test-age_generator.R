@@ -2,10 +2,12 @@ context("test-age_generator")
 library(tbgeneratr)
 
 ## Koch 6
-system.file("data", "age_gen_koch6.rda", package = "tbgeneratr") %>% 
-  load()
-system.file("data", "age_gen_koch6_neg.rda", package = "tbgeneratr") %>% 
-  load()
+age_gen_koch6 <- system.file("testdata", "age_gen_koch6.rds", 
+                             package = "tbgeneratr") %>% 
+  readRDS()
+age_gen_koch6_neg <- system.file("testdata", "age_gen_koch6_neg.rds", 
+                                 package = "tbgeneratr") %>% 
+  readRDS()
 
 k6 <- age_generator(age_gen_koch6, rm_orig = F)
 k6_narrow <- age_generator(age_gen_koch6, rm_orig = TRUE)
@@ -34,10 +36,12 @@ test_that("Negative Koch 6 age ok", {
 
 ## Epiinfo
 
-system.file("data", "age_gen_epi.rda", package = "tbgeneratr") %>% 
-  load()
-system.file("data", "age_gen_epi_neg.rda", package = "tbgeneratr") %>% 
-  load()
+age_gen_epi <- system.file("testdata", "age_gen_epi.rds", 
+                           package = "tbgeneratr") %>% 
+  readRDS()
+age_gen_epi_neg <- system.file("testdata", "age_gen_epi_neg.rds", 
+                               package = "tbgeneratr") %>% 
+  readRDS()
 
 epi <- age_generator(age_gen_epi, rm_orig = FALSE)
 epi_narrow <- age_generator(age_gen_epi, rm_orig = T)

@@ -2,8 +2,9 @@ context("test-start_splittr")
 library(tbgeneratr)
 
 ## Koch 6
-system.file("data", "start_splittr_koch6.rda", package = "tbgeneratr") %>% 
-  load()
+start_splittr_kcoh6 <- system.file("testdata", "start_splittr_koch6.rds", 
+                                   package = "tbgeneratr") %>% 
+  readRDS()
 
 koch6 <- start_splittr(start_splittr_koch6)
 
@@ -19,8 +20,9 @@ test_that("Koch 6 works", {
 
 
 ## EpiInfo
-system.file("data", "start_splittr_epi.rda", package = "tbgeneratr") %>% 
-  load()
+start_splittr_epi <- system.file("testdata", "start_splittr_epi.rds", 
+                                 package = "tbgeneratr") %>% 
+  readRDS()
 
 epi <- start_splittr(start_splittr_epi)
 
