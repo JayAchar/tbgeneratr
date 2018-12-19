@@ -4,25 +4,14 @@
 \alias{adm_lab_generator}
 \title{Admission and lab merged TB generator}
 \usage{
-adm_lab_generator(x, software = c("excel", "koch_6", "epiinfo"),
-  project = c("kk", "chechnya"), file = c("adm", "lab",
-  "clinical_lab"), dst_time = 90, dst_days = 30, baseline_days = 90)
+adm_lab_generator(adm, lab, baseline_days = 90)
 }
 \arguments{
-\item{x}{data frame of cleaned and merged TB admission and lab data}
+\item{adm}{data frame containing TB admission data cleaned and allocated object
+class by tbcleanr package}
 
-\item{software}{define software used for data collection.
-Values can be "excel", "koch_6", "epiinfo"}
-
-\item{project}{define project location to apply.
-Values can be "kk", "chechnya".}
-
-\item{file}{define database file argument to apply.
-Values can be "adm", "lab", "clinical_lab",}
-
-\item{dst_time}{absolute historical limit for including specimens}
-
-\item{dst_days}{additional criteria for including non-rif results}
+\item{lab}{data frame containing TB laboratory data cleaned and allocated object
+class by tbcleanr package}
 
 \item{baseline_days}{criteria for using pre-treatment samples}
 }

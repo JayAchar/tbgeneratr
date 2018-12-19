@@ -2,7 +2,7 @@ context("test-start_splittr")
 library(tbgeneratr)
 
 ## Koch 6
-start_splittr_kcoh6 <- system.file("testdata", "start_splittr_koch6.rds", 
+start_splittr_koch6 <- system.file("testdata", "start_splittr_koch6.rds", 
                                    package = "tbgeneratr") %>% 
   readRDS()
 
