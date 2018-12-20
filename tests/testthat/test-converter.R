@@ -1,25 +1,49 @@
 context("test-converter")
 library(tbgeneratr)
 
+## Epiinfo
 # load test data
-raw <- system.file("testdata", "culture_conv.rds", package="tbgeneratr") %>% 
-          readRDS() 
 
+epi_adm <- system.file("testdata", "converter_epi_adm.rds", package="tbgeneratr") %>% 
+  readRDS() 
+epi_lab <- system.file("testdata", "converter_epi_lab.rds", package="tbgeneratr") %>% 
+  readRDS() 
 
 # epiinfo - corect
-correct <- converter(raw, "culture", "epiinfo", "kk", "adm") 
+output <- converter(epi_adm, epi_lab, "culture")
 
-    test_that("culture conversion correct", {
-        expect_equal(ncol(correct), 2)
-        expect_equal(nrow(correct), length(unique(raw$id)))
-        expect_true(all(c("id", "cc_date") %in% names(correct)))
-        expect_match(class(correct$cc_date), "Date")
-        expect_equal(length(unique(correct$id)), nrow(correct))
-        expect_equal(length(unique(raw$id)), length(unique(correct$id)))
-        expect_equal(correct$cc_date[correct$id == "a"], as.Date("2017-02-15"))
-        expect_equal(correct$cc_date[correct$id == "b"], as.Date("2008-02-21"))
-        expect_true(is.na(correct$cc_date[correct$id == "c"]))
-        expect_equal(correct$cc_date[correct$id == "d"], as.Date("2008-03-01"))
-        expect_equal(correct$cc_date[correct$id == "e"], as.Date("2008-03-01"))
-    })
+test_that("EpiInfo culture correct", {
+  expect_equal(class(epi_adm), class(output))
+  expect_equal(ncol(epi_adm) + 1, ncol(output))
+  expect_true("cc_date" %in% names(output))
+  expect_true(lubridate::is.Date(output$cc_date))
+  expect_equal(length(unique(epi_adm$APID)), length(unique(output$APID)))
+  expect_true(all(output$cc_date > output$STARTTRE, na.rm = TRUE))
+  expect_true(all(output$cc_date < output$DATEN, na.rm = TRUE))
+  expect_equal(output$cc_date[output$APID == "XYZ1"], lubridate::ymd("2010/03/01"))
+  expect_equal(output$cc_date[output$APID == "XYZ2"], lubridate::ymd("2010/04/05"))
+  expect_equal(output$cc_date[output$APID == "XYZ3"], as.Date(NA))
+  })
 
+
+
+
+
+
+## Koch 6 with EpiInfo lab data
+# Load test data
+
+
+
+
+
+
+
+## Koch 6 with Koch 6 lab data
+# Load test data
+
+
+
+
+## Koch 6 with Grozny lab data
+# Load test data
