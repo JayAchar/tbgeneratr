@@ -1,10 +1,13 @@
 ---
-title: "Untitled"
 output: github_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
 ```
 # tbgeneratr
 [![Travis build status](https://travis-ci.org/JayAchar/tbgeneratr.svg?branch=master)](https://travis-ci.org/JayAchar/tbgeneratr)
@@ -16,13 +19,22 @@ Generate variables from cleaned MSF TB programme data
 
 ## Introduction
 
+The R package `tbgeneratr` was developed to be used in synergy with `tbcleanr` to simplify cleaning and processing for routinely collected TB programme data. `tbgeneratr` compliments `tbcleanr` output data frames by processing and generating more complex data points, such as individual patient culture conversion dates. Following development of `tbreportr`, a simplified workflow from raw data to automated reporting will be realised through `tbcleanr`, `tbgeneratr` and `tbreportr`. 
 
 ## Installation
 
 You can install the released version of tbcleanr from [Github](http://www.github.com/JayAchar) with:
 
 ``` r
-library(devtools)
-install_github("JayAchar/tbcleanr")
+require(devtools)
+install_github("JayAchar/tbgeneratr")
 library(tbcleanr)
 ```
+
+## Important functions
+
+Function               | Use it for
+--------------         | ------------------------------------------
+`adm_generator()`      | Calculate age and BMI variables, and split start treatment date to allow easier analysis
+`adm_lab_generator()`  | Calculate baseline smear and culture status, conversion dates, and baseline drug susceptbility results
+
