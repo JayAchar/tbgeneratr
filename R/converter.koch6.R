@@ -47,7 +47,6 @@ converter.koch6 <- function(adm, lab,
     return(adm)
   }
   
-  
   # quote generated id variable
   id_sym <- rlang::sym(id)
   
@@ -95,7 +94,7 @@ converter.koch6 <- function(adm, lab,
     group_by(!! id_sym) %>%
     mutate(seq = row_number())
   
-  
+
   # calculate days between consecutive negative results
   data <- data %>%
     arrange(!! id_sym, .data$samp_date) %>%
@@ -120,6 +119,7 @@ converter.koch6 <- function(adm, lab,
     data <- rename(data, cc_date = .data$samp_date)
   }
   
+
   # merge with admission data frame
   data <- left_join(adm, data, by = "registrationnb")
   

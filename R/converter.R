@@ -17,7 +17,7 @@ converter <- function(adm, lab,
   # check inputs
   assert_that(is.data.frame(adm))
   assert_that(is.data.frame(lab))
-  assert_that(any(c("epiinfo", "groz", "koch6") %in% class(lab)))
+  assert_that(any(c("epiinfo", "grozny", "koch6") %in% class(lab)))
   convert_type <- match.arg(convert_type)
   
   UseMethod("converter", adm)

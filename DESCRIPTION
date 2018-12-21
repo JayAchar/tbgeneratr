@@ -1,7 +1,7 @@
 Package: tbgeneratr
 Type: Package
 Title: tbgenratr: tools for generating new TB variables
-Version: 0.0.0.19
+Version: 0.0.0.20
 Date: 2018-12-21
 Authors@R: person("Jay", "Achar", 
     email = "jay.achar@doctors.org.uk", 
