@@ -8,6 +8,6 @@
 baseliner.default <- function(x) {
   
   message("No adm object class detected: baseliner() not applied.")
-  x  
+  x
   
 }

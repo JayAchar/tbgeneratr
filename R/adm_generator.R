@@ -8,6 +8,7 @@
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom assertthat assert_that
+#' @importFrom magrittr %>%
 #' @export
 
 adm_generator <- function(x, rm_orig = TRUE) {
@@ -18,11 +19,14 @@ adm_generator <- function(x, rm_orig = TRUE) {
 
 # =================================================================
 # generate age
-	x <- age_generator(x, rm_orig = rm_orig)
+	x <- age_generator(x, rm_orig = rm_orig) %>% 
 
 
 # generate bmi
-	x <- bmi_generator(x, rm_orig = rm_orig)	
+	bmi_generator(x, rm_orig = rm_orig)	%>% 
+	  
+	  # split starttre variable to allow easier stratification
+	  start_splittr(rm_orig = FALSE)
 
 x
 }
