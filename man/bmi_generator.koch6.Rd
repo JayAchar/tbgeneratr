@@ -4,7 +4,7 @@
 \alias{bmi_generator.koch6}
 \title{Calculate BMI from height and weight}
 \usage{
-\method{bmi_generator}{koch6}(x, rm_orig = TRUE)
+\method{bmi_generator}{koch6}(x, rm_orig = TRUE, ...)
 }
 \arguments{
 \item{x}{data frame containing height and weight variables}

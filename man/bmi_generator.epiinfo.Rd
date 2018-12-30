@@ -4,7 +4,7 @@
 \alias{bmi_generator.epiinfo}
 \title{Calculate BMI from height and weight}
 \usage{
-\method{bmi_generator}{epiinfo}(x, rm_orig = TRUE)
+\method{bmi_generator}{epiinfo}(x, rm_orig = TRUE, ...)
 }
 \arguments{
 \item{x}{data frame containing height and weight variables}

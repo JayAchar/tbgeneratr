@@ -20,6 +20,7 @@
 #' @importFrom magrittr %>%
 #' @importFrom assertthat assert_that
 #' @seealso \code{\link{tbgeneratr}}
+#' @export
 
 baseliner.epiinfo <- function(adm, lab,
                               baseline_test = c("culture", "smear"),

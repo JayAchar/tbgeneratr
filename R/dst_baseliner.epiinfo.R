@@ -41,16 +41,6 @@ dst_baseliner.epiinfo <- function(adm, lab,
     # remove specimens > time from starttre
     filter(.data$abs < dst_time)
 
-  
-
-  # # convert all DST results to numerical - 1 = sens, 2 = res
-  # hain <- str_which(names(x), pattern = "^hain_(rif|inh)$")
-  # x_rif <- str_which(names(x), pattern = "xpert_rif")
-  # dst_p <- str_which(names(x), pattern = "dst_p_")
-  # recode_dst <- c(hain, x_rif, dst_p)
-  # x <- map_at(.x = x, .at = recode_dst, .f = as.numeric)
-  # x <- as.data.frame(x, stringsAsFactors = FALSE)
-
   # aggregate rifampicin results
   data <- data %>%
     # take most resistant specimen - 1 = sensitive, 2 = resistant
@@ -59,9 +49,9 @@ dst_baseliner.epiinfo <- function(adm, lab,
                           as.numeric(.data$dst_p_rif), na.rm = TRUE),
            # convert output variable to factor
            rif_res = factor(.data$rif_res, levels = 1:2,
-                            labels = c("Sensitive", "Resistant"))) %>% 
+                            labels = c("Sensitive", "Resistant"))) 
     # remove original variables
-    select(-.data$xpert_rif, -.data$hain_rif, -.data$dst_p_rif)
+   # select(-.data$xpert_rif, -.data$hain_rif, -.data$dst_p_rif, -.data$xpert_res)
 
   # aggregate isoniazid results
   data <- data %>%
@@ -71,9 +61,9 @@ dst_baseliner.epiinfo <- function(adm, lab,
                           na.rm = TRUE),
            # convert output variable to factor
            inh_res = factor(.data$inh_res, levels = 1:2,
-                            labels = c("Sensitive", "Resistant"))) %>% 
+                            labels = c("Sensitive", "Resistant"))) 
     # remove original variables
-    select(- .data$dst_p_inh, - .data$hain_inh)
+    # select(- .data$dst_p_inh, - .data$hain_inh)
 
   # aggregate SLI & FQ results
     data <- data %>%
@@ -87,9 +77,9 @@ dst_baseliner.epiinfo <- function(adm, lab,
                                   as.numeric(.data$dst_p_mfx), 
                                   na.rm = T),
                              levels = 1:2,
-                             labels = c("Sensitive", "Resistant"))) %>% 
+                             labels = c("Sensitive", "Resistant"))) 
       # remove original variables
-      select(-.data$dst_p_cm, -.data$dst_p_km, -.data$dst_p_ofx, -.data$dst_p_mfx)
+    #  select(-.data$dst_p_cm, -.data$dst_p_km, -.data$dst_p_ofx, -.data$dst_p_mfx)
                             
     
   # } else if (project == "chechnya") {
@@ -100,39 +90,40 @@ dst_baseliner.epiinfo <- function(adm, lab,
 
 
   # ===================================================
-  # Johanna's method
-  # take the closest specimen to treatment start
-  # if rif resistant find pre-tx 2nd line DST within 30 days
+  # Research definition
+  ## aims to limit bias associated with number of pre-treatment DSTs performed
+  ## take the closest specimen to treatment start
+  ## if rif resistant find pre-tx 2nd line DST within 30 days
 
-  # # find rif result closest to treatment start
-  # baseline_spec <- x %>%	
-  #   # remove un-used variables	
-  #   select(.data$id, .data$labno, .data$starttre, .data$samp_date,
-  #          .data$abs, .data$rif_res) %>%
-  #   
-  #   # remove identical results from the same day
-  #   distinct(.data$id, .data$abs, .data$rif_res, .keep_all = T) %>%
-  #   
-  #   # take more resistant specimen when discordant results on same day
-  #   group_by(.data$id, .data$abs) %>%
-  #   top_n(1, .data$rif_res) %>%
-  #   ungroup() %>%
-  #   
-  #   # group data and find closest to treatment start
-  #   group_by(.data$id) %>%
-  #   top_n(1, desc(.data$abs)) %>%
-  #   ungroup() %>%
-  #   
-  #   # select key variables
-  #   rename(baseline_date = .data$samp_date,
-  #          baseline_no = .data$labno,
-  #          base_rif = .data$rif_res) %>%
-  #   select(.data$id, .data$baseline_no, .data$baseline_date, .data$base_rif)
-  # 
+  # find rif result closest to treatment start
+  baseline_spec <- data %>%
+
+    # remove identical results from the same day
+    distinct(.data$APID, .data$abs, .data$rif_res, .keep_all = T) %>% 
+
+    # take more resistant specimen when discordant results on same day
+    group_by(.data$APID, .data$abs) %>%
+    top_n(1, .data$rif_res) %>%
+    ungroup() %>%
+
+    # group data and find closest to treatment start
+    group_by(.data$APID) %>%
+    top_n(1, desc(.data$abs)) %>%
+    ungroup() %>%
+
+    # select key variables
+    rename(baseline_date = .data$samp_date,
+           baseline_no = .data$MICRLABN,
+           base_rif = .data$rif_res) %>%
+    select(.data$APID, .data$baseline_no, .data$baseline_date, .data$base_rif)
+    
+    # check that each ID/APID has a single baseline specimen
+    assert_that(nrow(baseline_spec) == length(unique(baseline_spec$APID)))
+
   # # ===================================================
-  # # merge baseline_spec with original data
-  # merged <- left_join(x, baseline_spec, by = "id")
-  # 
+  # merge baseline_spec with original data
+  merged <- left_join(data, baseline_spec, by = "APID")
+
   # # generate drug specific baseline DSTs
   # #	dst_drugs <- str_which(names(merged), pattern = "dst_p_")
   # #	drg_var <- quos(names(merged)[dst_drugs])
@@ -206,7 +197,7 @@ dst_baseliner.epiinfo <- function(adm, lab,
   # final_dst
   
   class(data) <- start_class
-  data
+merged
   
   }
 
