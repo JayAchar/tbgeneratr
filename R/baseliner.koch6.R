@@ -19,6 +19,7 @@
 #' @importFrom dplyr filter distinct mutate group_by top_n ungroup select left_join right_join rename
 #' @importFrom magrittr %>%
 #' @importFrom assertthat assert_that
+#' @export
 
 
 baseliner.koch6 <- function(adm, lab,

@@ -9,6 +9,7 @@
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom lubridate years interval
 #' @importFrom assertthat assert_that
+#' @export
 
 age_generator.epiinfo <- function(x, rm_orig = TRUE) {
   

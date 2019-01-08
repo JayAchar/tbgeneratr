@@ -13,6 +13,7 @@
 #' top_n ungroup row_number desc lag
 #' @importFrom magrittr %>%
 #' @seealso \code{\link{tbgeneratr}}
+#' @export
 
 converter.epiinfo <- function(adm, lab,
                       convert_type = c("culture", "smear")) {

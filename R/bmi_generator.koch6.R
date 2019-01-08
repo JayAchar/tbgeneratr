@@ -8,8 +8,9 @@
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom assertthat assert_that
 #' @importFrom naniar replace_with_na
+#' @export
 
-bmi_generator.koch6 <- function(x, rm_orig = TRUE) {
+bmi_generator.koch6 <- function(x, rm_orig = TRUE, ...) {
   
   # define vars
   vars <- c("weight", "height")
