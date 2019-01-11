@@ -2,25 +2,22 @@ JA.funs::setwd_test()
 list.files()
 
 # test data - Koch 6 - start_splittr()
-start_splittr_koch6 <- readr::read_tsv("20170630 Nukus SCR admission_dataV5.txt" ) %>% 
-  tbcleanr::adm_data_cleanr() %>% 
-  dplyr::select(registrationnb, Starttre, dateend) %>% 
-  dplyr::mutate(registrationnb = paste0("XYZ", 1:nrow(.))) %>% 
-  slice(1:10)
+start_splittr_koch6 <- structure(list(registrationnb = c("XYZ1", "XYZ2", "XYZ3", "XYZ4", "XYZ5", "XYZ6", "XYZ7", "XYZ8", "XYZ9", "XYZ10"), 
+                                      Starttre = structure(c(17137,17289, 16998, 17208, 17281, 17191, 16230, 17036, 17108, NA), 
+                                                           class = "Date"), 
+                                      dateend = structure(c(NA, NA, 17270, 17256, NA, NA, 16322, NA, NA, NA), class = "Date")),
+                                row.names = c(NA, -10L), 
+                                class = c("tbl_df", "tbl", "data.frame", "koch6"))
 
-JA.funs::set.wd("packages/tbgeneratr")
-usethis::use_data(start_splittr_koch6)
+saveRDS(start_splittr_koch6, "inst/testdata/start_splittr_koch6.rds")
 
 # test data - EpiInfo - start_splittr()
-JA.funs::setwd_test()
-list.files()
+start_splittr_epi <- start_splittr_koch6 %>% 
+  rename(APID = "registrationnb",
+         STARTTRE = "Starttre",
+         DATEN = "dateend")
+class(start_splittr_epi)[4] <- "epiinfo"
 
-start_splittr_epi <- readr::read_csv("2018_07_18 KK admission.csv") %>% 
-  tbcleanr::adm_data_cleanr() %>% 
-  dplyr::select(APID, STARTTRE, DATEN) %>% 
-  dplyr::mutate(APID = paste0("XYZ", 1:nrow(.))) %>% 
-  slice(1:10)
+saveRDS(start_splittr_epi, "inst/testdata/start_splittr_epiinfo.rds")
 
-JA.funs::set.wd("packages/tbgeneratr")
-usethis::use_data(start_splittr_epi)
 
