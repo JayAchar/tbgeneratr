@@ -12,14 +12,13 @@
 #' @importFrom dplyr group_by select mutate arrange filter slice rename
 #' @importFrom rlang enquo quo_name quo
 #' @importFrom assertthat assert_that
-#' @examples
-#' \dontrun{
-#' drug_baseliner(p, dst_p_pza)
-#' }
 
 
 drug_baseliner <- function(x, drug, days = 30) {
-
+  APID <- NULL
+  MICRLABN <- NULL
+  `:=` <- NULL
+  
 # checks
   assert_that(is.data.frame(x))
   assert_that(is.numeric(days))
@@ -43,32 +42,36 @@ if ("epiinfo" %in% class(x)) {
  	x <- x %>%
  			group_by(!! id) %>%
   	# select relevent variables
-  		select(!! id, samp_date, baseline_date, baseline_no, !! labno, base_rif, rif_res, !! drug) %>%
+  		select(!! id, .data$samp_date, .data$baseline_date, .data$baseline_no, 
+  		       !! labno, .data$base_rif, .data$rif_res, !! drug) %>%
   	# generate absolute days from baseline specimen collection
-  		mutate(base_abs = as.numeric(abs(baseline_date - samp_date))) %>%
+  		mutate(base_abs = as.numeric(abs(.data$baseline_date - .data$samp_date))) %>%
     # keep specimens within 'days' arg of baseline specimen
-      filter(base_abs <= days) %>%
+      filter(.data$base_abs <= days) %>%
   	# sort by absolute days from sample to treatment start
-  		arrange(!! id, base_abs) %>%
+  		arrange(!! id, .data$base_abs) %>%
   	# keep specimens with same rifampicin result as baseline
-  		filter(base_rif == rif_res) %>%
+  		filter(.data$base_rif == .data$rif_res) %>%
   	# remove all drug results == NA
-  		filter(! is.na(!! drug)) %>%
+  		filter(! is.na(!! drug)) %>% 
   	# remove duplicates by id, date and result
-  		group_by(!! id, base_abs, !! drug) %>%
-  		slice(1) %>%
-  	# keep more resistant if same base_abs
- 		group_by(!! id, base_abs) %>%
- 		arrange(!! id, base_abs, desc(!! drug)) %>%
- 		slice(1) %>%
- 	# keep closest to baseline specimen with same rif result
- 		# prioritise duplicated if discordant
- 		group_by(!! id) %>%
- 		arrange(!! id, base_abs) %>%
- 		slice(1) %>%
- 	# keep variables
- 		select(!! id, !! drug) %>%
- 		rename(!! drug_var := !! drug)
+  		group_by(!! id, .data$base_abs, !! drug) %>%
+  		slice(1) %>% 
+ 	    ungroup() %>% 
+    # keep more resistant if same base_abs
+   		group_by(!! id, .data$base_abs) %>%
+   		arrange(!! id, .data$base_abs, desc(!! drug)) %>%
+   		slice(1) %>%
+   	# keep closest to baseline specimen with same rif result
+   		# prioritise duplicated if discordant
+   		group_by(!! id) %>%
+   		arrange(!! id, .data$base_abs) %>%
+   		slice(1) %>% 
+   	# keep variables
+   		select(!! id, !! drug) %>%
+   		rename(!! drug_var := !! drug) %>%
+   	# ungroup
+   	  ungroup()
 
 x
 }

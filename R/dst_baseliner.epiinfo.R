@@ -47,7 +47,7 @@ dst_baseliner.epiinfo <- function(adm, lab,
                   .f = ~aggregate_dst(x = data, drug_class = .x)) %>% 
     bind_cols(data, .)
 
-return(dst_data)
+
   # ===================================================
   # Research definition
   ## aims to limit bias associated with number of pre-treatment DSTs performed
@@ -55,7 +55,7 @@ return(dst_data)
   ## if rif resistant find pre-tx 2nd line DST within 30 days
 
   # find rif result closest to treatment start
-  baseline_spec <- data %>%
+  baseline_spec <- dst_data %>%
 
     # remove identical results from the same day
     distinct(.data$APID, .data$abs, .data$rif_res, .keep_all = T) %>% 
@@ -81,13 +81,15 @@ return(dst_data)
 
   # # ===================================================
   # merge baseline_spec with original data
-  merged <- left_join(data, baseline_spec, by = "APID")
-
-  # # generate drug specific baseline DSTs
+  merged <- left_join(dst_data, baseline_spec, by = "APID")
+return(merged)
+    
+    
+  # generate drug specific baseline DSTs
   # #	dst_drugs <- str_which(names(merged), pattern = "dst_p_")
   # #	drg_var <- quos(names(merged)[dst_drugs])
   # #	drugs <- map_dfc(.f = drug_baseliner)
-  # h_dst <- drug_baseliner(merged, dst_p_inh, days = dst_days)
+  h_dst <- drug_baseliner(merged, dst_p_inh, days = dst_days)
   # z_dst <- drug_baseliner(merged, dst_p_pza, days = dst_days)
   # e_dst <- drug_baseliner(merged, dst_p_eth, days = dst_days)
   # cm_dst <- drug_baseliner(merged, dst_p_cm, days = dst_days)
