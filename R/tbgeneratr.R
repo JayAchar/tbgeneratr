@@ -7,6 +7,7 @@
 #' @seealso \code{\link{adm_generator}} 
 #' @seealso \code{\link{adm_lab_generator}} 
 #' @seealso \code{\link{age_generator}} 
+#' @seealso \code{\link{aggregate_dst}} 
 #' @seealso \code{\link{baseliner}} 
 #' @seealso \code{\link{bmi_generator}}
 #' @seealso \code{\link{converter}}

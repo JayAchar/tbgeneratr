@@ -12,9 +12,9 @@
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom dplyr filter mutate select rename group_by slice
-#' ungroup arrange left_join distinct
+#' ungroup arrange left_join distinct bind_cols
 #' @importFrom stringr str_which
-#' @importFrom purrr map_at
+#' @importFrom purrr map_at map_dfc
 #' @importFrom tidyr gather
 #' @importFrom rlang .data
 #' @importFrom assertthat assert_that
@@ -23,7 +23,7 @@
 dst_baseliner.epiinfo <- function(adm, lab, 
                                   dst_time = 90,
                                   dst_days = 30) {
-
+  . <- NULL
   
   # save adm class
   start_class <- class(adm)
@@ -41,54 +41,13 @@ dst_baseliner.epiinfo <- function(adm, lab,
     # remove specimens > time from starttre
     filter(.data$abs < dst_time)
 
-  # aggregate rifampicin results
-  data <- data %>%
-    # take most resistant specimen - 1 = sensitive, 2 = resistant
-    mutate(rif_res = pmax(as.numeric(.data$xpert_rif), 
-                          as.numeric(.data$hain_rif), 
-                          as.numeric(.data$dst_p_rif), na.rm = TRUE),
-           # convert output variable to factor
-           rif_res = factor(.data$rif_res, levels = 1:2,
-                            labels = c("Sensitive", "Resistant"))) 
-    # remove original variables
-   # select(-.data$xpert_rif, -.data$hain_rif, -.data$dst_p_rif, -.data$xpert_res)
+  # aggregate drug dst results by specimen  
+  drug_strings <- c("rif", "inh", "cm$|km$", "ofx$|lfx$|mfx")
+  dst_data <- map_dfc(drug_strings, 
+                  .f = ~aggregate_dst(x = data, drug_class = .x)) %>% 
+    bind_cols(data, .)
 
-  # aggregate isoniazid results
-  data <- data %>%
-    # take most resistant specimen - 1 = sensitive, 2 = resistant
-    mutate(inh_res = pmax(as.numeric(.data$hain_inh), 
-                          as.numeric(.data$dst_p_inh), 
-                          na.rm = TRUE),
-           # convert output variable to factor
-           inh_res = factor(.data$inh_res, levels = 1:2,
-                            labels = c("Sensitive", "Resistant"))) 
-    # remove original variables
-    # select(- .data$dst_p_inh, - .data$hain_inh)
-
-  # aggregate SLI & FQ results
-    data <- data %>%
-      # take most resistant specimen - 1 = sensitive, 2 = resistant
-      mutate(sli_res = factor(pmax(as.numeric(.data$dst_p_cm), 
-                                  as.numeric(.data$dst_p_km), 
-                                  na.rm = T),
-                            levels = 1:2,
-                            labels = c("Sensitive", "Resistant")),
-             fq_res = factor(pmax(as.numeric(.data$dst_p_ofx), 
-                                  as.numeric(.data$dst_p_mfx), 
-                                  na.rm = T),
-                             levels = 1:2,
-                             labels = c("Sensitive", "Resistant"))) 
-      # remove original variables
-    #  select(-.data$dst_p_cm, -.data$dst_p_km, -.data$dst_p_ofx, -.data$dst_p_mfx)
-                            
-    
-  # } else if (project == "chechnya") {
-  #   x <- x %>%
-  #     mutate(dst_p_sli = pmax(.data$dst_p_cm, .data$dst_p_am, na.rm = T)) %>%
-  #     mutate(dst_p_fq = pmax(.data$dst_p_lfx, .data$dst_p_mfx, na.rm = T))
-  # }
-
-
+return(dst_data)
   # ===================================================
   # Research definition
   ## aims to limit bias associated with number of pre-treatment DSTs performed
