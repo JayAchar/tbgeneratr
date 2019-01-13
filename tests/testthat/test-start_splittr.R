@@ -20,7 +20,7 @@ test_that("Koch 6 works", {
 
 
 ## EpiInfo
-start_splittr_epi <- system.file("testdata", "start_splittr_epi.rds", 
+start_splittr_epi <- system.file("testdata", "start_splittr_epiinfo.rds", 
                                  package = "tbgeneratr") %>% 
   readRDS()
 
