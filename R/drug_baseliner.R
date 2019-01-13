@@ -10,7 +10,7 @@
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom stringr str_remove
 #' @importFrom dplyr group_by select mutate arrange filter slice rename
-#' @importFrom rlang enquo quo_name quo
+#' @importFrom rlang sym quo_name quo
 #' @importFrom assertthat assert_that
 
 
@@ -26,7 +26,7 @@ drug_baseliner <- function(x, drug, days = 30) {
   assert_that(any(c("epiinfo", "koch6") %in% class(x)))
 
 # define variable names
- 	drug <- enquo(drug)
+ 	drug <- sym(drug)
 
 ## define based on object class
 if ("epiinfo" %in% class(x)) {

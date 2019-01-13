@@ -12,9 +12,9 @@
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom dplyr filter mutate select rename group_by slice
-#' ungroup arrange left_join distinct bind_cols
+#' ungroup arrange left_join distinct bind_cols right_join
 #' @importFrom stringr str_which
-#' @importFrom purrr map_at map_dfc
+#' @importFrom purrr map_at map_dfc map as_mapper
 #' @importFrom tidyr gather
 #' @importFrom rlang .data
 #' @importFrom assertthat assert_that
@@ -82,14 +82,32 @@ dst_baseliner.epiinfo <- function(adm, lab,
   # # ===================================================
   # merge baseline_spec with original data
   merged <- left_join(dst_data, baseline_spec, by = "APID")
-return(merged)
     
+  
+  # data frame of baseline dst results
+    base_dst <- data.frame(APID = adm$APID)
     
-  # generate drug specific baseline DSTs
+  # generate aggregate drug specific baseline DSTs
+  aggregate_drugs <- c("inh_res", "sli_res", "fq_res")
+  
+  # reapply object class
+  class(merged) <- start_class
+  
+    ## define mapper for drug_baseliner and merge back to data
+  drug_base_mapper <- purrr::as_mapper(.f = ~drug_baseliner(x = merged, drug = .x) %>% 
+                                         dplyr::right_join(base_dst, by = "APID"))
+  
+  base_dst <- purrr::map(aggregate_drugs, .f = drug_base_mapper) %>% 
+    data.frame(stringsAsFactors = FALSE) %>% 
+    dplyr::select(- dplyr::matches("^APID."))
+  
+  return(base_dst)
+  
+  
   # #	dst_drugs <- str_which(names(merged), pattern = "dst_p_")
   # #	drg_var <- quos(names(merged)[dst_drugs])
   # #	drugs <- map_dfc(.f = drug_baseliner)
-  h_dst <- drug_baseliner(merged, dst_p_inh, days = dst_days)
+  # h_dst <- drug_baseliner(merged, dst_p_inh, days = dst_days)
   # z_dst <- drug_baseliner(merged, dst_p_pza, days = dst_days)
   # e_dst <- drug_baseliner(merged, dst_p_eth, days = dst_days)
   # cm_dst <- drug_baseliner(merged, dst_p_cm, days = dst_days)

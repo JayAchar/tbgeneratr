@@ -10,7 +10,7 @@ correct <- system.file("testdata", "drug_baseliner_epi_correct.rds",
                        package = "tbgeneratr") %>% 
   readRDS()
 
-result <- drug_baseliner(x = epi, drug = inh_res)
+result <- drug_baseliner(x = epi, drug = "inh_res")
 
 test_that("EpiInfo works", {
   expect_equal(ncol(result), 2)
@@ -22,7 +22,7 @@ test_that("EpiInfo works", {
 })
 
   ## adjust days args
-result <- drug_baseliner(x = epi, drug = inh_res, days = 60)
+result <- drug_baseliner(x = epi, drug = "inh_res", days = 60)
 
 test_that("Days arg works", {
   expect_true(all(c("APID", "base_inh_res") %in% names(result)))
