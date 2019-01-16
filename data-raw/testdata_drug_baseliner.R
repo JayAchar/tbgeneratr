@@ -67,7 +67,7 @@ saveRDS(epi, "inst/testdata/drug_baseliner_epi.rds")
 # correct results  
 ## "XYZ6" is not included since it has one inh_res result which is NA
 correct <- data.frame(APID = c("XYZ1", "XYZ2", "XYZ3", "XYZ4", "XYZ5"),
-                      base_inh_res = structure(
+                      base_inh = structure(
                         c(1L, 2L, 1L, 2L, 2L),
                         .Label = c("Sensitive", "Resistant"),
                         class = "factor"),

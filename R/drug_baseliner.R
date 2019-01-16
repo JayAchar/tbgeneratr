@@ -8,7 +8,7 @@
 #' and baseline specimen
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
-#' @importFrom stringr str_remove
+#' @importFrom stringr str_remove str_detect
 #' @importFrom dplyr group_by select mutate arrange filter slice rename
 #' @importFrom rlang sym quo_name quo
 #' @importFrom assertthat assert_that
@@ -35,7 +35,15 @@ if ("epiinfo" %in% class(x)) {
 }	
  	
 # build final drug dst variable name
- 	drug_name <- str_remove(quo_name(drug), pattern = "dst_p_")
+ 	if (str_detect(drug, pattern = "^dst_p_")) {
+ 	  
+ 	    drug_name <- str_remove(quo_name(drug), pattern = "dst_p_")
+ 	
+ 	  } else if (str_detect(drug, pattern = "res$")) {
+ 	  
+ 	    drug_name <- str_remove(quo_name(drug), pattern = "_res$")
+ 	  }
+ 	
  	drug_var <- paste0("base_", drug_name)
 
 # generate baseline dst for specific drug

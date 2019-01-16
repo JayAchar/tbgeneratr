@@ -1,10 +1,11 @@
 # tbgeneratr 0.0.0.21.9003
-#### 13 Jan 2019
+#### 16 Jan 2019
 ## Major changes
 * `aggregate_dst()` added to simplify `dst_baseliner()`.
 
 ## Minor changes
 * `drug_baseliner()` args changed.
+* `drug_baseliner()` naming output bug fixed. 
 
 ---
 

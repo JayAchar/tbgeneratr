@@ -2,7 +2,7 @@ Package: tbgeneratr
 Type: Package
 Title: tbgenratr: tools for generating new TB variables
 Version: 0.0.0.21.9003
-Date: 2019-01-13
+Date: 2019-01-16
 Authors@R: person("Jay", "Achar", 
     email = "jay.achar@doctors.org.uk", 
     role = c("aut", "cre"),
