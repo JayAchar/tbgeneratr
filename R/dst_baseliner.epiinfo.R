@@ -12,10 +12,9 @@
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom dplyr filter mutate select rename group_by slice
-#' ungroup arrange left_join distinct bind_cols right_join
+#' ungroup arrange left_join distinct bind_cols right_join case_when top_n
 #' @importFrom stringr str_which
-#' @importFrom purrr map_at map_dfc map as_mapper
-#' @importFrom tidyr gather
+#' @importFrom purrr map_at map_dfc map 
 #' @importFrom rlang .data
 #' @importFrom assertthat assert_that
 #' @export
@@ -127,7 +126,7 @@ dst_baseliner.epiinfo <- function(adm, lab,
         (base_fq  == "Sensitive" | is.na(base_fq)) ~ "RRTB",
       base_rif    == "Resistant" &
         base_inh  == "Resistant" ~ "MDRTB",
-      base_rif    == "Sensitive" &
+      (base_rif   == "Sensitive" | is.na(base_rif)) &
         base_inh  == "Resistant" ~ "Inh-mono",
       base_rif    == "Sensitive" &
         base_inh  == "Resistant" &
