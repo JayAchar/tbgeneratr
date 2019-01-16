@@ -83,101 +83,62 @@ dst_baseliner.epiinfo <- function(adm, lab,
   # merge baseline_spec with original data
   merged <- left_join(dst_data, baseline_spec, by = "APID")
     
-  
   # data frame of baseline dst results
-    base_dst <- data.frame(APID = adm$APID)
+    base_dst <- data.frame(APID = adm$APID,
+                           stringsAsFactors = FALSE)
     
   # generate aggregate drug specific baseline DSTs
-  aggregate_drugs <- c("inh_res", "sli_res", "fq_res")
+  aggregate_drugs <- c("rif_res",
+                       "inh_res", 
+                       "dst_p_pza",
+                       "dst_p_eth",
+                       "dst_p_km",
+                       "dst_p_cm",
+                       "dst_p_ofx",
+                       "dst_p_mfx",
+                       "sli_res",
+                       "fq_res")
   
   # reapply object class
   class(merged) <- start_class
+
+  base_dst <- purrr::map(aggregate_drugs, .f = ~drug_baseliner(x = merged, drug = .x)) %>% 
+    # reduce from list to data frame
+    purrr::reduce(left_join, by = "APID") %>% 
+    # merge with all APID numbers to generate NAs
+    left_join(base_dst, ., by = "APID")
+
   
-    ## define mapper for drug_baseliner and merge back to data
-  drug_base_mapper <- purrr::as_mapper(.f = ~drug_baseliner(x = merged, drug = .x) %>% 
-                                         dplyr::right_join(base_dst, by = "APID"))
-  
-  base_dst <- purrr::map(aggregate_drugs, .f = drug_base_mapper) %>% 
-    data.frame(stringsAsFactors = FALSE) %>% 
-    dplyr::select(- dplyr::matches("^APID."))
-  
-  return(base_dst)
-  
-  
-  # #	dst_drugs <- str_which(names(merged), pattern = "dst_p_")
-  # #	drg_var <- quos(names(merged)[dst_drugs])
-  # #	drugs <- map_dfc(.f = drug_baseliner)
-  # h_dst <- drug_baseliner(merged, dst_p_inh, days = dst_days)
-  # z_dst <- drug_baseliner(merged, dst_p_pza, days = dst_days)
-  # e_dst <- drug_baseliner(merged, dst_p_eth, days = dst_days)
-  # cm_dst <- drug_baseliner(merged, dst_p_cm, days = dst_days)
-  # mfx_dst <- drug_baseliner(merged, dst_p_mfx, days = dst_days)
-  # sli_dst <- drug_baseliner(merged, dst_p_sli, days = dst_days)
-  # fq_dst <- drug_baseliner(merged, dst_p_fq, days = dst_days)
-  # 
-  # if (project == "kk") {
-  #   km_dst <- drug_baseliner(merged, dst_p_km, days = dst_days)
-  #   ofx_dst <- drug_baseliner(merged, dst_p_ofx, days = dst_days)
-  # } else if (project == "chechnya") {
-  #   am_dst <- drug_baseliner(merged, dst_p_am, days = dst_days)
-  #   lfx_dst <- drug_baseliner(merged, dst_p_lfx, days = dst_days)
-  # }
-  # 
-  # 
-  # all_dst <- baseline_spec %>%
-  #   left_join(h_dst, by = "id") %>%
-  #   left_join(z_dst, by = "id") %>%
-  #   left_join(e_dst, by = "id") %>%
-  #   left_join(cm_dst, by = "id") %>%
-  #   
-  #   
-  #   left_join(mfx_dst, by = "id") %>%
-  #   left_join(sli_dst, by = "id") %>%
-  #   left_join(fq_dst, by = "id")
-  # 
-  # if (project == "kk") {
-  #   all_dst <- all_dst %>%
-  #     left_join(km_dst, by = "id") %>%
-  #     left_join(ofx_dst, by = "id")
-  # } else if (project == "chechnya") {
-  #   all_dst <- all_dst %>%
-  #     left_join(am_dst, by = "id") %>%
-  #     left_join(lfx_dst, by = "id")
-  # }
-  # 
-  # 
-  # dst_cat_all <- all_dst %>%
-  #   mutate(ds = as.numeric(.data$base_rif == 1 & (.data$base_inh == 1 | is.na(.data$base_inh))),
-  #          mono_inh = as.numeric(.data$base_rif == 1 & .data$base_inh == 2), 
-  #          rres = as.numeric(.data$base_rif == 2 & (.data$base_inh == 1 | is.na(.data$base_inh))),
-  #          mdr = as.numeric(.data$base_rif == 2 & .data$base_inh == 2),
-  #          pre_fq = as.numeric((.data$mdr == 1 | .data$rres == 1) & .data$base_fq == 2 & 
-  #                                (.data$base_sli == 1 | is.na(.data$base_sli))),
-  #          pre_sli = as.numeric((.data$mdr == 1 | .data$rres == 1) & .data$base_sli == 2 & 
-  #                                 (.data$base_fq == 1 | is.na(.data$base_fq))),
-  #          xdr = as.numeric((.data$mdr == 1 | .data$rres == 1) & 
-  #                             .data$base_fq == 2 & .data$base_sli == 2),
-  #          mdr = as.numeric(.data$base_rif == 2 & .data$base_inh == 2 &
-  #                             .data$pre_fq != 1 & .data$pre_sli != 1 & .data$xdr != 1),
-  #          rres = as.numeric(.data$base_rif == 2 & (.data$base_inh == 1 | is.na(.data$base_inh)) &
-  #                              .data$pre_fq != 1 & .data$pre_sli != 1 & .data$xdr != 1))
-  # 
-  # 
-  # dst_gather <- dst_cat_all %>%
-  #   select(.data$id, .data$ds, .data$mono_inh, .data$rres, 
-  #          .data$mdr, .data$pre_fq, .data$pre_sli, .data$xdr) %>%
-  #   gather(dst_base, count, -.data$id) %>%
-  #   filter(.data$count >= 1) %>%
-  #   select(.data$id, .data$dst_base) 
-  # 
-  # final_dst <- left_join(dst_cat_all, dst_gather, by = "id")
-  # 
-  # 
-  # final_dst
-  
+  # generate baseline DST variable 
+  data <- base_dst %>% 
+    mutate(base_dst = dplyr::case_when(
+      base_rif    == "Resistant" &
+        base_sli  == "Resistant" &
+        base_fq  == "Resistant" ~ "XDRTB",
+      base_rif    == "Resistant" &
+        base_sli  == "Resistant" &
+        (base_fq  == "Sensitive" | is.na(base_fq)) ~ "pre-XDRTB (SLI)",
+      base_rif    == "Resistant" &
+        (base_sli == "Sensitive" | is.na(base_sli)) &
+        base_fq   == "Resistant" ~ "pre-XDRTB (FQ)",
+      base_rif    == "Resistant" &
+        (base_inh == "Sensitive" | is.na(base_inh)) &
+        (base_sli == "Sensitive" | is.na(base_sli)) &
+        (base_fq  == "Sensitive" | is.na(base_fq)) ~ "RRTB",
+      base_rif    == "Resistant" &
+        base_inh  == "Resistant" ~ "MDRTB",
+      base_rif    == "Sensitive" &
+        base_inh  == "Resistant" ~ "Inh-mono",
+      base_rif    == "Sensitive" &
+        base_inh  == "Resistant" &
+        (base_pza == "Resistant" | base_eth == "Resistant") ~ "PDRTB",
+      base_rif    == "Sensitive" ~ "DSTB",
+      TRUE ~ NA_character_))
+
+  # reapply object class
   class(data) <- start_class
-merged
-  
+
+  data
   }
 
 

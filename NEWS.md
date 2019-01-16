@@ -2,6 +2,7 @@
 #### 16 Jan 2019
 ## Major changes
 * `aggregate_dst()` added to simplify `dst_baseliner()`.
+* `dst_baseliner.epiinfo()` added to package.
 
 ## Minor changes
 * `drug_baseliner()` args changed.
