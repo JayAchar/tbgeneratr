@@ -9,4 +9,3 @@ inst/doc
 *.csv
 *.rda
 # Travis CI
-docs/*
