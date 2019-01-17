@@ -1,7 +1,7 @@
 template:
   params:
     bootswatch: cosmo
-    ganalytics: UA-128985004-1
+    ganalytics: UA-128985004-4
 
 reference:
   - title: Package information
