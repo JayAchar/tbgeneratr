@@ -1,3 +1,10 @@
+# tbgeneratr 0.1.0.0
+#### 17 Jan 2019
+## Major changes
+* release 0.1.0,0 which has functionality for Koch6 and EpiInfo but not Koch6 laboratory data
+
+---
+
 # tbgeneratr 0.0.0.21.9003
 #### 17 Jan 2019
 ## Major changes

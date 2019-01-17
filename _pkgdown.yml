@@ -20,6 +20,7 @@ reference:
       - start_splittr
   - title: Admission and Laboratory data functions
     desc: Functions requiring both admission and laboratory data sets
+    contents:
       - baseliner
       - converter
       - drug_baseliner
@@ -30,7 +31,7 @@ navbar:
   type: default
   left:
     - text: Functions
-      href: references/index.html
+      href: reference/index.html
     - text: Articles
       menu:
       - text: Getting Started
