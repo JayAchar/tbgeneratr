@@ -127,3 +127,30 @@ epi_lab <-
 class(epi_lab) <- c(class(epi_lab), "epiinfo")
 saveRDS(epi_lab, "inst/testdata/dst_baseliner_epi_lab.rds")
 
+
+# ================================================
+# Koch 6 with Grozny lab
+### Admission data
+k6_groz_adm <- epi_adm %>% 
+  rename(registrationnb = APID,
+         Starttre = STARTTRE) %>% 
+  mutate(dstnumber = as.character(1:length(unique(.$registrationnb)))) %>% 
+  select(registrationnb, dstnumber, everything())
+
+
+class(k6_groz_adm) <- c(class(k6_groz_adm), "koch6")
+saveRDS(k6_groz_adm, "inst/testdata/dst_baseliner_k6_groz_adm.rds")
+
+
+### Laboratory data
+k6_groz_lab <- epi_lab %>% 
+  rename(registrationnb = APID,
+         dst_p_am = dst_p_km,
+         dst_p_lfx = dst_p_ofx) %>% 
+  mutate(dst_p_mfxhigh = dst_p_mfx) %>% 
+  left_join(k6_groz_adm, by = "registrationnb") %>% 
+  select(-registrationnb, -MICRLABN, -Starttre) %>% 
+  select(dstnumber, everything())
+
+class(k6_groz_lab) <- c(class(k6_groz_lab), "grozny")
+saveRDS(k6_groz_lab, "inst/testdata/dst_baseliner_k6_groz_lab.rds")

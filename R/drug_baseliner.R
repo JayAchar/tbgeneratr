@@ -18,6 +18,7 @@ drug_baseliner <- function(x, drug, days = 30) {
   APID <- NULL
   MICRLABN <- NULL
   `:=` <- NULL
+  registrationnb <- NULL
   
 # checks
   assert_that(is.data.frame(x))
@@ -31,8 +32,9 @@ drug_baseliner <- function(x, drug, days = 30) {
 ## define based on object class
 if ("epiinfo" %in% class(x)) {
   id <- quo(APID)
-  labno <- quo(MICRLABN)
-}	
+}	else if ("koch6" %in% class(x)) {
+  id <- quo(registrationnb)
+}
  	
 # build final drug dst variable name
  	if (str_detect(drug, pattern = "^dst_p_")) {
@@ -50,8 +52,8 @@ if ("epiinfo" %in% class(x)) {
  	x <- x %>%
  			group_by(!! id) %>%
   	# select relevent variables
-  		select(!! id, .data$samp_date, .data$baseline_date, .data$baseline_no, 
-  		       !! labno, .data$base_rif, .data$rif_res, !! drug) %>%
+  		select(!! id, .data$samp_date, .data$baseline_date,
+  		      .data$base_rif, .data$rif_res, !! drug) %>%
   	# generate absolute days from baseline specimen collection
   		mutate(base_abs = as.numeric(abs(.data$baseline_date - .data$samp_date))) %>%
     # keep specimens within 'days' arg of baseline specimen

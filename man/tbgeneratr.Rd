@@ -24,6 +24,8 @@ from clean data sets.
 
 \code{\link{converter}}
 
+\code{\link{dst_baseliner}}
+
 \code{\link{start_splittr}}
 }
 \author{
