@@ -3,7 +3,7 @@
 ## Major changes
 * `aggregate_dst()` added to simplify `dst_baseliner()`.
 * `dst_baseliner.epiinfo()` added to package.
-* `dst_baseliner.koch6()` added to package - option for Gr lab data only.
+* `dst_baseliner.koch6()` added to package - option for Gr and EpiInfo lab data.
 
 ## Minor changes
 * `drug_baseliner()` args changed.

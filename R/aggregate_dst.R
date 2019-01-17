@@ -31,7 +31,8 @@ aggregate_dst <- function(x, drug_class) {
   } else if (any(str_detect(drug_class, sli_str_detect))) {
     var_name <- "sli_res"
   } else {
-    var_name <- paste0(drug_class, "_res")
+    drug_stem <- str_remove(drug_class, "^_")
+    var_name <- paste0(drug_stem, "_res")
   }
 
   # rename new variable

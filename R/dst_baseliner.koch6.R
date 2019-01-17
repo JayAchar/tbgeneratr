@@ -24,6 +24,8 @@ dst_baseliner.koch6 <- function(adm, lab,
                                   dst_time = 90,
                                   dst_days = 30) {
   . <- NULL
+  # save adm class
+  start_class <- class(adm)
   
   # if names in lab data set include 
     # grozny lab data
@@ -31,7 +33,7 @@ dst_baseliner.koch6 <- function(adm, lab,
     lab_id <- "dstnumber"
     start <- "Starttre"
     id    <- "registrationnb"
-    drug_strings <- c("rif", "inh", "cm$|am$", "ofx$|lfx$|mfx")
+    drug_strings <- c("_rif", "_inh", "_cm$|_am$", "_ofx$|_lfx$|_mfx")
     aggregate_drugs <- c("rif_res",
                          "inh_res", 
                          "dst_p_pza",
@@ -43,15 +45,26 @@ dst_baseliner.koch6 <- function(adm, lab,
                          "dst_p_mfxhigh",
                          "sli_res",
                          "fq_res")
+  } else if ("epiinfo" %in% class(lab)) {
+    lab_id <- c("registrationnb" = "APID")
+    id <- "registrationnb"
+    start <- "Starttre"
+    drug_strings <- c("_rif", "_inh", "_cm$|_km$", "_ofx$|_lfx$|_mfx")
+    aggregate_drugs <- c("rif_res",
+                         "inh_res", 
+                         "dst_p_pza",
+                         "dst_p_eth",
+                         "dst_p_km",
+                         "dst_p_cm",
+                         "dst_p_ofx",
+                         "dst_p_mfx",
+                         "sli_res",
+                         "fq_res")
   }
   
   id_sym <- rlang::sym(id)
   start_sym <- rlang::sym(start)
 
-  
-  # save adm class
-  start_class <- class(adm)
-  
   # merge adm and lab data 
   data <- dplyr::left_join(adm, lab, by = lab_id)
 
@@ -71,7 +84,6 @@ dst_baseliner.koch6 <- function(adm, lab,
                       .f = ~aggregate_dst(x = data, drug_class = .x)) %>% 
     bind_cols(data, .)
 
-  
   # ===================================================
   # Research definition
   ## aims to limit bias associated with number of pre-treatment DSTs performed
