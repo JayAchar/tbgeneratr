@@ -1,61 +1,76 @@
 context("test-age_generator")
 library(tbgeneratr)
 
-# generate test data
-# correctly formatted data frmae - Koch 6
-k6_data <- structure(list(id = 1:10, 
-               dateofbirth = structure(c(12541, 430, 
-                                 10006, 10930, 9207, 4977, 8491, 4592, 13531, 7829), class = "Date"), 
-               Starttre = structure(c(14217, 3797, 12418, 14796, 11785, 
-                             8730, 9980, 6407, 13893, 10832), class = "Date")), 
-                            class = "data.frame", row.names = c(NA, -10L))
+## Koch 6
+age_gen_koch6 <- system.file("testdata", "age_gen_koch6.rds", 
+                             package = "tbgeneratr") %>% 
+  readRDS()
+age_gen_koch6_neg <- system.file("testdata", "age_gen_koch6_neg.rds", 
+                                 package = "tbgeneratr") %>% 
+  readRDS()
 
-k1 <- age_generator(k6_data, "koch_6", rm_orig = TRUE)
+k6 <- age_generator(age_gen_koch6, rm_orig = F)
+k6_narrow <- age_generator(age_gen_koch6, rm_orig = TRUE)
+k6_neg <- suppressWarnings(age_generator(age_gen_koch6_neg, rm_orig = F))
 
-
-# add NA to date of birth
-k6_data2 <- k6_data
-k6_data2[10, 2] <- NA
-k2 <- age_generator(k6_data2, "koch_6", rm_orig = TRUE)
-
-
-# Starttre as string
-k6_data3 <- k6_data
-k6_data3$Starttre <- as.character(k6_data3$Starttre)
-
-# future date in Starttre
-k6_data4 <- k6_data
-k6_data4[1, 3] <- Sys.Date() + 5
-k4 <- age_generator(k6_data4, "koch_6", rm_orig = TRUE)
- 
-
-
-
-test_that("perfect data: structure is ok", {
-  expect_match(class(k1), "data.frame")
-  expect_equal(ncol(k1), 3)
-  expect_equal(nrow(k1), 10)
-  expect_true(all(c("id", "Starttre", "age") %in% names(k1)))
-  expect_match(class(k1$Starttre), "Date")
-  expect_match(class(k1$age), "numeric")
+test_that("Koch 6 wide ok", {
+  expect_equal(class(age_gen_koch6), class(k6))
+  expect_equal(nrow(age_gen_koch6), nrow(k6))
+  expect_equal(ncol(age_gen_koch6) + 1, ncol(k6))
+  expect_true("age_years" %in% names(k6))
+  expect_true(is.na(k6$age_years[3]))
+  expect_equal(class(k6$age_years), "numeric")
 })
 
-test_that("perfect data: content is ok", {
-  expect_equal(length(unique(k1$id)), 10)
-  expect_equal(round(k1$age[1], 2), 4.59)
-  expect_equal(round(median(k1$age), 2), 6.83)
-  expect_true(all(k1$age > 0))
+test_that("Koch 6 narrow ok", {
+  expect_equal(class(age_gen_koch6), class(k6_narrow))
+  expect_equal(ncol(age_gen_koch6), ncol(k6_narrow))
+  expect_true("Starttre" %in% names(k6_narrow))
 })
 
-test_that("DoB NA: content is ok", {
-    expect_equal(length(unique(k2$id)), 10)
-    expect_equal(round(k2$age[1], 2), 4.59)
-    expect_equal(round(median(k2$age, na.rm = TRUE), 2), 6.60)
-    expect_equal(sum(is.na(k6_data2$dateofbirth)), sum(is.na(k2$age)))
+test_that("Negative Koch 6 age ok", {
+  expect_true(is.na(k6_neg$age_years[4]))
 })
 
-test_that("Expect errors", {
-    expect_error(age_generator(k6_data3, "koch_6", rm_orig = TRUE),
-                 "Variables are not formatted as dates")
-#    expect_message(age_generator(k6_data4, "koch_6", rm_orig = TRUE))
+
+
+## Epiinfo
+
+age_gen_epi <- system.file("testdata", "age_gen_epi.rds", 
+                           package = "tbgeneratr") %>% 
+  readRDS()
+age_gen_epi_neg <- system.file("testdata", "age_gen_epi_neg.rds", 
+                               package = "tbgeneratr") %>% 
+  readRDS()
+
+epi <- age_generator(age_gen_epi, rm_orig = FALSE)
+epi_narrow <- age_generator(age_gen_epi, rm_orig = T)
+epi_neg <- suppressWarnings(age_generator(age_gen_epi_neg))
+
+test_that("EpiInfo wide ok", {
+  expect_equal(class(age_gen_epi), class(epi))
+  expect_equal(nrow(age_gen_epi), nrow(epi))
+  expect_equal(ncol(age_gen_epi) + 1, ncol(epi))
+  expect_true("age_years" %in% names(epi))
+  expect_true(is.na(epi$age_years[3]))
+  expect_equal(class(epi$age_years), "numeric")
 })
+
+test_that("EpiInfo narrow ok", {
+  expect_equal(class(age_gen_epi), class(epi_narrow))
+  expect_equal(ncol(age_gen_epi), ncol(epi_narrow))
+  expect_true("STARTTRE" %in% names(epi_narrow))
+})
+
+test_that("Negative EpiInfo age ok", {
+  expect_true(is.na(epi_neg$age_years[4]))
+})
+
+
+test_that("Expect errors & warnings", {
+  expect_error(age_generator(age_gen_epi, rm_orig = stop))
+  expect_warning(age_generator(age_gen_koch6_neg))
+  expect_warning(age_generator(age_gen_epi_neg))
+})
+
+

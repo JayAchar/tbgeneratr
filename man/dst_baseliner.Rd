@@ -4,16 +4,14 @@
 \alias{dst_baseliner}
 \title{Baseline DST calculator}
 \usage{
-dst_baseliner(x, software = c("excel", "koch_6", "epiinfo"),
-  project = c("kk", "chechnya"), dst_time = 90, dst_days = 30)
+dst_baseliner(adm, lab, dst_time = 90, dst_days = 30)
 }
 \arguments{
-\item{x}{data frame with TB and treatmetn data}
+\item{adm}{data frame containing TB admission data cleaned and allocated object
+class by tbcleanr package}
 
-\item{software}{define software used for data collection.
-Values can be "excel", "koch_6", "epiinfo"}
-
-\item{project}{define which project this dataset refers to}
+\item{lab}{data frame containing TB laboratory data cleaned and allocated object
+class by tbcleanr package}
 
 \item{dst_time}{absolute historical limit for including specimens}
 
@@ -23,12 +21,6 @@ Values can be "excel", "koch_6", "epiinfo"}
 Takes a TB DST laboratory dataset with information on 
 treatment start time to output the baseline DST according
 to specific rules designed to reduce missingness
-}
-\examples{
-\dontrun{
-dst_baseliner(lab, project = "kk")
-}
-
 }
 \seealso{
 \code{\link{tbgeneratr}}

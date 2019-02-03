@@ -4,29 +4,27 @@
 \alias{baseliner}
 \title{Calculate baseline culture or smear status}
 \usage{
-baseliner(x, software = c("koch_6", "epiinfo", "excel"),
-  project = c("kk", "chechnya"), file = c("adm", "lab"),
-  baseline_test = c("culture", "smear"), baseline_days = 90)
+baseliner(adm, lab, baseline_test = c("culture", "smear"),
+  baseline_days = 90)
 }
 \arguments{
-\item{x}{data frame or data.table with combined admission and lab data. Must contain
-patient ID number, start treatment date, sample date, and test result}
+\item{adm}{data frame containing TB admission data cleaned and allocated object
+class by tbcleanr package}
 
-\item{software}{define software used for data collection.
-Values can be "excel", "koch_6", "epiinfo"}
+\item{lab}{data frame containing TB laboratory data cleaned and allocated object
+class by tbcleanr package}
 
-\item{project}{define project location to apply.
-Values can be "kk", "chechnya".}
-
-\item{file}{define database file argument to apply.
-Values can be "adm", "lab",}
-
-\item{baseline_test}{define which baseline test result to check}
+\item{baseline_test}{string to define which baseline test result to check}
 
 \item{baseline_days}{criteria for using pre-treatment samples}
 }
 \description{
-This function takes a data frame and uses a unique patient identifier, dates of treatment start and sample submission and sample results to provide a baseline culture or smear result.
+This function takes two data frames, including TB admission and 
+laboratory programme data, uses a unique patient identifier, dates of 
+treatment start and sample submission and sample results to calculate baseline 
+culture or smear status. The function requires admission and laboratory data to 
+have been prepared with the tbcleanr package and for the admission data to have 
+class of either "epiinfo" or "koch6"
 }
 \seealso{
 \code{\link{tbgeneratr}}

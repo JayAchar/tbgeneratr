@@ -4,28 +4,17 @@
 \alias{adm_generator}
 \title{Admission TB generator}
 \usage{
-adm_generator(x, software = c("epiinfo", "koch_6", "excel"),
-  rm_orig = TRUE, ...)
+adm_generator(x, rm_orig = TRUE)
 }
 \arguments{
 \item{x}{data frame of cleaned TB admission data}
 
-\item{software}{define software used for data collection.
-Values can be "excel", "koch_6", "epiinfo"}
-
 \item{rm_orig}{remove original variables - TRUE or FALSE}
-
-\item{...}{further arguments passed to or from other methods}
 }
 \description{
 Designed to generate additional variables from within the TB admission
 data file. Age and BMI are calculated from date of birth, start treatment
 date, height and weight.
-}
-\examples{
-\dontrun{
-adm_generator(p, software = "epiinfo")
-}
 }
 \seealso{
 \code{\link{tbgeneratr}}

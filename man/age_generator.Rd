@@ -4,14 +4,10 @@
 \alias{age_generator}
 \title{Calculate age from two dates}
 \usage{
-age_generator(x, software = c("epiinfo", "koch_6", "excel"),
-  rm_orig = TRUE)
+age_generator(x, rm_orig = TRUE)
 }
 \arguments{
 \item{x}{data frame containing Koch 6 admission variables}
-
-\item{software}{define software used for data collection.
-Values can be "excel", "koch_6", "epiinfo"}
 
 \item{rm_orig}{remove original variables - TRUE or FALSE}
 }
@@ -19,11 +15,6 @@ Values can be "excel", "koch_6", "epiinfo"}
 Use date of birth and date of starting treatment to calculate 
 age at baseline. Takes data frame with date of birth and start 
 of treatment date to generate age variable in years.
-}
-\examples{
-\dontrun{
-age_generator(p, dob = "dateofbirth", start = "Starttre")
-}
 }
 \seealso{
 \code{\link{tbgeneratr}}

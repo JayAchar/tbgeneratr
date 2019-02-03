@@ -1,3 +1,4 @@
+inst/doc
 .Rproj.user
 .Rhistory
 *.Rproj
@@ -7,3 +8,4 @@
 *.xlsx
 *.csv
 *.rda
+# Travis CI

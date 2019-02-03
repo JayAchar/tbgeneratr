@@ -1,0 +1,42 @@
+template:
+  params:
+    bootswatch: cosmo
+    ganalytics: UA-128985004-4
+
+reference:
+  - title: Package information
+    contents:
+      - tbgeneratr
+  - title: Aggregating functions
+    desc: Combine multiple functions to streamline workflow
+    contents:
+      - adm_generator
+      - adm_lab_generator
+  - title: Admission data functions
+    desc: Functions used only for admission data sets
+    contents: 
+      - age_generator
+      - bmi_generator
+      - start_splittr
+  - title: Admission and Laboratory data functions
+    desc: Functions requiring both admission and laboratory data sets
+    contents:
+      - baseliner
+      - converter
+      - drug_baseliner
+      - dst_baseliner
+
+navbar:
+  title: ~
+  type: default
+  left:
+    - text: Functions
+      href: reference/index.html
+    - text: Articles
+      menu:
+      - text: Getting Started
+        href: articles/getting-started.html
+    - text: News
+      menu:
+      - text: Changelog
+        href: news/index.html

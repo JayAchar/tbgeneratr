@@ -16,13 +16,17 @@ from clean data sets.
 
 \code{\link{age_generator}}
 
-\code{\link{baseline_old}}
+\code{\link{aggregate_dst}}
 
 \code{\link{baseliner}}
 
 \code{\link{bmi_generator}}
 
 \code{\link{converter}}
+
+\code{\link{dst_baseliner}}
+
+\code{\link{start_splittr}}
 }
 \author{
 Jay Achar \email{jay.achar@doctors.org.uk}

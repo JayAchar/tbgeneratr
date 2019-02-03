@@ -18,11 +18,6 @@ and baseline specimen}
 Find baseline drug DST after baseline rifampicin result defined - 
 auxillary function for use in dst_baseliner()
 }
-\examples{
-\dontrun{
-drug_baseliner(p, dst_p_pza)
-}
-}
 \seealso{
 \code{\link{tbgeneratr}}
 }

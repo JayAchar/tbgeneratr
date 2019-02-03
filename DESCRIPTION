@@ -1,26 +1,37 @@
 Package: tbgeneratr
 Type: Package
-Title: Tools for Generating new TB variables
-Version: 0.0.0.8
-Date: 2018-10-09
-Authors@R: person("Jay", "Achar", email = "jay.achar@doctors.org.uk", role = c("aut", "cre"))
+Title: tbgenratr: tools for generating new TB variables
+Version: 0.1.0.0
+Date: 2019-01-17
+Authors@R: person("Jay", "Achar", 
+    email = "jay.achar@doctors.org.uk", 
+    role = c("aut", "cre"),
+    comment = c(ORCID = "0000-0002-2521-4422"))
 Description: Contains multiple tools for generating TB variables from cleaned data. Tools are designed for data collection tools used by MSF such as Excel-based tools, Koch 6, and Epi Info. 
 Depends: R (>= 3.4.0)
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
+URL: http://github.com/JayAchar/tbgeneratr 
 BugReports: http://github.com/JayAchar/tbgeneratr/issues
 Imports:
-  assertive (>= 0.3.5), 
-	data.table (>= 1.11.4),
+  assertthat (>= 0.2.0),
 	dplyr (>= 0.7.6),
 	lubridate (>= 1.7.4),
-	tbcleanr (>= 0.0.1.7), 
+	naniar (>= 0.4.1),
+	tbcleanr (>= 0.1.1.2),
 	tidyr (>= 0.8.1),
 	purrr (>= 0.2.5),
 	stringr (>= 1.3.1),
 	rlang (>= 0.2.1),
-	magrittr (>= 1.5)
-Suggests: 
-    testthat
+	magrittr (>= 1.5),
+Remotes:
+  JayAchar/tbcleanr,
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown,
+    pkgdown,
+    covr
+VignetteBuilder: knitr

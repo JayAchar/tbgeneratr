@@ -4,34 +4,20 @@
 \alias{converter}
 \title{Culture/smear conversion calculator}
 \usage{
-converter(x, convert_type = c("culture", "smear"),
-  software = c("excel", "koch_6", "epiinfo"), project = c("kk",
-  "chechnya"), file = c("adm", "lab", "clinical_lab"))
+converter(adm, lab, convert_type = c("culture", "smear"))
 }
 \arguments{
-\item{x}{data frame}
+\item{adm}{data frame containing TB admission data cleaned and allocated object
+class by tbcleanr package}
 
-\item{convert_type}{define what type of culture conversion required.}
+\item{lab}{data frame containing TB laboratory data cleaned and allocated object
+class by tbcleanr package}
 
-\item{software}{define software used for data collection.
-Values can be "excel", "koch_6", "epiinfo"}
-
-\item{project}{define project location to apply.
-Values can be "kk", "chechnya".}
-
-\item{file}{define database file argument to apply.
-Values can be "adm", "lab", "clinical_lab",}
-
-\item{...}{further arguments passed to or from other methods}
+\item{convert_type}{string to define which baseline test result to check}
 }
 \description{
 Takes laboratory data with start and end treatment informaiton and
 calculates culture or smear conversion dates based on >30 days criteria
-}
-\examples{
-\dontrun{
-converter(p, convert_type = "culture", software = "koch_6", project = "chechnya", file = "adm")
-}
 }
 \seealso{
 \code{\link{tbgeneratr}}

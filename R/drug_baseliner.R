@@ -8,53 +8,80 @@
 #' and baseline specimen
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
-#' @importFrom stringr str_remove
+#' @importFrom stringr str_remove str_detect
 #' @importFrom dplyr group_by select mutate arrange filter slice rename
-#' @importFrom rlang enquo quo_name
-#' @examples
-#' \dontrun{
-#' drug_baseliner(p, dst_p_pza)
-#' }
+#' @importFrom rlang sym quo_name quo
+#' @importFrom assertthat assert_that
 
 
 drug_baseliner <- function(x, drug, days = 30) {
+  APID <- NULL
+  MICRLABN <- NULL
+  `:=` <- NULL
+  registrationnb <- NULL
+  
+# checks
+  assert_that(is.data.frame(x))
+  assert_that(is.numeric(days))
+  assert_that(days >= 0)
+  assert_that(any(c("epiinfo", "koch6") %in% class(x)))
 
- 	drug <- enquo(drug)
+# define variable names
+ 	drug <- sym(drug)
 
+## define based on object class
+if ("epiinfo" %in% class(x)) {
+  id <- quo(APID)
+}	else if ("koch6" %in% class(x)) {
+  id <- quo(registrationnb)
+}
+ 	
 # build final drug dst variable name
- 	drug_name <- str_remove(quo_name(drug), pattern = "dst_p_")
+ 	if (str_detect(drug, pattern = "^dst_p_")) {
+ 	  
+ 	    drug_name <- str_remove(quo_name(drug), pattern = "dst_p_")
+ 	
+ 	  } else if (str_detect(drug, pattern = "res$")) {
+ 	  
+ 	    drug_name <- str_remove(quo_name(drug), pattern = "_res$")
+ 	  }
+ 	
  	drug_var <- paste0("base_", drug_name)
 
 # generate baseline dst for specific drug
  	x <- x %>%
- 			group_by(id) %>%
+ 			group_by(!! id) %>%
   	# select relevent variables
-  		select(id, samp_date, baseline_date, baseline_no, labno, base_rif, rif_res, !! drug) %>%
+  		select(!! id, .data$samp_date, .data$baseline_date,
+  		      .data$base_rif, .data$rif_res, !! drug) %>%
   	# generate absolute days from baseline specimen collection
-  		mutate(base_abs = as.numeric(abs(baseline_date - samp_date))) %>%
+  		mutate(base_abs = as.numeric(abs(.data$baseline_date - .data$samp_date))) %>%
     # keep specimens within 'days' arg of baseline specimen
-      filter(base_abs <= days) %>%
+      filter(.data$base_abs <= days) %>%
   	# sort by absolute days from sample to treatment start
-  		arrange(id, base_abs) %>%
+  		arrange(!! id, .data$base_abs) %>%
   	# keep specimens with same rifampicin result as baseline
-  		filter(base_rif == rif_res) %>%
-  	# remove all pza results == NA
-  		filter(! is.na(!! drug)) %>%
+  		filter(.data$base_rif == .data$rif_res) %>%
+  	# remove all drug results == NA
+  		filter(! is.na(!! drug)) %>% 
   	# remove duplicates by id, date and result
-  		group_by(id, base_abs, !! drug) %>%
-  		slice(1) %>%
-  	# keep more resistant if same base_abs
- 		group_by(id, base_abs) %>%
- 		arrange(id, base_abs, desc(!! drug)) %>%
- 		slice(1) %>%
- 	# keep closest to baseline specimen with same rif result
- 		# prioritise duplicated if discordant
- 		group_by(id) %>%
- 		arrange(id, base_abs) %>%
- 		slice(1) %>%
- 	# keep variables
- 		select(id, !! drug) %>%
- 		rename(!! drug_var := !! drug)
+  		group_by(!! id, .data$base_abs, !! drug) %>%
+  		slice(1) %>% 
+ 	    ungroup() %>% 
+    # keep more resistant if same base_abs
+   		group_by(!! id, .data$base_abs) %>%
+   		arrange(!! id, .data$base_abs, desc(!! drug)) %>%
+   		slice(1) %>%
+   	# keep closest to baseline specimen with same rif result
+   		# prioritise duplicated if discordant
+   		group_by(!! id) %>%
+   		arrange(!! id, .data$base_abs) %>%
+   		slice(1) %>% 
+   	# keep variables
+   		select(!! id, !! drug) %>%
+   		rename(!! drug_var := !! drug) %>%
+   	# ungroup
+   	  ungroup()
 
 x
 }
