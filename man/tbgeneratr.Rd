@@ -24,6 +24,8 @@ from clean data sets.
 
 \code{\link{converter}}
 
+\code{\link{drug_timer}}
+
 \code{\link{dst_baseliner}}
 
 \code{\link{start_splittr}}
