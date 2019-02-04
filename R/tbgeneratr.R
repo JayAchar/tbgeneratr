@@ -11,6 +11,7 @@
 #' @seealso \code{\link{baseliner}} 
 #' @seealso \code{\link{bmi_generator}}
 #' @seealso \code{\link{converter}}
+#' @seealso \code{\link{drug_timer}}
 #' @seealso \code{\link{dst_baseliner}}
 #' @seealso \code{\link{start_splittr}}
 #' 

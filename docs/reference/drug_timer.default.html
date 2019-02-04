@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Default method for bmi_generator() — bmi_generator.default • tbgeneratr</title>
+<title>Default method for drug_timer() — drug_timer.default • tbgeneratr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Default method for bmi_generator() — bmi_generator.default" />
+<meta property="og:title" content="Default method for drug_timer() — drug_timer.default" />
 
 <meta property="og:description" content="Allow data frames with unspecified object class to pass through" />
 <meta name="twitter:card" content="summary" />
@@ -127,9 +127,9 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Default method for bmi_generator()</h1>
-    <small class="dont-index">Source: <a href='https://github.com/JayAchar/tbgeneratr/blob/master/R/bmi_generator.default.R'><code>R/bmi_generator.default.R</code></a></small>
-    <div class="hidden name"><code>bmi_generator.default.Rd</code></div>
+    <h1>Default method for drug_timer()</h1>
+    <small class="dont-index">Source: <a href='https://github.com/JayAchar/tbgeneratr/blob/master/R/drug_timer.default.R'><code>R/drug_timer.default.R</code></a></small>
+    <div class="hidden name"><code>drug_timer.default.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -139,14 +139,22 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for default</span>
-<span class='fu'><a href='bmi_generator.html'>bmi_generator</a></span>(<span class='no'>x</span>)</pre>
+<span class='fu'><a href='drug_timer.html'>drug_timer</a></span>(<span class='no'>adm</span>, <span class='no'>change</span>, <span class='no'>drug</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>x</th>
-      <td><p>data frame containing variables</p></td>
+      <th>adm</th>
+      <td><p>admission data set cleaned using `tbcleanr`</p></td>
+    </tr>
+    <tr>
+      <th>change</th>
+      <td><p>change data set cleaned using `tbcleanr`</p></td>
+    </tr>
+    <tr>
+      <th>drug</th>
+      <td><p>define which drug to calculate</p></td>
     </tr>
     </table>
     
