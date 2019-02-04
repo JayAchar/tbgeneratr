@@ -1,3 +1,12 @@
+# tbgeneratr 0.1.1.0
+#### 04 Feb 2019
+## Major changes
+* `drug_timer()` added for Koch6 and EpiInfo data sets. This function is designed to calculate
+the number of days a patient has been prescribed a specified drug in their treatment regimen. It
+ requires admission and change data sets both cleaned using the `tbcleanr` package. 
+
+---
+
 # tbgeneratr 0.1.0.0
 #### 17 Jan 2019
 ## Major changes

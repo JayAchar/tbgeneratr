@@ -25,6 +25,10 @@ reference:
       - converter
       - drug_baseliner
       - dst_baseliner
+  - title: Admission and Change data functions
+    desc: Functions requiring both admission and change data sets
+    contents:  
+      - drug_timer
 
 navbar:
   title: ~
