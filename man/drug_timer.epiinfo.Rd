@@ -13,6 +13,9 @@
 
 \item{drug}{define which drug to calculate}
 }
+\value{
+admission data frame with additional drug days variable added
+}
 \description{
 This function calculates the number of days a specific drug was prescribed
 to a patient. It uses information from the admission data set to establish 

@@ -17,66 +17,66 @@
 #' @export
 #'
 
-drug_timer.epiinfo <- function(adm, change, drug) {
+drug_timer.koch6 <- function(adm, change, drug) {
   
   # fix CMD note
   . <- NULL
   
   # use internal data look up table to find drug variable name (adm)
-  adm_drug <- drug_look_up$epi_drug[drug_look_up$drug_string == tolower(drug)]
+  adm_drug <- drug_look_up$k6_drug[drug_look_up$drug_string == tolower(drug)]
   
   # use internal data look up table to find drug change variable name (change)
   change_drug <- drug_look_up$change_drug_name[drug_look_up$drug_string == tolower(drug)]
   
   # define ideal drug name to add to final output variable
   ideal_name <- drug_look_up$ideal_drug_name[drug_look_up$drug_string == tolower(drug)]
-
+  
   # define final drug_days variable name
   drug_days <- paste0(quo_name(ideal_name), "_days")
-
+  
   # convert drug name to quosure
   adm_drug <- sym(adm_drug)
   change_drug <- sym(change_drug)
-
+  
   # calculate database time
-  dbtime <- min(max(adm$STARTTRE, na.rm = T), max(change$change_dt, na.rm = T))
-
+  dbtime <- min(max(adm$Starttre, na.rm = T), max(change$change_dt, na.rm = T))
+  
   # Find ID numbers for all patients who received drug - start treatment
   interim <- adm %>% 
     filter(!! adm_drug == "Yes") %>% 
-    distinct(.data$APID)
+    distinct(.data$registrationnb)
   
   # combine all ID numbers from start and change data sets who started drug
   patients <- change %>% 
     filter(!! change_drug == "Start") %>% 
-    select(.data$APID) %>% 
+    select(.data$registrationnb) %>% 
     bind_rows(interim) %>% 
-    distinct(.data$APID)
+    distinct(.data$registrationnb)
   
   # check all ID numbers in patients are unique
-  assert_that(length(unique(patients$APID)) == length(patients$APID))
+  assert_that(length(unique(patients$registrationnb)) == length(patients$registrationnb))
   
   message(paste0(ideal_name, ": ", nrow(patients), " patients identified who received this drug."))
   
   # filter adm data to only include patients receiving drug
   adm_filtered <- adm %>% 
     # keep only patients IDs who received drug
-    semi_join(patients, by = "APID") %>% 
+    semi_join(patients, by = "registrationnb") %>% 
     # keep ID number, start and end treatment time
-    select(.data$APID, .data$STARTTRE, .data$DATEN) %>% 
+    select(.data$registrationnb, .data$Starttre, .data$dateend) %>% 
     # wide to long adjustment to prepare for row bind with change df
-    gather(key = !! change_drug, value = "change_dt", -.data$APID) %>% 
+    gather(key = !! change_drug, value = "change_dt", -.data$registrationnb) %>% 
     # recode adm drug change variable to match change df
-    mutate(!! change_drug := ifelse(!! change_drug == "STARTTRE", 
+    mutate(!! change_drug := ifelse(!! change_drug == "Starttre", 
                                     "Start", "Stop")) %>% 
     mutate(!! change_drug := factor(!! change_drug))
   
   # filter change data to only include patients receiving drug
   change_filtered <- change %>% 
     # keep only patients IDs who received drug
-    semi_join(patients, by = "APID") %>% 
+    semi_join(patients, by = "registrationnb") %>% 
     # keep ID number, change date and drug change variable
-    select(.data$APID, .data$change_dt, !! change_drug)
+    select(.data$registrationnb, .data$change_dt, !! change_drug)
   
   # bind rows of adm_filtered and change_filtered for final calculation
   full_long <- dplyr::bind_rows(adm_filtered, change_filtered) %>% 
@@ -87,8 +87,8 @@ drug_timer.epiinfo <- function(adm, change, drug) {
   
   # new var: days between each start and stop
   full_days <- full_long %>% 
-    group_by(.data$APID) %>% 
-    arrange(.data$APID, .data$change_dt) %>% 
+    group_by(.data$registrationnb) %>% 
+    arrange(.data$registrationnb, .data$change_dt) %>% 
     mutate(n_group = n()) %>% 
     mutate(days_sum = case_when(lag(!! change_drug, 1) == "Start" ~ 
                                   as.numeric(.data$change_dt - lag(.data$change_dt, 1)),
@@ -100,12 +100,12 @@ drug_timer.epiinfo <- function(adm, change, drug) {
     mutate(!! drug_days := max(cumsum(.data$days_sum))) %>% 
     # subset unique patients
     ungroup() %>% 
-    distinct(.data$APID, .keep_all = TRUE) %>% 
+    distinct(.data$registrationnb, .keep_all = TRUE) %>% 
     # tidy ready for output
-    select(.data$APID, !! drug_days) %>% 
+    select(.data$registrationnb, !! drug_days) %>% 
     # merge with admission data
-    left_join(adm, ., by = "APID")
-
+    left_join(adm, ., by = "registrationnb")
+  
   # how many patients merged back into admisison data
   merged_number <- sum(!is.na(full_days[[drug_days]]))
   

@@ -11,7 +11,7 @@
 #' @author \strong{Jay Achar:} \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom assertthat assert_that
-#' @return 
+#' @return admission data frame with additional drug days variable added
 #' @export
 
 drug_timer <- function(adm, change, drug) {
@@ -19,6 +19,7 @@ drug_timer <- function(adm, change, drug) {
   # check args 
   assert_that(is.data.frame(adm))
   assert_that(is.data.frame(change))
+  assert_that(length(drug) == 1)
   
   UseMethod("drug_timer", adm)
   
