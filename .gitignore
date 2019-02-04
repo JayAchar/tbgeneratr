@@ -7,5 +7,5 @@ inst/doc
 *.xls
 *.xlsx
 *.csv
-*.rda
+
 # Travis CI
