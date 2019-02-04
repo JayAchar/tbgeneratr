@@ -20,6 +20,6 @@ drug_timer <- function(adm, change, drug) {
   assert_that(is.data.frame(adm))
   assert_that(is.data.frame(change))
   
-  useMethod("drug_timer", adm)
+  UseMethod("drug_timer", adm)
   
 }

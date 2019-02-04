@@ -4,7 +4,7 @@
 \alias{drug_timer.epiinfo}
 \title{Drug duration calculator}
 \usage{
-drug_timer.epiinfo(adm, change, drug)
+\method{drug_timer}{epiinfo}(adm, change, drug)
 }
 \arguments{
 \item{adm}{admission data set cleaned using `tbcleanr`}
