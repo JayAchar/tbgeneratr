@@ -38,5 +38,5 @@ library(tbgeneratr)
 Function               | Use it for
 --------------         | ------------------------------------------
 `adm_generator()`      | Calculate age and BMI variables, and split start treatment date to allow easier analysis
-`adm_lab_generator()`  | Calculate baseline smear and culture status, conversion dates, and baseline drug susceptbility results
+`adm_lab_generator()`  | Calculate baseline smear and culture status, and associated conversion dates
 
