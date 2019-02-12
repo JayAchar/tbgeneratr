@@ -16,6 +16,12 @@ test_that("Koch 6 works", {
   expect_true(is.na(k6$bmi[6]))
 })
 
+k6_rm <- bmi_generator(bmi_k6, rm_orig = TRUE)
+
+test_that("Koch 6 rm orig", {
+  expect_equal(ncol(k6_rm), 1)
+})
+
 
 # EpiInfo
 bmi_epi <- system.file("testdata", "bmi_epi.rds", 

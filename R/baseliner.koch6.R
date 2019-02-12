@@ -26,6 +26,9 @@ baseliner.koch6 <- function(adm, lab,
                       baseline_test = c("culture", "smear"),
                       baseline_days = 90) {
 
+  # save adm class
+  start_class <- class(adm)
+  
   # define id variable name depending on lab database
     # merge lab and adm data frames
   if ("grozny" %in% class(lab)) {
@@ -104,6 +107,9 @@ baseliner.koch6 <- function(adm, lab,
   # generate final output variable name
   var_name <- paste0("base_", baseline_test)
   names(data)[names(data) == "result"] <- var_name
+  
+  # reapply adm class
+  class(data) <- start_class
   
   data
 }

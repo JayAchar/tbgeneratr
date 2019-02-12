@@ -25,7 +25,7 @@ The R package `tbgeneratr` was developed to be used in synergy with `tbcleanr` t
 
 ## Installation
 
-You can install the released version of tbcleanr from [Github](http://www.github.com/JayAchar) with:
+You can install the released version of `tbgeneratr` from [Github](http://www.github.com/JayAchar) with:
 
 ```{r eval=FALSE}
 require(devtools)

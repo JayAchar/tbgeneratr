@@ -1,3 +1,10 @@
+# tbgeneratr 0.1.1.1
+#### 12 Feb 2019
+## Bug fix
+* `baseliner.koch6()`: fixed bug of object class being erased by function. 
+
+---
+
 # tbgeneratr 0.1.1.0
 #### 04 Feb 2019
 ## Major changes
@@ -10,7 +17,7 @@ the number of days a patient has been prescribed a specified drug in their treat
 # tbgeneratr 0.1.0.0
 #### 17 Jan 2019
 ## Major changes
-* release 0.1.0,0 which has functionality for Koch6 and EpiInfo but not Koch6 laboratory data
+* release 0.1.0.0 which has functionality for Koch6 and EpiInfo but not Koch6 laboratory data
 
 ---
 
