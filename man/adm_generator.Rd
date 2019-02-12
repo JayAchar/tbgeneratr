@@ -14,7 +14,8 @@ adm_generator(x, rm_orig = TRUE)
 \description{
 Designed to generate additional variables from within the TB admission
 data file. Age and BMI are calculated from date of birth, start treatment
-date, height and weight.
+date, height and weight. Start treatment date is also split into components
+to allow easier grouping by year, month or date.
 }
 \seealso{
 \code{\link{tbgeneratr}}

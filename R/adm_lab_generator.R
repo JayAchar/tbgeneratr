@@ -9,7 +9,9 @@
 #' @param lab data frame containing TB laboratory data cleaned and allocated object
 #' class by tbcleanr package
 #' @param baseline_days criteria for using pre-treatment samples
-#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @return admission data frame with additional generated variables for baseline smear
+#' and culture status, and smear and culture conversion date. 
+#' @author Jay Achar 
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom magrittr %>%
 #' @importFrom assertthat assert_that
@@ -37,29 +39,13 @@ adm_lab_generator <- function(adm, lab,
 							baseline_days = baseline_days) %>% 
           baseliner(lab,
 							baseline_test = "culture", 
-							baseline_days = baseline_days)
-
-
-# # baseline DST calculator
-# 	base_dst <- dst_baseliner(x, software = software, 
-# 								project = project, 
-# 								dst_time = dst_time,
-# 								dst_days = dst_days)
-
-# # culture convertor
-# 	cc <- converter(x, convert_type = "culture", software = software, 
-# 							project = project, file = file)
-# 	sc <- converter(x, convert_type = "smear", software = software, 
-# 							project = project, file = file)
-# 
-# 
-# # join all to id numbers
-# 	final <- final %>%
-# 		left_join(sm_base, by = "id") %>%
-# 		left_join(cult_base, by = "id") %>%
-# 		left_join(cc, by = "id") %>%
-# 		left_join(sc, by = "id") %>%
-# 		left_join(base_dst, by = c("id" = "id"))
+							baseline_days = baseline_days) %>% 
+	  
+# calculate culture conversion date
+	  converter(lab = lab, convert_type = "culture") %>% 
+	  
+# calculate smear conversion date
+	  converter(lab = lab, convert_type = "smear")
 
 
 data
