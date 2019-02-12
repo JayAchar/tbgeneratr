@@ -15,6 +15,10 @@ class by tbcleanr package}
 
 \item{baseline_days}{criteria for using pre-treatment samples}
 }
+\value{
+admission data frame with additional generated variables for baseline smear
+and culture status, and smear and culture conversion date.
+}
 \description{
 Designed to generate additional variables from within the merged TB 
 admission and laboratory data file. Baseline DST, culture conversion 
@@ -25,5 +29,5 @@ the id number of the data set.
 \code{\link{tbgeneratr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }
