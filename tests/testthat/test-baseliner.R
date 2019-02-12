@@ -19,6 +19,7 @@ epi <- baseliner(adm = baseline_epi_adm,
                  baseline_days = 90)
 
 test_that("EpiInfo culture works", {
+  expect_equal(class(baseline_epi_adm), class(epi))
   expect_equal(length(unique(baseline_epi_adm$APID)), length(unique(epi$APID)))
   expect_true(all(c("base_smear", "base_culture") %in% names(epi)))
 })
