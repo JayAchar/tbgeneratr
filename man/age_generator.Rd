@@ -4,10 +4,12 @@
 \alias{age_generator}
 \title{Calculate age from two dates}
 \usage{
-age_generator(x, rm_orig = TRUE)
+age_generator(x, categorise = FALSE, rm_orig = TRUE)
 }
 \arguments{
-\item{x}{data frame containing Koch 6 admission variables}
+\item{x}{data frame containing TB admission variables}
+
+\item{categorise}{logical - generate additional factor age variable}
 
 \item{rm_orig}{remove original variables - TRUE or FALSE}
 }
@@ -20,5 +22,5 @@ of treatment date to generate age variable in years.
 \code{\link{tbgeneratr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }

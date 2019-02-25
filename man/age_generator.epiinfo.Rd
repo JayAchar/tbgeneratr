@@ -4,10 +4,12 @@
 \alias{age_generator.epiinfo}
 \title{Calculate age}
 \usage{
-\method{age_generator}{epiinfo}(x, rm_orig = TRUE)
+\method{age_generator}{epiinfo}(x, categorise = FALSE, rm_orig = TRUE)
 }
 \arguments{
 \item{x}{data frame containing Koch 6 admission variables}
+
+\item{categorise}{logical - generate additional factor age variable}
 
 \item{rm_orig}{remove original variables - TRUE or FALSE}
 }
@@ -20,5 +22,5 @@ of treatment date to generate age variable in years.
 \code{\link{tbgeneratr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }

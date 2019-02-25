@@ -1,3 +1,10 @@
+# tbgeneratr 0.1.1.2
+#### 25 Feb 2019
+## Minor update
+* `age_generator()`: add `categorise` argument to generate additional factor variable for age. 
+
+---
+
 # tbgeneratr 0.1.1.1
 #### 12 Feb 2019
 ## Bug fix

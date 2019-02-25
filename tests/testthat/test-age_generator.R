@@ -9,11 +9,9 @@ age_gen_koch6_neg <- system.file("testdata", "age_gen_koch6_neg.rds",
                                  package = "tbgeneratr") %>% 
   readRDS()
 
-k6 <- age_generator(age_gen_koch6, rm_orig = F)
-k6_narrow <- age_generator(age_gen_koch6, rm_orig = TRUE)
-k6_neg <- suppressWarnings(age_generator(age_gen_koch6_neg, rm_orig = F))
-
 test_that("Koch 6 wide ok", {
+  k6 <- age_generator(age_gen_koch6, rm_orig = F)
+  
   expect_equal(class(age_gen_koch6), class(k6))
   expect_equal(nrow(age_gen_koch6), nrow(k6))
   expect_equal(ncol(age_gen_koch6) + 1, ncol(k6))
@@ -23,15 +21,27 @@ test_that("Koch 6 wide ok", {
 })
 
 test_that("Koch 6 narrow ok", {
+  k6_narrow <- age_generator(age_gen_koch6, rm_orig = TRUE)
+  
   expect_equal(class(age_gen_koch6), class(k6_narrow))
   expect_equal(ncol(age_gen_koch6), ncol(k6_narrow))
   expect_true("Starttre" %in% names(k6_narrow))
 })
 
 test_that("Negative Koch 6 age ok", {
+  k6_neg <- suppressWarnings(age_generator(age_gen_koch6_neg, rm_orig = F))
+  
   expect_true(is.na(k6_neg$age_years[4]))
 })
 
+test_that("Categorise Koch 6 age ok", {
+  k6_cat <- age_generator(age_gen_koch6, categorise = TRUE, rm_orig = F)
+  
+  expect_true("age_cat" %in% names(k6_cat))
+  expect_equal(k6_cat$age_years[4], 45)
+  expect_equal(as.character(k6_cat$age_cat[4]), "15 - <= 45y")
+
+})
 
 
 ## Epiinfo
@@ -73,4 +83,11 @@ test_that("Expect errors & warnings", {
   expect_warning(age_generator(age_gen_epi_neg))
 })
 
-
+test_that("Categorise Koch 6 age ok", {
+  epi_cat <- age_generator(age_gen_epi, categorise = TRUE, rm_orig = F)
+  
+  expect_true("age_cat" %in% names(epi_cat))
+  expect_equal(epi_cat$age_years[4], 45)
+  expect_equal(as.character(epi_cat$age_cat[4]), "15 - <= 45y")
+  
+})

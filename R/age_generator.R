@@ -3,14 +3,17 @@
 #' Use date of birth and date of starting treatment to calculate 
 #' age at baseline. Takes data frame with date of birth and start 
 #' of treatment date to generate age variable in years. 
-#' @param x data frame containing Koch 6 admission variables 
+#' @param x data frame containing TB admission variables 
+#' @param categorise logical - generate additional factor age variable
 #' @param rm_orig remove original variables - TRUE or FALSE
-#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @author Jay Achar 
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom assertthat assert_that
 #' @export
 
-age_generator <- function(x, rm_orig = TRUE) {
+age_generator <- function(x, 
+                          categorise = FALSE, 
+                          rm_orig = TRUE) {
 
   # check input
   assert_that(is.data.frame(x))

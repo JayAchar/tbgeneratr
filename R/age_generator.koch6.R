@@ -4,14 +4,17 @@
 #' age at baseline. Takes data frame with date of birth and start 
 #' of treatment date to generate age variable in years. 
 #' @param x data frame containing Koch 6 admission variables 
+#' @param categorise logical - generate additional factor age variable
 #' @param rm_orig remove original variables - TRUE or FALSE
-#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @author Jay Achar 
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom lubridate years interval
 #' @importFrom assertthat assert_that
 #' @export
 
-age_generator.koch6 <- function(x, rm_orig = TRUE) {
+age_generator.koch6 <- function(x, 
+                                categorise = FALSE,
+                                rm_orig = TRUE) {
   
   # check variables are present
   assert_that(all(c("dateofbirth", "Starttre") %in% names(x)))
@@ -32,6 +35,20 @@ age_generator.koch6 <- function(x, rm_orig = TRUE) {
     
     # convert all negative ages to NA
     x$age_years[x$age_years <= 0] <- NA_integer_
+  }
+  
+  # generate additional factor variable
+  if (categorise) {
+    
+    x$age_cat <- cut(x$age_years,
+                     breaks = c(0, 15, 45, max(x$age_years, na.rm = TRUE) + 1),
+                     labels = c(1:3)) %>%
+      
+      factor(levels = c(1:3),
+             labels = c("<= 15y",
+                        "15 - <= 45y",
+                        ">45y"))
+      
   }
   
   # remove original variables
