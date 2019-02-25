@@ -4,12 +4,15 @@
 \alias{age_generator}
 \title{Calculate age from two dates}
 \usage{
-age_generator(x, categorise = FALSE, rm_orig = TRUE)
+age_generator(x, categorise = FALSE, paediatric = FALSE,
+  rm_orig = TRUE)
 }
 \arguments{
 \item{x}{data frame containing TB admission variables}
 
 \item{categorise}{logical - generate additional factor age variable}
+
+\item{paediatric}{logical - generate additional paediatric age factor variable}
 
 \item{rm_orig}{remove original variables - TRUE or FALSE}
 }

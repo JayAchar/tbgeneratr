@@ -4,12 +4,15 @@
 \alias{age_generator.koch6}
 \title{Calculate age}
 \usage{
-\method{age_generator}{koch6}(x, categorise = FALSE, rm_orig = TRUE)
+\method{age_generator}{koch6}(x, categorise = FALSE,
+  paediatric = FALSE, rm_orig = TRUE)
 }
 \arguments{
 \item{x}{data frame containing Koch 6 admission variables}
 
 \item{categorise}{logical - generate additional factor age variable}
+
+\item{paediatric}{logical - generate additional paediatric age factor variable}
 
 \item{rm_orig}{remove original variables - TRUE or FALSE}
 }

@@ -43,6 +43,16 @@ test_that("Categorise Koch 6 age ok", {
 
 })
 
+test_that("Paediatrics Koch 6 age ok", {
+  k6_paeds <- age_generator(age_gen_koch6, categorise = FALSE, paediatric = TRUE, rm_orig = F)
+  
+  expect_true("age_paeds" %in% names(k6_paeds))
+  expect_equal(k6_paeds$age_years[5], 2)
+  expect_equal(as.character(k6_paeds$age_paeds[5]), "<= 2y")
+  expect_true(k6_paeds$age_paeds[4] %>% is.na())
+  
+})
+
 
 ## Epiinfo
 
@@ -83,11 +93,22 @@ test_that("Expect errors & warnings", {
   expect_warning(age_generator(age_gen_epi_neg))
 })
 
-test_that("Categorise Koch 6 age ok", {
+test_that("Categorise Epiinfo age ok", {
   epi_cat <- age_generator(age_gen_epi, categorise = TRUE, rm_orig = F)
   
   expect_true("age_cat" %in% names(epi_cat))
   expect_equal(epi_cat$age_years[4], 45)
   expect_equal(as.character(epi_cat$age_cat[4]), "15 - <= 45y")
+  
+})
+
+
+test_that("Paediatrics Epiinfo age ok", {
+  epi_paeds <- age_generator(age_gen_epi, categorise = FALSE, paediatric = TRUE, rm_orig = F)
+  
+  expect_true("age_paeds" %in% names(epi_paeds))
+  expect_equal(epi_paeds$age_years[5], 2)
+  expect_equal(as.character(epi_paeds$age_paeds[5]), "<= 2y")
+  expect_true(epi_paeds$age_paeds[4] %>% is.na())
   
 })

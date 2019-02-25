@@ -5,6 +5,7 @@
 #' of treatment date to generate age variable in years. 
 #' @param x data frame containing TB admission variables 
 #' @param categorise logical - generate additional factor age variable
+#' @param paediatric logical - generate additional paediatric age factor variable
 #' @param rm_orig remove original variables - TRUE or FALSE
 #' @author Jay Achar 
 #' @seealso \code{\link{tbgeneratr}}
@@ -13,11 +14,14 @@
 
 age_generator <- function(x, 
                           categorise = FALSE, 
+                          paediatric = FALSE,
                           rm_orig = TRUE) {
 
   # check input
   assert_that(is.data.frame(x))
   assert_that(is.logical(rm_orig))
+  assert_that(is.logical(categorise))
+  assert_that(is.logical(paediatric))
     
   UseMethod("age_generator", x)
 
