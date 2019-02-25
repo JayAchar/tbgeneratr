@@ -75,7 +75,7 @@ of treatment date to generate age variable in years." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tbgeneratr</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1.2</span>
       </span>
     </div>
 
@@ -143,7 +143,8 @@ of treatment date to generate age variable in years.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for koch6</span>
-<span class='fu'>age_generator</span>(<span class='no'>x</span>, <span class='kw'>rm_orig</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>age_generator</span>(<span class='no'>x</span>, <span class='kw'>categorise</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>paediatric</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>rm_orig</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,6 +152,14 @@ of treatment date to generate age variable in years.</p>
     <tr>
       <th>x</th>
       <td><p>data frame containing Koch 6 admission variables</p></td>
+    </tr>
+    <tr>
+      <th>categorise</th>
+      <td><p>logical - generate additional factor age variable</p></td>
+    </tr>
+    <tr>
+      <th>paediatric</th>
+      <td><p>logical - generate additional paediatric age factor variable</p></td>
     </tr>
     <tr>
       <th>rm_orig</th>
@@ -173,7 +182,7 @@ of treatment date to generate age variable in years.</p>
           </ul>
 
     <h2>Author</h2>
-    <p>Jay Achar <a href='mailto:jay.achar@doctors.org.uk'>jay.achar@doctors.org.uk</a></p>
+    <p>Jay Achar</p>
   </div>
 </div>
 
