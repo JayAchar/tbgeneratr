@@ -31,5 +31,5 @@ from clean data sets.
 \code{\link{start_splittr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }

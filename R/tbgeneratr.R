@@ -3,7 +3,7 @@
 #' The tbgeneratr package provides functions to generate TB data  
 #' from clean data sets.
 #' 
-#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @author Jay Achar 
 #' @seealso \code{\link{adm_generator}} 
 #' @seealso \code{\link{adm_lab_generator}} 
 #' @seealso \code{\link{age_generator}} 

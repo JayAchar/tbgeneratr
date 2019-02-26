@@ -26,5 +26,5 @@ documented in the change data set.
 \code{\link{tbgeneratr}}
 }
 \author{
-\strong{Jay Achar:} \email{jay.achar@doctors.org.uk}
+Jay Achar
 }

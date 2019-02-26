@@ -5,13 +5,13 @@
 #' date, height and weight. Start treatment date is also split into components
 #' to allow easier grouping by year, month or date.
 #' @param x data frame of cleaned TB admission data
-#' @param rm_orig remove original variables - TRUE or FALSE
-#' @param ... logical arguments for `age_generator()`:
-#' 
-#'   - `categorise` to add factor variable of ages,
-#'   - `paediatric` to add factor variable for childhood ages.
-#'   
-#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @param rm_orig logical argument to remove original variables
+#' @param ... logical arguments for \code{age_generator()}:
+#' \itemize{
+#'   \item \code{categorise} to add factor variable of ages,
+#'   \item \code{paediatric} to add factor variable for childhood ages.
+#' }
+#' @author Jay Achar 
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom assertthat assert_that
 #' @importFrom magrittr %>%

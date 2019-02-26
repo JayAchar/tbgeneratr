@@ -26,5 +26,5 @@ to specific rules designed to reduce missingness
 \code{\link{tbgeneratr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }

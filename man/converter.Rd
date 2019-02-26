@@ -23,5 +23,5 @@ calculates culture or smear conversion dates based on >30 days criteria
 \code{\link{tbgeneratr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }

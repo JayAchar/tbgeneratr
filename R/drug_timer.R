@@ -8,7 +8,7 @@
 #' @param adm admission data set cleaned using `tbcleanr`
 #' @param change change data set cleaned using `tbcleanr`
 #' @param drug define which drug to calculate
-#' @author \strong{Jay Achar:} \email{jay.achar@@doctors.org.uk}
+#' @author Jay Achar
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom assertthat assert_that
 #' @return admission data frame with additional drug days variable added

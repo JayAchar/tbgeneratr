@@ -7,7 +7,7 @@
 #' @param lab data frame containing TB laboratory data cleaned and allocated object
 #' class by tbcleanr package
 #' @param convert_type string to define which baseline test result to check
-#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @author Jay Achar 
 #' @export
 #' @importFrom assertthat assert_that
 #' @seealso \code{\link{tbgeneratr}}

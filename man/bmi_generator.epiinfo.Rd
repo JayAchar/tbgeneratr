@@ -20,5 +20,5 @@ Use numerical height and weight variables to calculate BMI
 \code{\link{tbgeneratr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }

@@ -4,7 +4,7 @@
 #' @param adm admission data set cleaned using `tbcleanr`
 #' @param change change data set cleaned using `tbcleanr`
 #' @param drug define which drug to calculate
-#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @author Jay Achar 
 #' @seealso \code{\link{tbgeneratr}}
 
 drug_timer.default <- function(adm, change, drug) {

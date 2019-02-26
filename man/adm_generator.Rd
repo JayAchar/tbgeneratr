@@ -9,12 +9,13 @@ adm_generator(x, rm_orig = TRUE, ...)
 \arguments{
 \item{x}{data frame of cleaned TB admission data}
 
-\item{rm_orig}{remove original variables - TRUE or FALSE}
+\item{rm_orig}{logical argument to remove original variables}
 
-\item{...}{logical arguments for `age_generator()`:
-
-  - `categorise` to add factor variable of ages,
-  - `paediatric` to add factor variable for childhood ages.}
+\item{...}{logical arguments for \code{age_generator()}:
+\itemize{
+  \item \code{categorise} to add factor variable of ages,
+  \item \code{paediatric} to add factor variable for childhood ages.
+}}
 }
 \description{
 Designed to generate additional variables from within the TB admission
@@ -26,5 +27,5 @@ to allow easier grouping by year, month or date.
 \code{\link{tbgeneratr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }
