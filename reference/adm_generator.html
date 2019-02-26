@@ -144,7 +144,7 @@ to allow easier grouping by year, month or date.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>adm_generator</span>(<span class='no'>x</span>, <span class='kw'>rm_orig</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>adm_generator</span>(<span class='no'>x</span>, <span class='kw'>rm_orig</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -156,6 +156,12 @@ to allow easier grouping by year, month or date.</p>
     <tr>
       <th>rm_orig</th>
       <td><p>remove original variables - TRUE or FALSE</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>logical arguments for `age_generator()`:</p>
+<p>- `categorise` to add factor variable of ages,
+  - `paediatric` to add factor variable for childhood ages.</p></td>
     </tr>
     </table>
     
