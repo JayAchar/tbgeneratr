@@ -9,7 +9,7 @@
 #' @param rm_orig remove original variables - TRUE or FALSE
 #' @author Jay Achar 
 #' @seealso \code{\link{tbgeneratr}}
-#' @importFrom assertthat assert_that
+#' @importFrom assertthat assert_that is.flag
 #' @export
 
 age_generator <- function(x, 
@@ -18,10 +18,10 @@ age_generator <- function(x,
                           rm_orig = TRUE) {
 
   # check input
-  assert_that(is.data.frame(x))
-  assert_that(is.logical(rm_orig))
-  assert_that(is.logical(categorise))
-  assert_that(is.logical(paediatric))
+  assert_that(is.data.frame(x),
+              is.flag(rm_orig),
+              is.flag(categorise),
+              is.flag(paediatric))
     
   UseMethod("age_generator", x)
 
