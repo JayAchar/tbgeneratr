@@ -6,21 +6,25 @@
 #' to allow easier grouping by year, month or date.
 #' @param x data frame of cleaned TB admission data
 #' @param rm_orig remove original variables - TRUE or FALSE
+#' @param ... logical arguments for `age_generator()`:
+#' 
+#'   - `categorise` to add factor variable of ages,
+#'   - `paediatric` to add factor variable for childhood ages.
+#'   
 #' @author Jay Achar \email{jay.achar@@doctors.org.uk}
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom assertthat assert_that
 #' @importFrom magrittr %>%
 #' @export
 
-adm_generator <- function(x, rm_orig = TRUE) {
+adm_generator <- function(x, rm_orig = TRUE, ...) {
   
 # check input
     assert_that(is.data.frame(x))
 
-
 # =================================================================
 # generate age
-	x <- age_generator(x, rm_orig = rm_orig) %>% 
+	x <- age_generator(x, rm_orig = rm_orig, ...) %>% 
 
 
 # generate bmi

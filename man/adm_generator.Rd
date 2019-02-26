@@ -4,12 +4,17 @@
 \alias{adm_generator}
 \title{Admission TB generator}
 \usage{
-adm_generator(x, rm_orig = TRUE)
+adm_generator(x, rm_orig = TRUE, ...)
 }
 \arguments{
 \item{x}{data frame of cleaned TB admission data}
 
 \item{rm_orig}{remove original variables - TRUE or FALSE}
+
+\item{...}{logical arguments for `age_generator()`:
+
+  - `categorise` to add factor variable of ages,
+  - `paediatric` to add factor variable for childhood ages.}
 }
 \description{
 Designed to generate additional variables from within the TB admission
