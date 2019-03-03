@@ -28,8 +28,10 @@ from clean data sets.
 
 \code{\link{dst_baseliner}}
 
+\code{\link{finalise_outcome}}
+
 \code{\link{start_splittr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }

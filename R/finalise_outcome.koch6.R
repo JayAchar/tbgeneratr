@@ -10,20 +10,19 @@
 #' @seealso \code{\link{tbgeneratr}}
 #' @export
 
-finalise_outcome.epiinfo <- function(x, 
-                             simplify = TRUE,
-                             ...) {
-
+finalise_outcome.koch6 <- function(x, 
+                                     simplify = TRUE,
+                                     ...) {
+  
   # check that outcome variable has been cleaned
   assert_that(is.factor(x$outcome))
-    
+  
   # adjust outcome variable according to WHO definitions
-  ## Merge failure levels
-  x$final_outcome <- fct_collapse(x$outcome,
-                                  Fail = c("Fail", "Fail & amplify")) %>% 
-    ## convert inappropriate outcomes to NA
-    fct_recode(NULL = "Transfer to Cat 4",
-               NULL = "On treatment") 
+  ## convert inappropriate outcomes to NA
+  x$final_outcome <- fct_recode(x$outcome, 
+                                NULL = "Transfer back to SCC",
+                                NULL = "On treatment",
+                                NULL = "Other") 
   
   
   ## collapse factors for success and unsuccessful treatment
@@ -34,6 +33,6 @@ finalise_outcome.epiinfo <- function(x,
                                      Not_evaluated = "Transfer out")
   }
   
-
+  
   x
 }
