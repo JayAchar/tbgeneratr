@@ -13,6 +13,7 @@
 #' @seealso \code{\link{converter}}
 #' @seealso \code{\link{drug_timer}}
 #' @seealso \code{\link{dst_baseliner}}
+#' @seealso \code{\link{finalise_outcome}}
 #' @seealso \code{\link{start_splittr}}
 #' 
 #' @docType package
