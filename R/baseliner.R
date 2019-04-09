@@ -25,7 +25,7 @@ baseliner <- function(adm, lab,
 # check input
   assert_that(is.data.frame(adm))
   assert_that(is.data.frame(lab))
-  assert_that(any(c("epiinfo", "groz", "koch6") %in% class(lab)))
+  assert_that(any(c("epiinfo", "grozny", "koch6") %in% class(lab)))
   assert_that(is.numeric(baseline_days))
   assert_that(baseline_days >= 0)
   assert_that(baseline_days %% 1 == 0)
