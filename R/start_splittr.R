@@ -4,7 +4,7 @@
 #' into component parts (year, month, day) to allow filtered analyses.
 #' @param x data frame containing cleaned TB admission data
 #' @param rm_orig remove original variables - TRUE or FALSE
-#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @author Jay Achar 
 #' @export
 #' @importFrom assertthat assert_that
 #' @importFrom tidyr separate

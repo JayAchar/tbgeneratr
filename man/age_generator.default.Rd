@@ -4,10 +4,17 @@
 \alias{age_generator.default}
 \title{Default method for age_generator()}
 \usage{
-\method{age_generator}{default}(x)
+\method{age_generator}{default}(x, categorise = FALSE,
+  paediatric = FALSE, rm_orig = TRUE)
 }
 \arguments{
 \item{x}{data frame containing variables}
+
+\item{categorise}{logical - generate additional factor age variable}
+
+\item{paediatric}{logical - generate additional paediatric age factor variable}
+
+\item{rm_orig}{remove original variables - TRUE or FALSE}
 }
 \description{
 Allow data frames with unspecified object class to pass through
@@ -16,5 +23,5 @@ Allow data frames with unspecified object class to pass through
 \code{\link{tbgeneratr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }

@@ -19,5 +19,5 @@ into component parts (year, month, day) to allow filtered analyses.
 \code{\link{tbgeneratr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }
