@@ -2,14 +2,15 @@
 % Please edit documentation in R/adm_generator.R
 \name{adm_generator}
 \alias{adm_generator}
-\title{Admission TB generator}
+\title{Admission TB variable generator}
 \usage{
 adm_generator(x, rm_orig = TRUE, ...)
 }
 \arguments{
-\item{x}{data frame of cleaned TB admission data}
+\item{x}{data frame of cleaned TB admission data using the `tbcleanr` package}
 
-\item{rm_orig}{logical argument to remove original variables}
+\item{rm_orig}{logical argument to remove original variables from age and BMI
+calculators}
 
 \item{...}{logical arguments for \code{age_generator()}:
 \itemize{
