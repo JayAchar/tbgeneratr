@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Getting Started • tbgeneratr</title>
+<title>Generating admission variables • tbgeneratr</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cosmo/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Getting Started">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Generating admission variables">
 <meta property="og:description" content="">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -92,52 +92,51 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Getting Started</h1>
+      <h1>Generating admission variables</h1>
                         <h4 class="author">Jay Achar</h4>
             
             <h4 class="date">2019-04-11</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/JayAchar/tbgeneratr/blob/master/vignettes/getting-started.Rmd"><code>vignettes/getting-started.Rmd</code></a></small>
-      <div class="hidden name"><code>getting-started.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/JayAchar/tbgeneratr/blob/master/vignettes/generate-admission-variables.Rmd"><code>vignettes/generate-admission-variables.Rmd</code></a></small>
+      <div class="hidden name"><code>generate-admission-variables.Rmd</code></div>
 
     </div>
 
     
     
-<div id="accessing-instructions" class="section level1">
+<div id="introduction" class="section level1">
 <h1 class="hasAnchor">
-<a href="#accessing-instructions" class="anchor"></a>Accessing instructions</h1>
-<p>This instruction vignette is available either online at <strong><a href="https://github.com/JayAchar/tbgeneratr">Github</a></strong> or through <strong><a href="mailto:jay.achar@london.msf.org?subject=tbgeneratr%20instructions">emailing the author</a></strong>. Alternatively, you may ask your medical manager since they may also have a copy. For the most up to date version, it’s recommended to visit the online repository linked.</p>
+<a href="#introduction" class="anchor"></a>Introduction</h1>
+<p>The <code>tbgeneratr</code> package takes programmatic TB data cleaned using the <code>tbcleanr</code> package and generates additional variables. This vignette describes which variables can be calculated using only the cleaned admission data object. <code>tbgeneratr</code> has been developed for EpiInfo and Koch 6 data exports. It relies on standard variable naming by these software packages.</p>
 </div>
-<div id="purpose" class="section level1">
+<div id="workflow" class="section level1">
 <h1 class="hasAnchor">
-<a href="#purpose" class="anchor"></a>Purpose</h1>
-<p>This R package, <code>tbgeneratr</code>, has been developed to support MSF field staff using either Koch 6 or EpiInfo to augment the output from <code>tbcleanr</code>, a package designed to automate cleaning of routine TB programme data. The package will eventually fit into a workflow incorporating <code>tbcleanr</code> and <code>tbreportr</code>, a package being developed to generate standardised TB programme reports.</p>
+<a href="#workflow" class="anchor"></a>Workflow</h1>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tbcleanr)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tbgeneratr)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">adm <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="st">  </span><span class="co"># clean imported admission data using tbcleanr</span></a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="st">  </span>tbcleanr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tbcleanr/topics/adm_data_cleanr">adm_data_cleanr</a></span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="st">  </span><span class="co"># generate adm variables using tbgeneratr</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="st">  </span>tbgeneratr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/tbgeneratr/topics/adm_generator">adm_generator</a></span>()</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">  </a></code></pre></div>
+<p>The <code><a href="https://www.rdocumentation.org/packages/tbgeneratr/topics/adm_generator">adm_generator()</a></code> function incorporates three functions - <code><a href="https://www.rdocumentation.org/packages/tbgeneratr/topics/age_generator">age_generator()</a></code>, <code><a href="https://www.rdocumentation.org/packages/tbgeneratr/topics/bmi_generator">bmi_generator()</a></code> and <code><a href="https://www.rdocumentation.org/packages/tbgeneratr/topics/start_splittr">start_splittr()</a></code>. These functions calculate the age in years at treatment start, the body mass index (BMI), and breaks apart the start treatment variable to alow easier grouping.</p>
 </div>
-<div id="how-to" class="section level1">
+<div id="additional-arguments" class="section level1">
 <h1 class="hasAnchor">
-<a href="#how-to" class="anchor"></a>How to</h1>
-<p>To use this package, R experience is required. The R langugage must be downloaded and installed on the computer. This, and the download of the <code>tbgeneratr</code> package will require a functioning internet connection.</p>
-<p>This package accepts admission and laboratory data exported from Koch 6 or EpiInfo, then cleaned using <code>tbcleanr</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(devtools)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">install_github</span>(<span class="st">"JayAchar/tbgeneratr"</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(tbgeneratr)</a></code></pre></div>
-<p>Aggregating functions have been developed to simplify multiple variable generation steps:</p>
+<a href="#additional-arguments" class="anchor"></a>Additional arguments</h1>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">adm <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/tbgeneratr/topics/adm_generator">adm_generator</a></span>(<span class="dt">categorise =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb2-4" data-line-number="4">                <span class="dt">paediatric =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">                <span class="dt">rm_orig =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>Three optional arguments can also be used with <code><a href="https://www.rdocumentation.org/packages/tbgeneratr/topics/adm_generator">adm_generator()</a></code>:</p>
 <ul>
-<li>
-<code>adm_generator</code> generates the age and BMI, in addition to splitting the start treatment date within the cleaned admission data frame. It is capable of working with data collected in Koch 6 and EpiInfo.</li>
-<li>
-<code>adm_lab_generator</code> generates baseline smear and culture status variables, with culture and smear conversion dates and baseline DST results.</li>
+<li>categorise - adds a factor variable <code>age_cat</code> splitting age in years into three categories;</li>
+<li>paediatric - adds a factor varialbe <code>age_paeds</code> splitting age &lt; 18 years into three additional categories;</li>
+<li>rm_orig - removes variables used to generate the age and BMI variables.</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">adm &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/tbgeneratr/topics/adm_generator">adm_generator</a></span>(adm, <span class="dt">rm_orig =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">adm &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/tbgeneratr/topics/adm_lab_generator">adm_lab_generator</a></span>(adm, lab, <span class="dt">baseline_days =</span> <span class="dv">90</span>)</a></code></pre></div>
-<p>Help files for individual functions are available in the usual way:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">?tbgeneratr<span class="op">::</span>converter</a></code></pre></div>
-</div>
-<div id="future-developments" class="section level1">
-<h1 class="hasAnchor">
-<a href="#future-developments" class="anchor"></a>Future developments</h1>
-<p>Functionality will be added for adherance and change drug data sets. In parallel, <code>tbreportr</code> is being developed to automate cohort reporting for programme evaluation purposes and to monitor data quality within a programme.</p>
 </div>
   </div>
 
@@ -146,10 +145,9 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#accessing-instructions">Accessing instructions</a></li>
-      <li><a href="#purpose">Purpose</a></li>
-      <li><a href="#how-to">How to</a></li>
-      <li><a href="#future-developments">Future developments</a></li>
+<li><a href="#introduction">Introduction</a></li>
+      <li><a href="#workflow">Workflow</a></li>
+      <li><a href="#additional-arguments">Additional arguments</a></li>
       </ul>
 </div>
       </div>
