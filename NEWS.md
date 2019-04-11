@@ -1,5 +1,7 @@
 # tbgeneratr 0.1.1.4
-#### 9 Apr 2019
+#### 11 Apr 2019
+## Minor update
+* *Generate admission variables* vignette added
 ## Bug fix
 * fix class detection 
 

@@ -40,6 +40,8 @@ navbar:
       menu:
       - text: Getting Started
         href: articles/getting-started.html
+      - text: Generate admission variables
+        href: articles/generate-admission-variables.html
     - text: News
       menu:
       - text: Changelog
