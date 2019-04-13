@@ -6,7 +6,7 @@
 #' @param drug name of drug dst variable from dst_baseliner()
 #' @param days number of days allowed between individual drug specimen 
 #' and baseline specimen
-#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @author Jay Achar 
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom stringr str_remove str_detect
 #' @importFrom dplyr group_by select mutate arrange filter slice rename

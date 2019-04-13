@@ -1,8 +1,19 @@
+# tbgeneratr 0.1.1.4
+#### 11 Apr 2019
+## Minor update
+* *Generate admission variables* vignette added
+## Bug fix
+* fix class detection 
+
+---
+
 # tbgeneratr 0.1.1.2
-#### 25 Feb 2019
+#### 26 Feb 2019
 ## Minor update
 * `age_generator()`: add `categorise` argument to generate additional factor variable for age. 
 * `age_generator()`: add `paediatric` argument to generate additional paediatric age variable.
+* args fixed in `age_generator.default()`
+* update `adm_generator()` to pass `age_generator()` args using `...`
 
 ---
 

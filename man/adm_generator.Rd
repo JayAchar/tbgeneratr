@@ -2,14 +2,21 @@
 % Please edit documentation in R/adm_generator.R
 \name{adm_generator}
 \alias{adm_generator}
-\title{Admission TB generator}
+\title{Admission TB variable generator}
 \usage{
-adm_generator(x, rm_orig = TRUE)
+adm_generator(x, rm_orig = TRUE, ...)
 }
 \arguments{
-\item{x}{data frame of cleaned TB admission data}
+\item{x}{data frame of cleaned TB admission data using the `tbcleanr` package}
 
-\item{rm_orig}{remove original variables - TRUE or FALSE}
+\item{rm_orig}{logical argument to remove original variables from age and BMI
+calculators}
+
+\item{...}{logical arguments for \code{age_generator()}:
+\itemize{
+  \item \code{categorise} to add factor variable of ages,
+  \item \code{paediatric} to add factor variable for childhood ages.
+}}
 }
 \description{
 Designed to generate additional variables from within the TB admission
@@ -21,5 +28,5 @@ to allow easier grouping by year, month or date.
 \code{\link{tbgeneratr}}
 }
 \author{
-Jay Achar \email{jay.achar@doctors.org.uk}
+Jay Achar
 }

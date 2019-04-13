@@ -8,7 +8,7 @@
 #' @param adm admission data set cleaned using `tbcleanr`
 #' @param change change data set cleaned using `tbcleanr`
 #' @param drug define which drug to calculate
-#' @author \strong{Jay Achar:} \email{jay.achar@@doctors.org.uk}
+#' @author Jay Achar 
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom rlang enquo .data sym :=
 #' @importFrom dplyr filter distinct %>% bind_rows semi_join group_by ungroup left_join case_when n

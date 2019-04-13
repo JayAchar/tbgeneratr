@@ -27,7 +27,7 @@ adm_lab_generator <- function(adm, lab,
   assert_that(is.numeric(baseline_days))
   assert_that(baseline_days >= 0)
   assert_that(baseline_days %% 1 == 0)
-  assert_that(any(c("epiinfo", "groz", "koch6") %in% class(lab)))
+  assert_that(any(c("epiinfo", "grozny", "koch6") %in% class(lab)))
   assert_that(any(c("epiinfo", "koch6") %in% class(adm)))
 
 # # generate unique id numbers

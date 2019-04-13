@@ -7,7 +7,7 @@
 #' @param lab data frame containing TB laboratory data cleaned and allocated object
 #' class by tbcleanr package
 #' @param convert_type string to define which baseline test result to check
-#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @author Jay Achar 
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr left_join rename mutate recode arrange filter distinct group_by 
 #' top_n ungroup row_number desc lag

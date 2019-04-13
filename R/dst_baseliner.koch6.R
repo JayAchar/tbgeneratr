@@ -9,7 +9,7 @@
 #' class by tbcleanr package
 #' @param dst_time absolute historical limit for including specimens
 #' @param dst_days additional criteria for including non-rif results
-#' @author Jay Achar \email{jay.achar@@doctors.org.uk}
+#' @author Jay Achar 
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom dplyr filter mutate select rename group_by slice
 #' ungroup arrange left_join distinct bind_cols right_join case_when top_n

@@ -1,0 +1,56 @@
+---
+title: "Generating admission variables"
+author: "Jay Achar"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Generating admission variables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+# Introduction
+
+The `tbgeneratr` package takes programmatic TB data cleaned using the `tbcleanr` package and generates additional variables. This vignette describes which variables can be calculated using only the cleaned admission data object. `tbgeneratr` has been developed for EpiInfo and Koch 6 data exports. It relies on standard variable naming by these software packages. 
+
+# Workflow
+
+``` {r adm-workflow}
+library(tbcleanr)
+library(tbgeneratr)
+
+adm %>% 
+  # clean imported admission data using tbcleanr
+  tbcleanr::adm_data_cleanr() %>% 
+  # generate adm variables using tbgeneratr
+  tbgeneratr::adm_generator()
+  
+```
+
+The `adm_generator()` function incorporates three functions - `age_generator()`, `bmi_generator()` and `start_splittr()`. These functions calculate the age in years at treatment start, the body mass index (BMI), and breaks apart the start treatment variable to alow easier grouping. 
+
+# Additional arguments
+
+``` {r adm-args}
+
+adm %>%
+  adm_generator(categorise = TRUE,
+                paediatric = TRUE, 
+                rm_orig = TRUE)
+
+```
+
+Three optional arguments can also be used with `adm_generator()`:
+
+*  categorise - adds a factor variable `age_cat` splitting age in years into three categories;
+*  paediatric - adds a factor varialbe `age_paeds` splitting age < 18 years into three additional categories;
+*  rm_orig - removes variables used to generate the age and BMI variables. 
+
