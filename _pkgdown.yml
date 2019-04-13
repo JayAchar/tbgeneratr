@@ -17,6 +17,7 @@ reference:
     contents: 
       - age_generator
       - bmi_generator
+      - finalise_outcome
       - start_splittr
   - title: Admission and Laboratory data functions
     desc: Functions requiring both admission and laboratory data sets
