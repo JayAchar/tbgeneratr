@@ -6,7 +6,7 @@ epi_adm <-
   data.frame(APID = paste0("XYZ", 1:8), stringsAsFactors = F) %>%
   dplyr::mutate(
     STARTTRE = lubridate::dmy(c(rep("1/1/10", 8))),
-    indictor_dst = c(
+    indictor_dst = factor(c(
       "DSTB",
       "Inh-mono",
       "Inh-mono",
@@ -15,7 +15,7 @@ epi_adm <-
       "RRTB",
       "XDRTB",
       "DSTB"
-    )
+    ))
   )
 
 class(epi_adm) <- c(class(epi_adm), "epiinfo")
@@ -135,7 +135,7 @@ k6_groz_adm <- epi_adm %>%
   rename(registrationnb = APID,
          Starttre = STARTTRE) %>% 
   mutate(dstnumber = as.character(1:length(unique(.$registrationnb)))) %>% 
-  select(registrationnb, dstnumber, everything())
+  select(registrationnb, dstnumber, dplyr::everything())
 
 
 class(k6_groz_adm) <- c(class(k6_groz_adm), "koch6")
@@ -150,7 +150,7 @@ k6_groz_lab <- epi_lab %>%
   mutate(dst_p_mfxhigh = dst_p_mfx) %>% 
   left_join(k6_groz_adm, by = "registrationnb") %>% 
   select(-registrationnb, -MICRLABN, -Starttre) %>% 
-  select(dstnumber, everything())
+  select(dstnumber, dplyr::everything())
 
 class(k6_groz_lab) <- c(class(k6_groz_lab), "grozny")
 saveRDS(k6_groz_lab, "inst/testdata/dst_baseliner_k6_groz_lab.rds")

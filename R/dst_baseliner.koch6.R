@@ -161,6 +161,18 @@ dst_baseliner.koch6 <- function(adm, lab,
       base_rif    == "Sensitive" ~ "DSTB",
       TRUE ~ NA_character_))
   
+  # convert base_dst to ordered factor variable
+  data$base_dst <- factor(data$base_dst, 
+                          levels = c("DSTB",
+                                     "PDRTB",
+                                     "Inh-mono",
+                                     "RRTB",
+                                     "MDRTB",
+                                     "pre-XDRTB (SLI)",
+                                     "pre-XDRTB (FQ)",
+                                     "XDRTB"),
+                          ordered = TRUE)
+  
   # reapply object class
   class(data) <- start_class
   

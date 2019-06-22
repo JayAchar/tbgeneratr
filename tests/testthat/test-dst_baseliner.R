@@ -78,7 +78,7 @@ test_that("K6 Grozny works", {
   expect_true(output$base_fq[output$registrationnb == "XYZ5"] %>% is.na())
   
   # check final baseline DST
-  expect_equal(output$base_dst, adm$indictor_dst)
+  expect_equivalent(output$base_dst, adm$indictor_dst)
 })
 
 
@@ -121,5 +121,5 @@ test_that("K6 EpiInfo works", {
   expect_true(output$base_fq[output$registrationnb == "XYZ5"] %>% is.na())
   
   # check final baseline DST
-  expect_equal(output$base_dst, adm$indictor_dst)
+  expect_equivalent(output$base_dst, adm$indictor_dst)
 })
