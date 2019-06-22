@@ -39,7 +39,9 @@ drug_timer.epiinfo <- function(adm, change, drug) {
   change_drug <- sym(change_drug)
 
   # calculate database time
-  dbtime <- min(max(adm$STARTTRE, na.rm = T), max(change$change_dt, na.rm = T))
+  dbtime <- max(max(adm$STARTTRE, na.rm = T), max(change$change_dt, na.rm = T))
+  
+  message(paste0("drug_timer(): Database time calculated as ", dbtime))
 
   # Find ID numbers for all patients who received drug - start treatment
   interim <- adm %>% 
@@ -110,6 +112,13 @@ drug_timer.epiinfo <- function(adm, change, drug) {
   merged_number <- sum(!is.na(full_days[[drug_days]]))
   
   message(paste0(ideal_name, ": ", merged_number, " patient records merged back into admission data."))
+  
+  # warning if negative days generated
+  negative_number <- sum(full_days[[drug_days]] < 0)
+  
+  if (negative_number > 0) {
+    warning(paste0(ideal_name, ": ", negative_number, " patient records have negative days recorded"))
+  }
   
   full_days
 }
