@@ -141,7 +141,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>finalise_outcome</span>(<span class='no'>x</span>, <span class='kw'>simplify</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>finalise_outcome</span>(<span class='no'>x</span>, <span class='kw'>bin_outcome</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -151,14 +151,25 @@
       <td><p>data frame containing outcome variables</p></td>
     </tr>
     <tr>
-      <th>simplify</th>
-      <td><p>logical to add binary outcome variable</p></td>
+      <th>bin_outcome</th>
+      <td><p>create new binary factor variable simplifying treatment outcome</p></td>
     </tr>
     <tr>
       <th>...</th>
       <td><p>further arguments passed to or from other methods</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>This is a generic function. Methods for EpiInfo and Koch6 data have been defined 
+within this package. They are designed to standardise outcome factor levels
+according to <a href='https://www.who.int/tb/publications/definitions/en/'>WHO (2013) TB definitions</a>.</p>
+<p>If <code>bin_outcome</code> is <code>TRUE</code>, an additional simplified factor outcome variable is generated with 
+levels <code>Successful</code>, <code>Unsuccessful</code> and <code>Not evaluated</code>, corresponding to definitions
+in the WHO document.</p>
+<p>The original data frame with generated variables appended is returned.</p>
+<p>Any original data not represented in the WHO definitions are converted to <code>NA</code>.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -171,6 +182,8 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
           </ul>
 
