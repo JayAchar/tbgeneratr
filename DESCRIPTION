@@ -2,7 +2,7 @@ Package: tbgeneratr
 Type: Package
 Title: tbgenratr: tools for generating new TB variables
 Version: 0.1.1.5
-Date: 2019-06-22
+Date: 2019-06-26
 Authors@R: person("Jay", "Achar", 
     email = "jay.achar@doctors.org.uk", 
     role = c("aut", "cre"),
@@ -30,7 +30,7 @@ Imports:
 Remotes:
   JayAchar/tbcleanr,
 Suggests:
-    testthat,
+    testthat (>= 2.1.0),
     knitr,
     rmarkdown,
     pkgdown,

@@ -4,12 +4,12 @@
 \alias{finalise_outcome.epiinfo}
 \title{Finalise TB treatment outcome}
 \usage{
-\method{finalise_outcome}{epiinfo}(x, simplify = TRUE, ...)
+\method{finalise_outcome}{epiinfo}(x, bin_outcome = TRUE, ...)
 }
 \arguments{
 \item{x}{data frame containing outcome variables}
 
-\item{simplify}{logical to add binary outcome variable}
+\item{bin_outcome}{create new binary factor variable simplifying treatment outcome}
 
 \item{...}{further arguments passed to or from other methods}
 }
