@@ -1,3 +1,10 @@
+# tbgeneratr 0.1.1.6
+#### 29 July 2019
+## Bug fix
+* Fixed error in `drug_timer()`
+
+---
+
 # tbgeneratr 0.1.1.5
 #### 26 Jun 2019
 ## Minor update

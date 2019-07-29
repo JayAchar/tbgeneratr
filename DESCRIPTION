@@ -1,8 +1,8 @@
 Package: tbgeneratr
 Type: Package
 Title: tbgenratr: tools for generating new TB variables
-Version: 0.1.1.5
-Date: 2019-06-26
+Version: 0.1.1.6
+Date: 2019-07-29
 Authors@R: person("Jay", "Achar", 
     email = "jay.achar@doctors.org.uk", 
     role = c("aut", "cre"),
@@ -17,6 +17,7 @@ URL: http://github.com/JayAchar/tbgeneratr
 BugReports: http://github.com/JayAchar/tbgeneratr/issues
 Imports:
   assertthat (>= 0.2.0),
+  data.table (>= 1.12.2),
 	dplyr (>= 0.7.6),
 	forcats (>= 0.4.0),
 	lubridate (>= 1.7.4),

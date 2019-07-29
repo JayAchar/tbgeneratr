@@ -114,7 +114,7 @@ drug_timer.epiinfo <- function(adm, change, drug) {
   message(paste0(ideal_name, ": ", merged_number, " patient records merged back into admission data."))
   
   # warning if negative days generated
-  negative_number <- sum(full_days[[drug_days]] < 0)
+  negative_number <- sum(full_days[[drug_days]] < 0, na.rm = TRUE)
   
   if (negative_number > 0) {
     warning(paste0(ideal_name, ": ", negative_number, " patient records have negative days recorded"))
