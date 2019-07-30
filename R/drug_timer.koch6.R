@@ -43,6 +43,13 @@ drug_timer.koch6 <- function(adm, change, drug) {
   
   message(paste0("drug_timer(): Database time calculated as ", dbtime))
   
+  # remove drug changes before treatment start and after treatment ending
+  change <- adm %>% 
+    select(.data$registrationnb, .data$Starttre, .data$dateend) %>% 
+    left_join(change, by = "registrationnb") %>% 
+    filter(.data$change_dt >= .data$Starttre & .data$change_dt <= .data$dateend) %>% 
+    select(-.data$Starttre, -.data$dateend)
+  
   # Find ID numbers for all patients who received drug - start treatment
   interim <- adm %>% 
     filter(!! adm_drug == "Yes") %>% 

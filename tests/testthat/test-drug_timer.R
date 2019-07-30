@@ -1,41 +1,44 @@
 context("test-drug_timer")
 library(tbgeneratr)
 
+# define unit tests code
+testing_code <- quote({
+  expect_true("data.frame" %in% class(output))
+  expect_equal(nrow(output), nrow(input$adm))
+  expect_equal(ncol(output), ncol(input$adm) + 1)
+  expect_true("bdq_days" %in% names(output))
+  expect_true(all(output$bdq_days >= 0 | is.na(output$bdq_days)))
+  expect_true(output$bdq_days[output[[1]] == "XYZ1"] == 5L)
+  expect_true(output$bdq_days[output[[1]] == "XYZ2"] == 5L) 
+  expect_true(output$bdq_days[output[[1]] == "XYZ3"] == 60L)
+  expect_equal(output$bdq_days[output[[1]] == "XYZ1"], output$bdq_days[output[[1]] == "XYZ4"])
+  expect_true(output$bdq_days[output[[1]] == "XYZ5"] == 360L)
+  expect_true(output$bdq_days[output[[1]] == "XYZ8"] == 20L)
+  expect_true(output$bdq_days[output[[1]] == "XYZ0"] == 365L)
+  expect_true(output$bdq_days[output[[1]] == "XYZ10"] == 365L)
+})
+
 ## Epiinfo
 # load test data
-epi <- system.file("testdata", "drug_timer_epi.rds", package="tbgeneratr") %>% 
+input <- system.file("testdata", "drug_timer_epi.rds", package="tbgeneratr") %>% 
   readRDS() 
 
-out <- tbgeneratr:::drug_timer.epiinfo(adm = epi$adm,
-                                      change = epi$change,
+output <- tbgeneratr:::drug_timer.epiinfo(adm = input$adm,
+                                      change = input$change,
                                       drug = "bdq")
 
-test_that("EpiInfo correct", {
-  expect_equal(nrow(out), nrow(epi$adm))
-  expect_equal(ncol(out), ncol(epi$adm) + 1)
-  expect_true("bdq_days" %in% names(out))
-  expect_true(all(out$bdq_days >= 0))
-  expect_true(out$bdq_days[out$APID == "XYZ1"] == 5L)
-  expect_true(out$bdq_days[out$APID == "XYZ2"] == 5L) 
-  expect_true(out$bdq_days[out$APID == "XYZ3"] == 60L)
-})
+# test code
+test_that("EpiInfo testing", eval(testing_code))
 
 
 ## Koch6
 # load test data
-k <- system.file("testdata", "drug_timer_koch.rds", package="tbgeneratr") %>% 
+input <- system.file("testdata", "drug_timer_koch.rds", package="tbgeneratr") %>% 
   readRDS() 
 
-out <- tbgeneratr:::drug_timer.koch6(adm = k$adm,
-                                      change = k$change,
+output <- tbgeneratr:::drug_timer.koch6(adm = input$adm,
+                                      change = input$change,
                                       drug = "bdq")
 
-test_that("Koch 6 correct", {
-  expect_equal(nrow(out), nrow(k$adm))
-  expect_equal(ncol(out), ncol(k$adm) + 1)
-  expect_true("bdq_days" %in% names(out))
-  expect_true(all(out$bdq_days >= 0))
-  expect_true(out$bdq_days[out$registrationnb == "XYZ1"] == 5L)
-  expect_true(out$bdq_days[out$registrationnb == "XYZ2"] == 5L) 
-  expect_true(out$bdq_days[out$registrationnb == "XYZ3"] == 60L)
-})
+# test code
+test_that("Koch6 testing", eval(testing_code))

@@ -39,10 +39,17 @@ drug_timer.epiinfo <- function(adm, change, drug) {
   change_drug <- sym(change_drug)
 
   # calculate database time
-  dbtime <- max(max(adm$STARTTRE, na.rm = T), max(change$change_dt, na.rm = T))
+  dbtime <- max(max(adm$STARTTRE, na.rm = T), max(change$change_dt, na.rm = TRUE))
   
   message(paste0("drug_timer(): Database time calculated as ", dbtime))
 
+  # remove drug changes before treatment start and after treatment ending
+  change <- adm %>% 
+    select(.data$APID, .data$STARTTRE, .data$DATEN) %>% 
+    left_join(change, by = "APID") %>% 
+    filter(.data$change_dt >= .data$STARTTRE & .data$change_dt <= .data$DATEN) %>% 
+    select(-.data$STARTTRE, -.data$DATEN)
+  
   # Find ID numbers for all patients who received drug - start treatment
   interim <- adm %>% 
     filter(!! adm_drug == "Yes") %>% 

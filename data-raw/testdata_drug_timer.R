@@ -33,11 +33,38 @@ list(adm = adm,
 
 # define each patient
 
-p1 <- new_patient(1, c(30, 35), c("Start", "Stop"), NA_character_)
-p2 <- new_patient(2, 5, "Stop", "Yes")
-p3 <- new_patient(3, c(10, 30, 50, 90), rep(c("Start", "Stop"), 2), NA_character_)
+records <- list(
+  # start then stop
+  list(1, c(30, 35), c("Start", "Stop"), NA_character_),
+  # start in baseline regimen then stop
+  list(2, 5, "Stop", "Yes"),
+  # start - stop, start - stop
+  list(3, c(10, 30, 50, 90), rep(c("Start", "Stop"), 2), NA_character_),
+  # start - stop, baseline regimen inclusion "No" check
+  list(4, c(30, 35), c("Start", "Stop"), "No"),
+  # start at baseline, stop, restart and stop using end of treatment date
+  list(5, c(30, 35), c("Stop", "Start"), "Yes"),
+  # all missing - replicates data for this particular drug not present in data set
+  list(6, c(30, 55), c(NA_character_, NA_character_), "No"),
+  # start at baseline, never stop but ID number present in change data set
+  list(7, 10, NA_character_, "Yes"),
+  # start treatment with pre-treatment start date - should be excluded
+  list(8, c(-10, 30, 50), c("Start", "Start", "Stop"), "No"),
+  # only stop flag available - should be no result
+  list(9, 25, "Stop", NA_character_),
+  # stop drug after end of treatment
+  list(10, 400, "Stop", "Yes")
+)
 
-epi <- purrr::pmap(.l = list(p1, p2, p3), .f = bind_rows)
+epi <- purrr::map(records, .f = ~ new_patient(.x[[1]], .x[[2]], .x[[3]], .x[[4]])) %>% 
+  purrr::pmap(bind_rows)
+
+# add record in admission data with no change data
+epi$adm <- dplyr::bind_rows(epi$adm, data.frame(APID = "XYZ0", 
+                                         STARTTRE = lubridate::dmy("1/1/2010"),
+                                         BDQDBDQ = factor("Yes", levels = c("Yes", "No")), 
+                                         DATEN = lubridate::dmy("1/1/2011"), 
+                                         stringsAsFactors = FALSE))
 
 # save epiinfo data
 saveRDS(epi, "inst/testdata/drug_timer_epi.rds")
