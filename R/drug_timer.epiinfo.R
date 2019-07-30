@@ -11,7 +11,7 @@
 #' @author Jay Achar 
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom rlang enquo .data sym :=
-#' @importFrom dplyr filter distinct %>% bind_rows semi_join group_by ungroup left_join case_when n
+#' @importFrom dplyr filter distinct %>% bind_rows semi_join group_by ungroup left_join case_when n last
 #' @importFrom tidyr gather
 #' @return admission data frame with additional drug days variable added
 #' @export
@@ -64,14 +64,21 @@ drug_timer.epiinfo <- function(adm, change, drug) {
   adm_filtered <- adm %>% 
     # keep only patients IDs who received drug
     semi_join(patients, by = "APID") %>% 
-    # keep ID number, start and end treatment time
-    select(.data$APID, .data$STARTTRE, .data$DATEN) %>% 
+    
+    # keep ID number, start and end treatment time, and admission drug status
+    select(.data$APID, .data$STARTTRE, .data$DATEN, !! adm_drug) %>%
+    
     # wide to long adjustment to prepare for row bind with change df
-    gather(key = !! change_drug, value = "change_dt", -.data$APID) %>% 
+    gather(key = !! change_drug, value = "change_dt", -.data$APID, - !! adm_drug) %>% 
+    
+    # remove STARTTRE rows for patients who didn't receive drug in starting regimen
+    filter(!! adm_drug == "Yes" | !! change_drug == "DATEN") %>% 
+    select(- !! adm_drug) %>% 
+    
     # recode adm drug change variable to match change df
     mutate(!! change_drug := ifelse(!! change_drug == "STARTTRE", 
                                     "Start", "Stop")) %>% 
-    mutate(!! change_drug := factor(!! change_drug))
+    mutate(!! change_drug := factor(!! change_drug, levels = c("Start", "Stop")))
   
   # filter change data to only include patients receiving drug
   change_filtered <- change %>% 
@@ -95,7 +102,7 @@ drug_timer.epiinfo <- function(adm, change, drug) {
     mutate(days_sum = case_when(lag(!! change_drug, 1) == "Start" ~ 
                                   as.numeric(.data$change_dt - lag(.data$change_dt, 1)),
                                 # if no start and stop - use dbdate as stop date                                
-                                .data$change_dt == last(.data$change_dt) & !! change_drug == "Start" ~ 
+                                .data$change_dt == dplyr::last(.data$change_dt) & !! change_drug == "Start" ~ 
                                   as.numeric(dbtime - .data$change_dt),
                                 TRUE ~ 0)) %>% 
     # sum days between start and stop
