@@ -1,89 +1,101 @@
 library(magrittr)
+# function to add new patient to test data
 
-## EpiInfo test data
-### Admission data
-baseline_epi_adm <- data.frame(APID = paste0("XYZ", 1:6),
-                      STARTTRE = lubridate::dmy("1/1/12"),
-                      stringsAsFactors = FALSE)
+new_patient <- function(unique_id_int,
+                        sample_time,
+                        culture_results,
+                        smear_results) {
+  
+  start_date <- lubridate::dmy("1/1/2010")
+  
+  assertthat::assert_that(is.numeric(unique_id_int),
+                          is.numeric(sample_time),
+                          is.numeric(culture_results),
+                          is.numeric(smear_results),
+                          length(culture_results) == length(smear_results),
+                          length(culture_results) == length(sample_time))
+  
+  # define sample dates  
+  sample_dt <- start_date + sample_time
+  
+  # gen APID vector  
+  id <- paste0("XYZ", unique_id_int)
+  id_number <- rep(id, length(sample_dt))
+  
+  adm <- data.frame(APID = id, 
+                    STARTTRE = start_date, 
+                    stringsAsFactors = FALSE)
+  
+  lab = data.frame(APID = id_number, 
+                   samp_date = sample_dt,
+                   culture = factor(culture_results, 
+                                    levels = 0:1,
+                                    labels = c("Negative", "Positive"),
+                                    ordered = TRUE),
+                   smear = factor(smear_results, 
+                                  levels = 0:4,
+                                  labels = c("Negative", "Scanty", "1+", "2+", "3+"),
+                                  ordered = TRUE),
+                   stringsAsFactors = FALSE)
+  list(adm = adm, 
+       lab = lab)
+}
 
-class(baseline_epi_adm) <- c(class(baseline_epi_adm), "epiinfo")
-saveRDS(baseline_epi_adm, "inst/testdata/baseline_epi_adm.rds")
+# define each patient
+records <- list(
+  # use result closest to treatment start
+  list(1, c(-7, 2), c(0, 1), c(3, 1)),
+  # test baseline days = 90
+  list(2, -91, 1, 4),
+  # NA result
+  list(3, c(-15, -5), c(1, NA_integer_), c(2, NA_integer_)),
+  # discrepant results same day
+  list(4, c(-5, -5), c(1, 0), c(0, 4)),
+  # results after starting treatment + 7
+  list(5, 8, 1, 1)
+)
 
-### Lab data
-baseline_epi_lab <- data.frame(APID = rep(paste0("XYZ", 1:6), 3), 
-                      stringsAsFactors = FALSE) %>% 
-              dplyr::arrange(APID) %>% 
-              dplyr::mutate(samp_date = lubridate::dmy(rep(c("1/9/11",
-                                                       "25/12/11",
-                                                       "3/1/12"), 4),
-                                                       c("1/9/11",
-                                                         "25/12/11",
-                                                         "3/4/12",
-                                                         "14/12/11",
-                                                         "30/12/11",
-                                                         "30/12/11")),
-                            culture = as.factor(c("Negative", "Positive", "Positive",
-                                        "Positive", "Negative", "Negative",
-                                        NA_character_, "Positive", "Negative",
-                                        "Positive", "Negative", "Positive",
-                                        "Negative", "Positive", "Negative",
-                                        "Positive", "Negative", "Positive")),
-                            smear = as.factor(c("Negative", "2+", "Scanty",
-                                              "3+", "Negative", "Scanty",
-                                              NA, "3+", "Scanty",
-                                              "1+", "2+", "3+", 
-                                              "Scanty", "Negative", "3+",
-                                              "3+", "Scanty", "2+")))
+epi <- purrr::map(records, .f = ~ new_patient(.x[[1]], .x[[2]], .x[[3]], .x[[4]])) %>% 
+  purrr::pmap(dplyr::bind_rows)
 
-class(baseline_epi_lab) <- c(class(baseline_epi_lab), "epiinfo")  
+class(epi$adm) <- c("data.frame", "epiinfo")
+class(epi$lab) <- c("data.frame", "epiinfo")
 
-saveRDS(baseline_epi_lab, "inst/testdata/baseline_epi_lab.rds")
+# save epiinfo data
+saveRDS(epi, "inst/testdata/baseliner_epi.rds")
 
+# Koch 6
+# rename variables for koch6 adm and lab
+koch6 <- epi
+names(koch6$adm) <- c("registrationnb", "Starttre")
+names(koch6$lab)[1] <- c("registrationnb")
 
-## Koch 6 test data
-### Admission data
-baseline_k6_adm <- baseline_epi_adm %>% 
-  rename(registrationnb = APID,
-         Starttre = STARTTRE)
+# change class of Koch 6 data
+class(koch6$adm) <- c("data.frame", "koch6")
+class(koch6$lab) <- c("data.frame", "koch6")
 
-class(baseline_k6_adm) <- stringr::str_replace(class(baseline_k6_adm), "epiinfo", "koch6")
+# save koch6 data
+saveRDS(koch6, "inst/testdata/baseliner_k6.rds")
 
-saveRDS(baseline_k6_adm, "inst/testdata/baseline_k6_adm.rds")
+# Grozny
+# rename variables for koch6 adm and Grozny lab
+groz <- epi
+names(groz$adm) <- c("registrationnb", "Starttre")
+names(groz$lab)[1] <- c("registrationnb")
 
+# add DST number variable
+id_numbers <- stringr::str_remove(groz$adm$registrationnb, pattern = "^XYZ")
+groz$adm$dstnumber <- stringr::str_pad(id_numbers, width = 5, side = "left", pad = "0")
 
-### Lab data
-baseline_k6_lab <- baseline_epi_lab %>% 
-  rename(registrationnb = APID)
+id_numbers <- stringr::str_remove(groz$lab$registrationnb, pattern = "^XYZ")
+groz$lab$dstnumber <- stringr::str_pad(id_numbers, width = 5, side = "left", pad = "0")
+groz$lab$registrationnb <- NULL
 
-
-class(baseline_k6_lab) <- stringr::str_replace(class(baseline_k6_lab), "epiinfo", "koch6")
-
-saveRDS(baseline_k6_lab, "inst/testdata/baseline_k6_lab.rds")
-
-
-## Grozny test data
-### Admission data
-baseline_groz_adm <- baseline_epi_adm %>% 
-  rename(registrationnb = APID,
-         Starttre = STARTTRE) %>% 
-  mutate(dstnumber = paste0("0000", c(1:5, 1)),
-         Starttre = lubridate::dmy(c(rep("1/1/2012", 5), "1/1/2013")))
-
-class(baseline_groz_adm) <- c(class(baseline_groz_adm), "koch6")
-saveRDS(baseline_groz_adm, "inst/testdata/baseline_groz_adm.rds")
+# change class of Grozny data
+class(groz$adm) <- c("data.frame", "koch6")
+class(groz$lab) <- c("data.frame", "grozny")
 
 
-### Lab data
-baseline_groz_lab <- baseline_epi_lab %>% 
-  rename(registrationnb = APID) %>% 
-  left_join(select(baseline_groz_adm, registrationnb, dstnumber), by = "registrationnb") %>% 
-  select(-registrationnb)
-
-  baseline_groz_lab$samp_date[16] <- lubridate::dmy("14/12/2012")
-  baseline_groz_lab$samp_date[17] <- lubridate::dmy("30/12/2012")
-  baseline_groz_lab$samp_date[18] <- lubridate::dmy("02/01/2013")
-
-class(baseline_groz_lab) <- c(class(baseline_groz_lab), "grozny")
-
-saveRDS(baseline_groz_lab, "inst/testdata/baseline_groz_lab.rds")
+# save grozny data
+saveRDS(groz, "inst/testdata/baseliner_groz.rds")
 
