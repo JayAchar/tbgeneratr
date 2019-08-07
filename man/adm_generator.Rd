@@ -4,7 +4,8 @@
 \alias{adm_generator}
 \title{Admission TB variable generator}
 \usage{
-adm_generator(x, rm_orig = TRUE, ...)
+adm_generator(x, rm_orig = TRUE, categorise = TRUE,
+  paediatric = TRUE, bin_outcome = TRUE, ...)
 }
 \arguments{
 \item{x}{data frame of cleaned TB admission data using the `tbcleanr` package}
@@ -12,11 +13,13 @@ adm_generator(x, rm_orig = TRUE, ...)
 \item{rm_orig}{logical argument to remove original variables from age and BMI
 calculators}
 
-\item{...}{logical arguments for \code{age_generator()}:
-\itemize{
-  \item \code{categorise} to add factor variable of ages,
-  \item \code{paediatric} to add factor variable for childhood ages.
-}}
+\item{categorise}{logical flag to add factor variable of ages}
+
+\item{paediatric}{logical flag to add factor variable for childhood ages}
+
+\item{bin_outcome}{logical flag to add binary outcome variable}
+
+\item{...}{additional arguments to pass}
 }
 \description{
 Designed to generate additional variables from within the TB admission

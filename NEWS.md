@@ -1,5 +1,9 @@
 # tbgeneratr 0.1.1.6
-#### 30 July 2019
+#### 7 August 2019
+## Minor update
+* args in `adm_generator()` changed
+* `finalise_outcome()` added to `adm_generator()`
+
 ## Bug fix
 * Bug fixes in `drug_timer()`
 * Unit tests added for `drug_timer()`
