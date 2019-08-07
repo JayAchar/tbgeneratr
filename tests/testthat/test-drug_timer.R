@@ -7,6 +7,26 @@ testing_code <- quote({
   expect_equal(nrow(output), nrow(input$adm))
   expect_equal(ncol(output), ncol(input$adm) + 1)
   expect_true("bdq_days" %in% names(output))
+  expect_error(tbgeneratr:::drug_timer(adm = input$adm,
+                                              change = input$change,
+                                              drug = "bdq"),
+                 NA)
+  expect_warning(tbgeneratr:::drug_timer(adm = input$adm,
+                                       change = input$change,
+                                       drug = "bdq"),
+               NA)
+  expect_message(tbgeneratr:::drug_timer(adm = input$adm,
+                                       change = input$change,
+                                       drug = "bdq"),
+               regexp = "drug_timer(): ",
+               all = FALSE, 
+               fixed = TRUE)
+  expect_message(tbgeneratr:::drug_timer(adm = input$adm,
+                                         change = input$change,
+                                         drug = "bdq"),
+                 regexp = "identified who received this drug.",
+                 all = FALSE, 
+                 fixed = TRUE)
   expect_true(all(output$bdq_days >= 0 | is.na(output$bdq_days)))
   expect_true(output$bdq_days[output[[1]] == "XYZ1"] == 5L)
   expect_true(output$bdq_days[output[[1]] == "XYZ2"] == 5L) 
@@ -18,17 +38,29 @@ testing_code <- quote({
   expect_true(output$bdq_days[output[[1]] == "XYZ10"] == 365L)
 })
 
+error_testing <- quote({
+  # drug argument not present in look up table
+  expect_error(tbgeneratr:::drug_timer(adm = input$adm,
+                                             change = input$change,
+                                             drug = "zzz"))
+  # drug arg should be string
+  expect_error(tbgeneratr:::drug_timer(adm = input$adm,
+                                             change = input$change,
+                                             drug = bdq))
+})
+
 ## Epiinfo
 # load test data
 input <- system.file("testdata", "drug_timer_epi.rds", package="tbgeneratr") %>% 
   readRDS() 
 
-output <- tbgeneratr:::drug_timer.epiinfo(adm = input$adm,
+output <- tbgeneratr:::drug_timer(adm = input$adm,
                                       change = input$change,
                                       drug = "bdq")
 
 # test code
 test_that("EpiInfo testing", eval(testing_code))
+test_that("EpiInfo errors", eval(error_testing))
 
 
 ## Koch6
@@ -36,9 +68,10 @@ test_that("EpiInfo testing", eval(testing_code))
 input <- system.file("testdata", "drug_timer_koch.rds", package="tbgeneratr") %>% 
   readRDS() 
 
-output <- tbgeneratr:::drug_timer.koch6(adm = input$adm,
+output <- tbgeneratr:::drug_timer(adm = input$adm,
                                       change = input$change,
                                       drug = "bdq")
 
 # test code
 test_that("Koch6 testing", eval(testing_code))
+test_that("Koch6 errors", eval(error_testing))

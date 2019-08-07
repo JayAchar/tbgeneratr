@@ -1,3 +1,4 @@
+library(magrittr)
 # Function to define patients
 new_patient <- function(unique_id_int,
                         change_time,
@@ -57,7 +58,7 @@ records <- list(
 )
 
 epi <- purrr::map(records, .f = ~ new_patient(.x[[1]], .x[[2]], .x[[3]], .x[[4]])) %>% 
-  purrr::pmap(bind_rows)
+  purrr::pmap(dplyr::bind_rows)
 
 # add record in admission data with no change data
 epi$adm <- dplyr::bind_rows(epi$adm, data.frame(APID = "XYZ0", 
@@ -65,6 +66,9 @@ epi$adm <- dplyr::bind_rows(epi$adm, data.frame(APID = "XYZ0",
                                          BDQDBDQ = factor("Yes", levels = c("Yes", "No")), 
                                          DATEN = lubridate::dmy("1/1/2011"), 
                                          stringsAsFactors = FALSE))
+# apply class
+class(epi$adm) <- c("data.frame", "epiinfo")
+class(epi$change) <- c("data.frame", "epiinfo")
 
 # save epiinfo data
 saveRDS(epi, "inst/testdata/drug_timer_epi.rds")
@@ -74,6 +78,10 @@ koch <- epi
 
 names(koch$adm) <- c("registrationnb", "Starttre", "Bdq", "dateend")
 names(koch$change) <- c("registrationnb", "change_dt", "bdq_change")
+
+# apply class
+class(koch$adm) <- c("data.frame", "koch6")
+class(koch$change) <- c("data.frame", "koch6")
 
 # save koch6 data
 saveRDS(koch, "inst/testdata/drug_timer_koch.rds")

@@ -16,10 +16,11 @@
 
 drug_timer <- function(adm, change, drug) {
   
-  # check args 
-  assert_that(is.data.frame(adm))
-  assert_that(is.data.frame(change))
-  assert_that(length(drug) == 1)
+  # check args
+  assert_that(is.data.frame(adm),
+              is.data.frame(change))
+  assert_that(length(drug) == 1,
+              is.character(drug))
   
   UseMethod("drug_timer", adm)
   
