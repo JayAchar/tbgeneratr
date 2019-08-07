@@ -147,7 +147,8 @@ to allow easier grouping by year, month or date.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>adm_generator</span>(<span class='no'>x</span>, <span class='kw'>rm_orig</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>adm_generator</span>(<span class='no'>x</span>, <span class='kw'>rm_orig</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>categorise</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>paediatric</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>bin_outcome</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -162,11 +163,20 @@ to allow easier grouping by year, month or date.</p>
 calculators</p></td>
     </tr>
     <tr>
+      <th>categorise</th>
+      <td><p>logical flag to add factor variable of ages</p></td>
+    </tr>
+    <tr>
+      <th>paediatric</th>
+      <td><p>logical flag to add factor variable for childhood ages</p></td>
+    </tr>
+    <tr>
+      <th>bin_outcome</th>
+      <td><p>logical flag to add binary outcome variable</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p>logical arguments for <code>age_generator()</code>:</p><ul>
-<li><p><code>categorise</code> to add factor variable of ages,</p></li>
-<li><p><code>paediatric</code> to add factor variable for childhood ages.</p></li>
-</ul></td>
+      <td><p>additional arguments to pass</p></td>
     </tr>
     </table>
     
