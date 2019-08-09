@@ -1,3 +1,10 @@
+# tbgeneratr 0.1.2.0
+#### 9 August 2019
+## Major update
+* added function to recalculate treatment outcome for DR-TB in EpiInfo data
+
+---
+
 # tbgeneratr 0.1.1.6
 #### 7 August 2019
 ## Minor update
