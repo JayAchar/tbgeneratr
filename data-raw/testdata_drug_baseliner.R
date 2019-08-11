@@ -62,7 +62,7 @@ epi <- structure(
 )
 
 # save test data
-saveRDS(epi, "inst/testdata/drug_baseliner_epi.rds")
+saveRDS(epi, "inst/testdata/drug_baseliner_epi.rds", version = 2)
 
 # correct results  
 ## "XYZ6" is not included since it has one inh_res result which is NA
@@ -73,4 +73,4 @@ correct <- data.frame(APID = c("XYZ1", "XYZ2", "XYZ3", "XYZ4", "XYZ5"),
                         class = "factor"),
                       stringsAsFactors = FALSE)
 # save correct results data
-saveRDS(correct, "inst/testdata/drug_baseliner_epi_correct.rds")
+saveRDS(correct, "inst/testdata/drug_baseliner_epi_correct.rds", version = 2)

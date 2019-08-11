@@ -97,5 +97,5 @@ class(groz$lab) <- c("data.frame", "grozny")
 
 
 # save grozny data
-saveRDS(groz, "inst/testdata/baseliner_groz.rds")
+saveRDS(groz, "inst/testdata/baseliner_groz.rds", version = 2)
 

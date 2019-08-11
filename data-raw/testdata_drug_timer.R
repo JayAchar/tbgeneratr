@@ -71,7 +71,7 @@ class(epi$adm) <- c("data.frame", "epiinfo")
 class(epi$change) <- c("data.frame", "epiinfo")
 
 # save epiinfo data
-saveRDS(epi, "inst/testdata/drug_timer_epi.rds")
+saveRDS(epi, "inst/testdata/drug_timer_epi.rds", version = 2)
 
 # change variable names for Koch 6 raw data
 koch <- epi
@@ -84,4 +84,4 @@ class(koch$adm) <- c("data.frame", "koch6")
 class(koch$change) <- c("data.frame", "koch6")
 
 # save koch6 data
-saveRDS(koch, "inst/testdata/drug_timer_koch.rds")
+saveRDS(koch, "inst/testdata/drug_timer_koch.rds", version = 2)

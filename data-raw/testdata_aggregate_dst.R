@@ -37,4 +37,4 @@ df <- structure(
   row.names = c(NA,-8L),
   class = "data.frame"
 )
-saveRDS(df, "inst/testdata/aggregate_dst.rds")
+saveRDS(df, "inst/testdata/aggregate_dst.rds", version = 2)

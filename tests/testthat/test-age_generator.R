@@ -83,14 +83,13 @@ test_that("EpiInfo narrow ok", {
 })
 
 test_that("Negative EpiInfo age ok", {
-  expect_true(is.na(epi_neg$age_years[4]))
+  expect_true(is.na(epi_neg$age_years[3]))
 })
 
 
 test_that("Expect errors & warnings", {
   expect_error(age_generator(age_gen_epi, rm_orig = stop))
   expect_warning(age_generator(age_gen_koch6_neg))
-  expect_warning(age_generator(age_gen_epi_neg))
 })
 
 test_that("Categorise Epiinfo age ok", {
