@@ -102,7 +102,7 @@ class(epi$adm) <- c("data.frame", "epiinfo")
 class(epi$lab) <- c("data.frame", "epiinfo")
 
 # save koch6 data
-saveRDS(epi, "inst/testdata/fail_culture_reversion_epi.rds")
+saveRDS(epi, "inst/testdata/fail_culture_reversion_epi.rds", version = 2)
 
 
 

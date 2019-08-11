@@ -17,7 +17,12 @@ testing_code <- quote({
   expect_true(output$fail_amplify[output[[1]] == "XYZ2"] == 0L)
   expect_true(output$fail_amplify[output[[1]] == "XYZ3"] == 1L)
   expect_true(output$fail_amplify[output[[1]] == "XYZ4"] == 0L)
-  expect_true(output$fail_amplify[output[[1]] == "XYZ5"] == 1L)
+  expect_true(output$fail_amplify[output[[1]] == "XYZ5"] == 0L)
+  expect_true(output$fail_amplify[output[[1]] == "XYZ6"] == 0L)
+  
+  expect_true(output$fail_amplify[output[[1]] == "XYZ9"] == 1L)
+  expect_true(output$fail_amplify[output[[1]] == "XYZ10"] == 1L)
+  expect_true(output$fail_amplify_dt[output[[1]] == "XYZ10"] == input$adm$STARTTRE[10] + 100)
 })
 
 error_testing <- quote({

@@ -76,7 +76,7 @@ epi <- purrr::map(records, .f = ~ new_data(.x[[1]], .x[[2]], .x[[3]], .x[[4]], .
 class(epi) <- c("data.frame", "epiinfo")
 
 # save koch6 data
-saveRDS(epi, "inst/testdata/fail_no_culture_conversion_epi.rds")
+saveRDS(epi, "inst/testdata/fail_no_culture_conversion_epi.rds", version = 2)
 
 
 
