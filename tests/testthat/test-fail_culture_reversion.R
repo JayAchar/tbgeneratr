@@ -1,4 +1,4 @@
-context("test-drug_timer")
+context("test-fail_culture_reversion")
 library(tbgeneratr)
 
 # define unit tests code
