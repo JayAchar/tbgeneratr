@@ -6,6 +6,7 @@ testing_code <- quote({
   expect_equal(class(input$adm), class(output))
   expect_equal(length(unique(input$adm[[1]])), length(unique(output[[1]])))
   expect_true(all(c("base_smear", "base_culture") %in% names(output)))
+  expect_true(length(unique(output[[1]])) == nrow(output))
   
   expect_true(output$base_culture[output[[1]] == "XYZ1"] == "Positive")
   expect_true(output$base_smear[output[[1]] == "XYZ1"] == "Scanty")

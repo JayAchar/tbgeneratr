@@ -36,8 +36,8 @@ baseliner.epiinfo <- function(adm, lab,
   data <- data[ , c("APID", "STARTTRE", "samp_date", "culture", "smear")]
   
   # check data structure
-  assert_that(lubridate::is.Date(data$samp_date))
-  assert_that(lubridate::is.Date(data$STARTTRE))
+  assertthat::assert_that(lubridate::is.Date(data$samp_date))
+  assertthat::assert_that(lubridate::is.Date(data$STARTTRE))
   
   # enquo baseline_days for use with NSE
   baseline_days <- enquo(baseline_days)
@@ -65,10 +65,10 @@ baseliner.epiinfo <- function(adm, lab,
     filter(.data$samp_date - .data$STARTTRE < 7) %>%
     # reoove rows beyond defined baseline_days
     filter(.data$STARTTRE - .data$samp_date < !! baseline_days) %>%
-    # remove id, sample date and result duplicate
-    distinct(.data$APID, .data$samp_date, .data$result, .keep_all = T) %>%
     # generate absolute days variable
     mutate(abs_days = abs(.data$samp_date - .data$STARTTRE)) %>%
+    # remove id, sample abs date and result duplicate
+    distinct(.data$APID, .data$abs_days, .data$result, .keep_all = T) %>%
     # keep positive results if duplicated for same id and sample date
     # result variable should be orderd factor
     group_by(.data$APID, .data$abs_days) %>%
@@ -77,7 +77,7 @@ baseliner.epiinfo <- function(adm, lab,
     # keep closest result to treatment start
     group_by(.data$APID) %>%
     top_n(1, desc(.data$abs_days)) %>%
-    ungroup() %>%
+    ungroup() %>% 
     # select output variables
     select(.data$APID, .data$result) %>% 
     # merge with admission data frame
