@@ -46,6 +46,8 @@ new_data <- function(unique_id_int,
                     DATEN = end_dt,
                     base_fq = fq,
                     base_sli = sli,
+                    base_ofx = factor(NA_integer_),
+                    base_cm = factor(NA_integer_),
                     stringsAsFactors = FALSE)
 
   samp_date <- start_date + sample_date

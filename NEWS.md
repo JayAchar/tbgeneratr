@@ -1,7 +1,7 @@
 # tbgeneratr 0.1.2.0
-#### 16 August 2019
+#### 17 August 2019
 ## Major update
-* added function to recalculate treatment outcome for DR-TB in EpiInfo data
+* added function - `recalculate_outcome()` to recalculate treatment outcome for DR-TB in EpiInfo data
 
 ## Bug fix
 * prevent baseliner() generating >1 result per patient by adjusting filtering of duplicate sample results

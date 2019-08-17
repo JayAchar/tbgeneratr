@@ -49,8 +49,8 @@ fail_amplify.epiinfo <- function(adm,
   
   # drug names
   drugs <- list(
-  fq_match <- c("_fq$", "_ofx$", "_mfx$"),
-  sli_match <- c("_sli$", "_km$", "_cm$")
+  fq_match <- c("_fq$", "^dst_p_ofx$", "^dst_p_mfx$"),
+  sli_match <- c("_sli$", "^dst_p_km$", "^dst_p_cm$")
   )
   
   # dataframe of detect_amplify outputs 
