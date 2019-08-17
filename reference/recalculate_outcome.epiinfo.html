@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Default method for drug_timer() — drug_timer.default • tbgeneratr</title>
+<title>Recalculate outcome — recalculate_outcome.epiinfo • tbgeneratr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,10 @@
 
 
 
-<meta property="og:title" content="Default method for drug_timer() — drug_timer.default" />
+<meta property="og:title" content="Recalculate outcome — recalculate_outcome.epiinfo" />
 
-<meta property="og:description" content="Allow data frames with unspecified object class to pass through" />
+<meta property="og:description" content="This function detects whether DR-TB failure criteria have been 
+encourntered during the course of a treatment episode." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,36 +131,68 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Default method for drug_timer()</h1>
-    <small class="dont-index">Source: <a href='https://github.com/JayAchar/tbgeneratr/blob/master/R/drug_timer.default.R'><code>R/drug_timer.default.R</code></a></small>
-    <div class="hidden name"><code>drug_timer.default.Rd</code></div>
+    <h1>Recalculate outcome</h1>
+    <small class="dont-index">Source: <a href='https://github.com/JayAchar/tbgeneratr/blob/master/R/recalculate_outcome.epiinfo.R'><code>R/recalculate_outcome.epiinfo.R</code></a></small>
+    <div class="hidden name"><code>recalculate_outcome.epiinfo.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Allow data frames with unspecified object class to pass through</p>
+    <p>This function detects whether DR-TB failure criteria have been 
+encourntered during the course of a treatment episode.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for default</span>
-<span class='fu'>drug_timer</span>(<span class='no'>adm</span>, <span class='no'>change</span>, <span class='no'>drug</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for epiinfo</span>
+<span class='fu'>recalculate_outcome</span>(<span class='no'>adm</span>, <span class='no'>adhere</span>, <span class='no'>change</span>, <span class='no'>lab</span>,
+  <span class='kw'>stop_days</span> <span class='kw'>=</span> <span class='fl'>30</span>, <span class='kw'>no_cc_days</span> <span class='kw'>=</span> <span class='fl'>240</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>adm</th>
-      <td><p>admission data set cleaned using `tbcleanr`</p></td>
+      <td><p>data frame of individual patient admission records cleaned 
+with `tbcleanr`.</p></td>
+    </tr>
+    <tr>
+      <th>adhere</th>
+      <td><p>data frame of individual patient follow-up data including
+monthly drug-specific adherence data cleaned by `tbcleanr::adhere_cleanr()`</p></td>
     </tr>
     <tr>
       <th>change</th>
-      <td><p>change data set cleaned using `tbcleanr`</p></td>
+      <td><p>data frame of individual patient follow-up data including
+monthly drug-specific change data cleaned by `tbcleanr::change_cleanr()`</p></td>
     </tr>
     <tr>
-      <th>drug</th>
-      <td><p>define which drug to calculate</p></td>
+      <th>lab</th>
+      <td><p>data frame of laboratory TB data cleaned using `tbcleanr`</p></td>
+    </tr>
+    <tr>
+      <th>stop_days</th>
+      <td><p>define interval in days where two drugs being stopped would result in failure.</p></td>
+    </tr>
+    <tr>
+      <th>no_cc_days</th>
+      <td><p>time cut-off in days to define failure to culture convert - default = 240 days</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>tibble with same class as input admission data with two columns. The first represents
+the unique record ID number and second "fail_date" identifies all dates where a failure criteria
+was detected within the treatment course.</p>
+    
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The purpose of this function is to detect whether failure criteria for DR-TB
+have occured during the course of a treatment record and to propose a new "failure" date.</p>
+<p>This proposed failure date may then be compared to the recorded failure date to see 
+whether a new treament episode should be defined for any ongoing treatment being provided. This 
+decision may depend upon, amongst other things, whether the ongoing treatment length was significant,
+or whether a new regimen was initiated.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -172,6 +205,10 @@
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
+      <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
+
       <li><a href="#see-also">See also</a></li>
           </ul>
 

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Default method for drug_timer() — drug_timer.default • tbgeneratr</title>
+<title>Recalculate outcome — recalculate_outcome.default • tbgeneratr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Default method for drug_timer() — drug_timer.default" />
+<meta property="og:title" content="Recalculate outcome — recalculate_outcome.default" />
 
-<meta property="og:description" content="Allow data frames with unspecified object class to pass through" />
+<meta property="og:description" content="Recalculate outcome" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,34 +130,46 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Default method for drug_timer()</h1>
-    <small class="dont-index">Source: <a href='https://github.com/JayAchar/tbgeneratr/blob/master/R/drug_timer.default.R'><code>R/drug_timer.default.R</code></a></small>
-    <div class="hidden name"><code>drug_timer.default.Rd</code></div>
+    <h1>Recalculate outcome</h1>
+    <small class="dont-index">Source: <a href='https://github.com/JayAchar/tbgeneratr/blob/master/R/recalculate_outcome.R'><code>R/recalculate_outcome.R</code></a></small>
+    <div class="hidden name"><code>recalculate_outcome.default.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Allow data frames with unspecified object class to pass through</p>
+    <p>Recalculate outcome</p>
     
     </div>
 
     <pre class="usage"><span class='co'># S3 method for default</span>
-<span class='fu'>drug_timer</span>(<span class='no'>adm</span>, <span class='no'>change</span>, <span class='no'>drug</span>)</pre>
+<span class='fu'>recalculate_outcome</span>(<span class='no'>adm</span>, <span class='no'>adhere</span>, <span class='no'>change</span>, <span class='no'>lab</span>,
+  <span class='kw'>stop_days</span> <span class='kw'>=</span> <span class='fl'>30</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>adm</th>
-      <td><p>admission data set cleaned using `tbcleanr`</p></td>
+      <td><p>data frame of individual patient admission records cleaned 
+with `tbcleanr`.</p></td>
+    </tr>
+    <tr>
+      <th>adhere</th>
+      <td><p>data frame of individual patient follow-up data including
+monthly drug-specific adherence data cleaned by `tbcleanr::adhere_cleanr()`</p></td>
     </tr>
     <tr>
       <th>change</th>
-      <td><p>change data set cleaned using `tbcleanr`</p></td>
+      <td><p>data frame of individual patient follow-up data including
+monthly drug-specific change data cleaned by `tbcleanr::change_cleanr()`</p></td>
     </tr>
     <tr>
-      <th>drug</th>
-      <td><p>define which drug to calculate</p></td>
+      <th>lab</th>
+      <td><p>data frame of laboratory TB data cleaned using `tbcleanr`</p></td>
+    </tr>
+    <tr>
+      <th>stop_days</th>
+      <td><p>define interval in days where two drugs being stopped would result in failure.</p></td>
     </tr>
     </table>
     

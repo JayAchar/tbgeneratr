@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Default method for drug_timer() — drug_timer.default • tbgeneratr</title>
+<title>Fail - no culture conversion — fail_no_culture_conversion.epiinfo • tbgeneratr</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,12 @@
 
 
 
-<meta property="og:title" content="Default method for drug_timer() — drug_timer.default" />
+<meta property="og:title" content="Fail - no culture conversion — fail_no_culture_conversion.epiinfo" />
 
-<meta property="og:description" content="Allow data frames with unspecified object class to pass through" />
+<meta property="og:description" content="This function detects with a record diagnosed with DR-TB
+should receive a failure outcome due to lack of culture conversion
+before a defined time-point. The WHO 2014 definitions suggests this
+time-point to be 8 months after treatment commencement." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -130,34 +133,35 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Default method for drug_timer()</h1>
-    <small class="dont-index">Source: <a href='https://github.com/JayAchar/tbgeneratr/blob/master/R/drug_timer.default.R'><code>R/drug_timer.default.R</code></a></small>
-    <div class="hidden name"><code>drug_timer.default.Rd</code></div>
+    <h1>Fail - no culture conversion</h1>
+    <small class="dont-index">Source: <a href='https://github.com/JayAchar/tbgeneratr/blob/master/R/fail_no_culture_conversion.epiinfo.R'><code>R/fail_no_culture_conversion.epiinfo.R</code></a></small>
+    <div class="hidden name"><code>fail_no_culture_conversion.epiinfo.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Allow data frames with unspecified object class to pass through</p>
+    <p>This function detects with a record diagnosed with DR-TB
+should receive a failure outcome due to lack of culture conversion
+before a defined time-point. The WHO 2014 definitions suggests this
+time-point to be 8 months after treatment commencement.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for default</span>
-<span class='fu'>drug_timer</span>(<span class='no'>adm</span>, <span class='no'>change</span>, <span class='no'>drug</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for epiinfo</span>
+<span class='fu'>fail_no_culture_conversion</span>(<span class='no'>adm_lab</span>, <span class='kw'>no_cc_days</span> <span class='kw'>=</span> <span class='fl'>240</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>adm</th>
-      <td><p>admission data set cleaned using `tbcleanr`</p></td>
+      <th>adm_lab</th>
+      <td><p>data frame of individual patient records cleaned 
+with `tbcleanr` and combined with laboratory data using `tbgeneratr::adm_lab_generator()`</p></td>
     </tr>
     <tr>
-      <th>change</th>
-      <td><p>change data set cleaned using `tbcleanr`</p></td>
-    </tr>
-    <tr>
-      <th>drug</th>
-      <td><p>define which drug to calculate</p></td>
+      <th>no_cc_days</th>
+      <td><p>time cut-off in days to define failure to culture convert. 
+Default value (240 days) taken from 2014 WHO definition of 8 months</p></td>
     </tr>
     </table>
     
