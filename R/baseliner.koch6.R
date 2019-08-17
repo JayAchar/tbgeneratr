@@ -85,10 +85,10 @@ baseliner.koch6 <- function(adm, lab,
     filter(.data$samp_date - .data$Starttre < 7) %>%
     # reoove rows beyond defined baseline_days
     filter(.data$Starttre - .data$samp_date < !! baseline_days) %>% 
-    # remove id, sample date and result duplicate
-    distinct(!!id_sym, .data$samp_date, .data$result, .keep_all = T) %>% 
     # generate absolute days variable
     mutate(abs_days = abs(.data$samp_date - .data$Starttre)) %>%
+    # remove id, sample abs date and result duplicate
+    distinct(!!id_sym, .data$abs_days, .data$result, .keep_all = T) %>% 
     # keep positive results if duplicated for same id and sample date
     # result variable should be orderd factor
     group_by(!! id_sym, .data$abs_days) %>%

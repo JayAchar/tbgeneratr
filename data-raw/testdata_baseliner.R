@@ -52,7 +52,9 @@ records <- list(
   # discrepant results same day
   list(4, c(-5, -5), c(1, 0), c(0, 4)),
   # results after starting treatment + 7
-  list(5, 8, 1, 1)
+  list(5, 8, 1, 1), 
+  # same negative results on the same day
+  list(6, c(-5, 5), c(1, 1), c(0, 0))
 )
 
 epi <- purrr::map(records, .f = ~ new_patient(.x[[1]], .x[[2]], .x[[3]], .x[[4]])) %>% 
