@@ -26,6 +26,7 @@
 #' the unique record ID number and second "fail_date" identifies all dates where a failure criteria
 #' was detected within the treatment course. 
 #' @importFrom assertthat assert_that
+#' @export
 
 recalculate_outcome <- function(adm,
                                 adhere,

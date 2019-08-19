@@ -11,6 +11,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr left_join 
 #' @importFrom purrr map_int modify_at reduce
+#' @export
 
 recalculate_outcome.epiinfo <- function(adm,
                                 adhere,

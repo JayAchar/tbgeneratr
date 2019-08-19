@@ -9,6 +9,7 @@
 #' @param days single integer to define the timepoint following treatment initiation 
 #' to generate regimen string
 #' @author Jay Achar
+#' @export 
 #' @seealso \code{\link{tbgeneratr}}
 #' @importFrom assertthat assert_that
 
