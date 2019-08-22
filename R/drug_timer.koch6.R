@@ -39,13 +39,18 @@ drug_timer.koch6 <- function(adm, change, drug) {
   change_drug <- sym(change_drug)
   
   # calculate database time
-  dbtime <- max(max(adm$Starttre, na.rm = T), max(change$change_dt, na.rm = T))
+  dbtime <- max(max(adm$Starttre, na.rm = TRUE), max(change$change_dt, na.rm = TRUE))
   
   message(paste0("drug_timer(): Database time calculated as ", dbtime))
   
   # remove drug changes before treatment start and after treatment ending
   change <- adm %>% 
     select(.data$registrationnb, .data$Starttre, .data$dateend) %>% 
+    # add dbtime if end date is missing to allow filtering
+    mutate(dateend = as.Date(ifelse(is.na(.data$dateend),
+                                  dbtime,
+                                  .data$dateend),
+                           origin = "1970-01-01")) %>% 
     left_join(change, by = "registrationnb") %>% 
     filter(.data$change_dt >= .data$Starttre & .data$change_dt <= .data$dateend) %>% 
     select(-.data$Starttre, -.data$dateend)

@@ -1,3 +1,11 @@
+# tbgeneratr 0.1.2.2
+#### 22 August 2019
+
+## Bug fix
+* records where end treatment date are missing are now included in `drug_timer()` calculations using the most recent date in the admission and drug changes data sets as a database time. 
+
+---
+
 # tbgeneratr 0.1.2.0
 #### 17 August 2019
 ## Major update

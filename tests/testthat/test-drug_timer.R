@@ -36,6 +36,8 @@ testing_code <- quote({
   expect_true(output$bdq_days[output[[1]] == "XYZ8"] == 20L)
   expect_true(output$bdq_days[output[[1]] == "XYZ0"] == 365L)
   expect_true(output$bdq_days[output[[1]] == "XYZ10"] == 365L)
+  expect_true(output$bdq_days[output[[1]] == "XYZ11"] == 70L)
+  
 })
 
 error_testing <- quote({

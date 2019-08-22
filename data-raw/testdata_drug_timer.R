@@ -54,7 +54,10 @@ records <- list(
   # only stop flag available - should be no result
   list(9, 25, "Stop", NA_character_),
   # stop drug after end of treatment
-  list(10, 400, "Stop", "Yes")
+  list(10, 400, "Stop", "Yes"),
+  # no end date in admission data - changed after purrr::map call
+  list(11, c(30, 100), c("Start", "Stop"), "No")
+  
 )
 
 epi <- purrr::map(records, .f = ~ new_patient(.x[[1]], .x[[2]], .x[[3]], .x[[4]])) %>% 
@@ -66,6 +69,10 @@ epi$adm <- dplyr::bind_rows(epi$adm, data.frame(APID = "XYZ0",
                                          BDQDBDQ = factor("Yes", levels = c("Yes", "No")), 
                                          DATEN = lubridate::dmy("1/1/2011"), 
                                          stringsAsFactors = FALSE))
+
+# convert XYZ11 adm DATEN to NA
+  epi$adm$DATEN[epi$adm$APID == "XYZ11"] <- NA
+
 # apply class
 class(epi$adm) <- c("data.frame", "epiinfo")
 class(epi$change) <- c("data.frame", "epiinfo")
