@@ -1,3 +1,13 @@
+# tbgeneratr 0.1.2.3
+#### 10 October 2019
+## Minor update
+
+* **New function added:** `reassign_lab_no()` for use with Epiinfo data checks whether a diagnostic
+specimen number is defined in admission data and assigns the relevent patient ID that this specimen
+in the lab data set if it is missing.
+
+---
+
 # tbgeneratr 0.1.2.2
 #### 22 August 2019
 
