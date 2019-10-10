@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Culture/smear conversion calculator — converter.epiinfo • tbgeneratr</title>
+<title>Reassign lab numbers — reassign_lab_no.epiinfo • tbgeneratr</title>
 
 
 <!-- jquery -->
@@ -35,9 +35,10 @@
 
 
 
-<meta property="og:title" content="Culture/smear conversion calculator — converter.epiinfo" />
-<meta property="og:description" content="Takes laboratory data with start and end treatment informaiton and
-calculates culture or smear conversion dates based on &amp;gt;30 days criteria" />
+<meta property="og:title" content="Reassign lab numbers — reassign_lab_no.epiinfo" />
+<meta property="og:description" content="Check admission data set for diagnostic laboratory sample 
+identification numbers and link to laboratory data set where
+this is absent in original data." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -137,39 +138,37 @@ calculates culture or smear conversion dates based on &amp;gt;30 days criteria" 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Culture/smear conversion calculator</h1>
-    <small class="dont-index">Source: <a href='https://github.com/JayAchar/tbgeneratr/blob/master/R/converter.epiinfo.R'><code>R/converter.epiinfo.R</code></a></small>
-    <div class="hidden name"><code>converter.epiinfo.Rd</code></div>
+    <h1>Reassign lab numbers</h1>
+    <small class="dont-index">Source: <a href='https://github.com/JayAchar/tbgeneratr/blob/master/R/reasign_lab_no.epiinfo.R'><code>R/reasign_lab_no.epiinfo.R</code></a></small>
+    <div class="hidden name"><code>reassign_lab_no.epiinfo.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Takes laboratory data with start and end treatment informaiton and
-calculates culture or smear conversion dates based on &gt;30 days criteria</p>
+    <p>Check admission data set for diagnostic laboratory sample 
+identification numbers and link to laboratory data set where
+this is absent in original data.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for epiinfo</span>
-<span class='fu'>converter</span>(<span class='no'>adm</span>, <span class='no'>lab</span>, <span class='kw'>convert_type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"culture"</span>,
-  <span class='st'>"smear"</span>))</pre>
+<span class='fu'>reassign_lab_no</span>(<span class='no'>adm</span>, <span class='no'>lab</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>adm</th>
-      <td><p>data frame containing TB admission data cleaned and allocated object
-class by tbcleanr package</p></td>
+      <td><p>data frame of admission data cleaned with the tbcleanr package</p></td>
     </tr>
     <tr>
       <th>lab</th>
-      <td><p>data frame containing TB laboratory data cleaned and allocated object
-class by tbcleanr package</p></td>
-    </tr>
-    <tr>
-      <th>convert_type</th>
-      <td><p>string to define which baseline test result to check</p></td>
+      <td><p>data frame of laboratory data cleaned with the tbcleanr package</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>data frame containing lab data with updated patient ID numbers where 
+they were previously missing</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code>tbgeneratr</code></p></div>
@@ -179,11 +178,10 @@ class by tbcleanr package</p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
       <li><a href="#see-also">See also</a></li>
     </ul>
 
-    <h2>Author</h2>
-    <p>Jay Achar</p>
   </div>
 </div>
 
