@@ -1,33 +1,33 @@
 # develop test data for reassign_lab_no()
 
-new_patient <- function(APID, 
+new_patient <- function(APID,
                         include_APID_in_lab,
                         diag_no,
                         base_no,
-                        micro_no, 
+                        micro_no,
                         micro_previous_year = FALSE) {
-  
+
   APID <- paste0("ABC", stringr::str_pad(APID, 4, "left", "0"))
-  
+
   if(!is.na(base_no)) {
-    base_no <- paste0("10-", stringr::str_pad(base_no, 5, "left", "0"))  
+    base_no <- paste0("10-", stringr::str_pad(base_no, 5, "left", "0"))
   }
-  
+
   if(micro_previous_year) {
     micro_no <- paste0("09-", stringr::str_pad(micro_no, 5, "left", "0"))
   } else {
     micro_no <- paste0("10-", stringr::str_pad(micro_no, 5, "left", "0"))
   }
-  
+
   adm <- data.frame(APID = APID,
                     NB1 = as.character(diag_no),
                     NB2 = base_no,
                     stringsAsFactors = FALSE)
-  
+
   if(! include_APID_in_lab) {
     APID <- NA_character_
   }
-  
+
   lab <- data.frame(APID = APID,
                     MICRLABN = micro_no,
                     stringsAsFactors = FALSE)
@@ -39,11 +39,11 @@ new_patient <- function(APID,
 # generate testing records
 
 ## Args
-    # APID, 
+    # APID,
     # include_APID_in_lab,
     # diag_no,
     # base_no,
-    # micro_no, 
+    # micro_no,
     # micro_previous_year = FALSE
 records <- list(
   list(1, TRUE, 1, 2, 1, FALSE),
@@ -60,7 +60,7 @@ records <- list(
 
 
 
-epi <- purrr::map(records, .f = ~ new_patient(.x[[1]], .x[[2]], .x[[3]], .x[[4]], .x[[5]], .x[[6]])) %>% 
+epi <- purrr::map(records, .f = ~ new_patient(.x[[1]], .x[[2]], .x[[3]], .x[[4]], .x[[5]], .x[[6]])) %>%
   purrr::pmap(dplyr::bind_rows)
 
 # apply class
@@ -68,4 +68,4 @@ class(epi$adm) <- c("data.frame", "epiinfo")
 class(epi$lab) <- c("data.frame", "epiinfo")
 
 # save epiinfo data
-saveRDS(epi, "inst/testdata/reassign_lab_no_epi.rds")
+saveRDS(epi, "inst/testdata/reassign_lab_no_epi.rds", version = 2)

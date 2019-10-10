@@ -18,7 +18,7 @@ k6 <- data.frame(Starttre = rep(lubridate::dmy("1/1/2018"), 5),
 
 class(k6) <- c("data.frame", "koch6")
 
-saveRDS(k6, file = "inst/testdata/adm_generator_koch6.rds")
+saveRDS(k6, file = "inst/testdata/adm_generator_koch6.rds", , version = 2)
 
 # epiinfo
 epiinfo <- data.frame(STARTTRE = rep(lubridate::dmy("1/1/2018"), 5),
@@ -40,4 +40,3 @@ epiinfo <- data.frame(STARTTRE = rep(lubridate::dmy("1/1/2018"), 5),
 class(epiinfo) <- c("data.frame", "epiinfo")
 
 saveRDS(epiinfo, file = "inst/testdata/adm_generator_epiinfo.rds", version = 2)
-

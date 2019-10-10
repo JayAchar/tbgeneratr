@@ -18,12 +18,12 @@ epi <- data.frame(APID = paste0("XYZ", 1:9),
 
 class(epi) <- c(class(epi), "epiinfo")
 
-saveRDS(epi, "inst/testdata/finalise_outcome_epi.rds")
+saveRDS(epi, "inst/testdata/finalise_outcome_epi.rds", version = 2)
 
 # Koch 6
 
 k6 <- data.frame(APID = paste0("XYZ", 1:9),
-                 outcome = factor(c("On treatment", "Cured", "Completed", "Death", "Fail", "LTFU", 
+                 outcome = factor(c("On treatment", "Cured", "Completed", "Death", "Fail", "LTFU",
                                     "Transfer out", "Other", "Transfer back to SCC")),
                  stringsAsFactors = FALSE)
 

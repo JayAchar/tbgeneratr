@@ -12,12 +12,12 @@ age_gen_koch6 <- data.frame(dateofbirth = lubridate::dmy("1/1/2015",
                                            "1/1/1992"),
                  stringsAsFactors = FALSE)
 class(age_gen_koch6) <- c(class(age_gen_koch6), "koch6")
-saveRDS(age_gen_koch6, file = "inst/testdata/age_gen_koch6.rds")
+saveRDS(age_gen_koch6, file = "inst/testdata/age_gen_koch6.rds", version = 2)
 
   # generate negative age
 age_gen_koch6_neg <- data.frame(dateofbirth = lubridate::dmy("1/1/2015",
                                                          "5/3/2012",
-                                                         "7/6/1967", 
+                                                         "7/6/1967",
                                                          "1/1/2016"),
                             Starttre = lubridate::dmy("3/1/2016",
                                                       "7/3/2018",
@@ -25,7 +25,7 @@ age_gen_koch6_neg <- data.frame(dateofbirth = lubridate::dmy("1/1/2015",
                                                       "1/1/2012"),
                             stringsAsFactors = FALSE)
 class(age_gen_koch6_neg) <- c(class(age_gen_koch6_neg), "koch6")
-saveRDS(age_gen_koch6_neg, file = "inst/testdata/age_gen_koch6_neg.rds")
+saveRDS(age_gen_koch6_neg, file = "inst/testdata/age_gen_koch6_neg.rds", version = 2)
 
 # EpiInfo
 age_gen_epi <- data.frame(BIRTDATE = lubridate::dmy("1/1/2015",
@@ -40,12 +40,12 @@ age_gen_epi <- data.frame(BIRTDATE = lubridate::dmy("1/1/2015",
                                            "1/1/1992"),
                  stringsAsFactors = FALSE)
 class(age_gen_epi) <- c(class(age_gen_epi), "epiinfo")
-saveRDS(age_gen_epi, file = "inst/testdata/age_gen_epi.rds")
+saveRDS(age_gen_epi, file = "inst/testdata/age_gen_epi.rds", version = 2)
 
   # generate negative age
 age_gen_epi_neg <- data.frame(BIRTDATE = lubridate::dmy("1/1/2015",
                                                     "5/3/2012",
-                                                    "7/6/1967", 
+                                                    "7/6/1967",
                                                     "1/1/2016"),
                           STARTTRE = lubridate::dmy("3/1/2016",
                                                     "7/3/2018",

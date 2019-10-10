@@ -5,39 +5,39 @@ new_patient <- function(unique_id_int,
                         sample_time,
                         culture_results,
                         smear_results) {
-  
+
   start_date <- lubridate::dmy("1/1/2010")
-  
+
   assertthat::assert_that(is.numeric(unique_id_int),
                           is.numeric(sample_time),
                           is.numeric(culture_results),
                           is.numeric(smear_results),
                           length(culture_results) == length(smear_results),
                           length(culture_results) == length(sample_time))
-  
-  # define sample dates  
+
+  # define sample dates
   sample_dt <- start_date + sample_time
-  
-  # gen APID vector  
+
+  # gen APID vector
   id <- paste0("XYZ", unique_id_int)
   id_number <- rep(id, length(sample_dt))
-  
-  adm <- data.frame(APID = id, 
-                    STARTTRE = start_date, 
+
+  adm <- data.frame(APID = id,
+                    STARTTRE = start_date,
                     stringsAsFactors = FALSE)
-  
-  lab = data.frame(APID = id_number, 
+
+  lab = data.frame(APID = id_number,
                    samp_date = sample_dt,
-                   culture = factor(culture_results, 
+                   culture = factor(culture_results,
                                     levels = 0:1,
                                     labels = c("Negative", "Positive"),
                                     ordered = TRUE),
-                   smear = factor(smear_results, 
+                   smear = factor(smear_results,
                                   levels = 0:4,
                                   labels = c("Negative", "Scanty", "1+", "2+", "3+"),
                                   ordered = TRUE),
                    stringsAsFactors = FALSE)
-  list(adm = adm, 
+  list(adm = adm,
        lab = lab)
 }
 
@@ -52,19 +52,19 @@ records <- list(
   # discrepant results same day
   list(4, c(-5, -5), c(1, 0), c(0, 4)),
   # results after starting treatment + 7
-  list(5, 8, 1, 1), 
+  list(5, 8, 1, 1),
   # same negative results on the same day
   list(6, c(-5, 5), c(1, 1), c(0, 0))
 )
 
-epi <- purrr::map(records, .f = ~ new_patient(.x[[1]], .x[[2]], .x[[3]], .x[[4]])) %>% 
+epi <- purrr::map(records, .f = ~ new_patient(.x[[1]], .x[[2]], .x[[3]], .x[[4]])) %>%
   purrr::pmap(dplyr::bind_rows)
 
 class(epi$adm) <- c("data.frame", "epiinfo")
 class(epi$lab) <- c("data.frame", "epiinfo")
 
 # save epiinfo data
-saveRDS(epi, "inst/testdata/baseliner_epi.rds")
+saveRDS(epi, "inst/testdata/baseliner_epi.rds", version = 2)
 
 # Koch 6
 # rename variables for koch6 adm and lab
@@ -77,7 +77,7 @@ class(koch6$adm) <- c("data.frame", "koch6")
 class(koch6$lab) <- c("data.frame", "koch6")
 
 # save koch6 data
-saveRDS(koch6, "inst/testdata/baseliner_k6.rds")
+saveRDS(koch6, "inst/testdata/baseliner_k6.rds", version = 2)
 
 # Grozny
 # rename variables for koch6 adm and Grozny lab
@@ -100,4 +100,3 @@ class(groz$lab) <- c("data.frame", "grozny")
 
 # save grozny data
 saveRDS(groz, "inst/testdata/baseliner_groz.rds", version = 2)
-
