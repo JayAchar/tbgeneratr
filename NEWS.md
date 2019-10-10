@@ -1,3 +1,13 @@
+# tbgeneratr 0.1.1.7
+#### 10 October 2019
+## Minor update
+
+* **New function added:** `reassign_lab_no()` for use with Epiinfo data checks whether a diagnostic 
+specimen number is defined in admission data and assigns the relevent patient ID that this specimen
+in the lab data set if it is missing. 
+
+---
+
 # tbgeneratr 0.1.1.6
 #### 7 August 2019
 ## Minor update
@@ -24,7 +34,9 @@ simplified treatment outcomes
 # tbgeneratr 0.1.1.4
 #### 11 Apr 2019
 ## Minor update
-* *Generate admission variables* vignette added
+* **Vignette added:** *Generate admission variables* guides the user through the process of generating 
+new variables within the admission data set.  
+
 ## Bug fix
 * fix class detection 
 
@@ -50,7 +62,7 @@ simplified treatment outcomes
 # tbgeneratr 0.1.1.0
 #### 04 Feb 2019
 ## Major changes
-* `drug_timer()` added for Koch6 and EpiInfo data sets. This function is designed to calculate
+* **New function added:** `drug_timer()` added for Koch6 and EpiInfo data sets. This function is designed to calculate
 the number of days a patient has been prescribed a specified drug in their treatment regimen. It
  requires admission and change data sets both cleaned using the `tbcleanr` package. 
 
