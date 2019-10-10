@@ -53,4 +53,4 @@ age_gen_epi_neg <- data.frame(BIRTDATE = lubridate::dmy("1/1/2015",
                                                     "1/1/2012"),
                           stringsAsFactors = FALSE)
 class(age_gen_epi_neg) <- c(class(age_gen_epi_neg), "epiinfo")
-saveRDS(age_gen_koch6, file = "inst/testdata/age_gen_epi_neg.rds")
+saveRDS(age_gen_koch6, file = "inst/testdata/age_gen_epi_neg.rds", version = 2)

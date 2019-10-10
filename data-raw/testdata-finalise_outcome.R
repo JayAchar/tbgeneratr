@@ -29,4 +29,4 @@ k6 <- data.frame(APID = paste0("XYZ", 1:9),
 
 class(k6) <- c(class(k6), "koch6")
 
-saveRDS(k6, "inst/testdata/finalise_outcome_k6.rds")
+saveRDS(k6, "inst/testdata/finalise_outcome_k6.rds", version = 2)

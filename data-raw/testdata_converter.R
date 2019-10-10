@@ -7,7 +7,7 @@ epi_adm <- data.frame(APID = paste0("XYZ", 1:4), stringsAsFactors = F) %>%
                 DATEN = lubridate::dmy(c(rep("31/12/10", 3), "31/12/12")))
 
 class(epi_adm) <- c(class(epi_adm), "epiinfo")
-saveRDS(epi_adm, "inst/testdata/converter_epi_adm.rds")
+saveRDS(epi_adm, "inst/testdata/converter_epi_adm.rds", version = 2)
 
 
 ### Laboratory data
@@ -34,7 +34,7 @@ epi_lab <- data.frame(APID = c(rep(paste0("XYZ", 1), 3),
 
 
 class(epi_lab) <- c(class(epi_lab), "epiinfo")
-saveRDS(epi_lab, "inst/testdata/converter_epi_lab.rds")
+saveRDS(epi_lab, "inst/testdata/converter_epi_lab.rds", version = 2)
 
 ## Koch6 admission and lab
 ### Admission
@@ -43,20 +43,20 @@ k6_adm <- epi_adm %>%
          Starttre = STARTTRE,
          dateend = DATEN)
 class(k6_adm) <- stringr::str_replace(class(k6_adm), "epiinfo", "koch6")
-saveRDS(k6_adm, "inst/testdata/converter_k6_adm.rds")
+saveRDS(k6_adm, "inst/testdata/converter_k6_adm.rds", version = 2)
 
 ### Laboratory
 k6_lab <- epi_lab %>% 
   rename(registrationnb = APID)
 class(k6_lab) <- stringr::str_replace(class(k6_adm), "epiinfo", "koch6")
-saveRDS(k6_lab, "inst/testdata/converter_k6_lab.rds")
+saveRDS(k6_lab, "inst/testdata/converter_k6_lab.rds", version = 2)
 
 ## Grozny lab
 ### Admission Chechnya
 groz_adm <- k6_adm %>% 
   mutate(dstnumber = paste0("0000100", c(1:3, 1)))
 class(groz_adm) <- c(class(groz_adm), "koch6")
-saveRDS(groz_adm, "inst/testdata/converter_groz_adm.rds")  
+saveRDS(groz_adm, "inst/testdata/converter_groz_adm.rds", version = 2)  
 
 ### Laboratory
 groz_lab <- epi_lab %>% 
@@ -66,7 +66,7 @@ groz_lab <- epi_lab %>%
                        rep("00001003", 4),
                        rep("00001001", 4)))
 class(groz_lab) <- c(class(groz_lab), "grozny")
-saveRDS(groz_lab, "inst/testdata/converter_groz_lab.rds")
+saveRDS(groz_lab, "inst/testdata/converter_groz_lab.rds", version = 2)
 
 
 

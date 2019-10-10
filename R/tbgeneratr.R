@@ -14,6 +14,8 @@
 #' @seealso \code{\link{drug_timer}}
 #' @seealso \code{\link{dst_baseliner}}
 #' @seealso \code{\link{finalise_outcome}}
+#' @seealso \code{\link{recalculate_outcome}}
+#' @seealso \code{\link{regimen_calculator}}
 #' @seealso \code{\link{start_splittr}}
 #' 
 #' @docType package

@@ -19,7 +19,7 @@ epi_adm <-
   )
 
 class(epi_adm) <- c(class(epi_adm), "epiinfo")
-saveRDS(epi_adm, "inst/testdata/dst_baseliner_epi_adm.rds")
+saveRDS(epi_adm, "inst/testdata/dst_baseliner_epi_adm.rds", version = 2)
                 
 
 ### Laboratory data
@@ -125,7 +125,7 @@ epi_lab <-
   dplyr::select(APID, MICRLABN, samp_date, dplyr::everything())
 
 class(epi_lab) <- c(class(epi_lab), "epiinfo")
-saveRDS(epi_lab, "inst/testdata/dst_baseliner_epi_lab.rds")
+saveRDS(epi_lab, "inst/testdata/dst_baseliner_epi_lab.rds", version = 2)
 
 
 # ================================================
@@ -139,7 +139,7 @@ k6_groz_adm <- epi_adm %>%
 
 
 class(k6_groz_adm) <- c(class(k6_groz_adm), "koch6")
-saveRDS(k6_groz_adm, "inst/testdata/dst_baseliner_k6_groz_adm.rds")
+saveRDS(k6_groz_adm, "inst/testdata/dst_baseliner_k6_groz_adm.rds", version = 2)
 
 
 ### Laboratory data
@@ -153,4 +153,4 @@ k6_groz_lab <- epi_lab %>%
   select(dstnumber, dplyr::everything())
 
 class(k6_groz_lab) <- c(class(k6_groz_lab), "grozny")
-saveRDS(k6_groz_lab, "inst/testdata/dst_baseliner_k6_groz_lab.rds")
+saveRDS(k6_groz_lab, "inst/testdata/dst_baseliner_k6_groz_lab.rds", version = 2)

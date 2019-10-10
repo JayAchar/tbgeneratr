@@ -39,5 +39,5 @@ epiinfo <- data.frame(STARTTRE = rep(lubridate::dmy("1/1/2018"), 5),
 
 class(epiinfo) <- c("data.frame", "epiinfo")
 
-saveRDS(epiinfo, file = "inst/testdata/adm_generator_epiinfo.rds")
+saveRDS(epiinfo, file = "inst/testdata/adm_generator_epiinfo.rds", version = 2)
 

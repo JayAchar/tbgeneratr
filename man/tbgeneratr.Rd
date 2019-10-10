@@ -30,6 +30,10 @@ from clean data sets.
 
 \code{\link{finalise_outcome}}
 
+\code{\link{recalculate_outcome}}
+
+\code{\link{regimen_calculator}}
+
 \code{\link{start_splittr}}
 }
 \author{
