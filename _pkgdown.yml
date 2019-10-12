@@ -24,13 +24,17 @@ reference:
     contents:
       - baseliner
       - converter
-      - drug_baseliner
       - dst_baseliner
+      - reassign_lab_no
   - title: Admission and Change data functions
     desc: Functions requiring both admission and change data sets
     contents:  
       - drug_timer
-
+      - regimen_calculator
+  - tile: Multi-dataset functions
+    des: Functions which require multiple different data sets
+    contents:
+      - recalculate_outcome
 navbar:
   title: ~
   type: default

@@ -12,7 +12,6 @@
 #' @importFrom dplyr select matches
 #' @importFrom purrr map_df pmap_dbl
 #' @importFrom stringr str_detect
-#' @export
 #'
 
 aggregate_dst <- function(x, drug_class) {
