@@ -31,7 +31,7 @@ reference:
     contents:
       - drug_timer
       - regimen_calculator
-  - tile: Multi-dataset functions
+  - title: Multi-dataset functions
     desc: Functions which require multiple different data sets
     contents:
       - recalculate_outcome
