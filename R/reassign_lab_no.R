@@ -28,8 +28,7 @@ reassign_lab_no <- function(adm, lab) {
 
 
 #' @inherit reassign_lab_no
-#' @export
-#'
+
 reassign_lab_no.default <- function(adm, lab) {
   
   message("No adm object class detected: reassign_lab_no() not applied.")

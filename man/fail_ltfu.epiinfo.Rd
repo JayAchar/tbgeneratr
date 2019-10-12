@@ -20,6 +20,3 @@ should receive a failure outcome due to fulfilling the criteria for loss to foll
 \seealso{
 \code{\link{tbgeneratr}}
 }
-\author{
-Jay Achar
-}

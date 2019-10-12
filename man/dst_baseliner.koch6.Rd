@@ -25,6 +25,3 @@ to specific rules designed to reduce missingness
 \seealso{
 \code{\link{tbgeneratr}}
 }
-\author{
-Jay Achar
-}

@@ -36,3 +36,15 @@ baseliner <- function(adm, lab,
   
 }
 
+
+
+
+#' @inherit baseliner
+
+baseliner.default <- function(adm) {
+  
+  message("No adm object class detected: baseliner() not applied.")
+  adm
+  
+}
+

@@ -19,6 +19,3 @@ Use numerical height and weight variables to calculate BMI
 \seealso{
 \code{\link{tbgeneratr}}
 }
-\author{
-Jay Achar
-}

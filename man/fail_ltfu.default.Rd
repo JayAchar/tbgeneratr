@@ -14,11 +14,9 @@ with `tbcleanr`.}
 monthly drug-specific adherence data cleaned by `tbcleanr::adhere_cleanr()`}
 }
 \description{
-Fail - LTFU
+This function detects whether a record diagnosed with DR-TB
+should receive a failure outcome due to fulfilling the criteria for loss to follow-up.
 }
 \seealso{
 \code{\link{tbgeneratr}}
-}
-\author{
-Jay Achar
 }

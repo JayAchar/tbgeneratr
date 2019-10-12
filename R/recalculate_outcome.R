@@ -50,11 +50,7 @@ recalculate_outcome <- function(adm,
 }
 
 
-#' Recalculate outcome
-#'
-#' @inheritParams recalculate_outcome
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit recalculate_outcome
 
 recalculate_outcome.default <- function(adm,
                               adhere,

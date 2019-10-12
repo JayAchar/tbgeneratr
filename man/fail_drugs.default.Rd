@@ -16,11 +16,9 @@ monthly drug-specific adherence data cleaned by `tbcleanr::adhere_cleanr()`}
 \item{stop_days}{define interval in days where two drugs being stopped would result in failure.}
 }
 \description{
-Fail - 2 drugs changed
+This function detects whether a record diagnosed with DR-TB
+should receive a failure outcome due to two drugs being ceased within a designated interval.
 }
 \seealso{
 \code{\link{tbgeneratr}}
-}
-\author{
-Jay Achar
 }

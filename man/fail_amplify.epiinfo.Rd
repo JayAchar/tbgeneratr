@@ -20,6 +20,3 @@ should receive a failure outcome due to amplification of resistance.
 \seealso{
 \code{\link{tbgeneratr}}
 }
-\author{
-Jay Achar
-}

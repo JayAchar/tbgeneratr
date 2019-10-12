@@ -18,3 +18,13 @@ bmi_generator <- function(x, rm_orig = TRUE, ...) {
   UseMethod("bmi_generator", x)
 
 }
+
+
+#' @inherit bmi_generator
+
+bmi_generator.default <- function(x) {
+  
+  message("No adm object class detected: bmi_generator() not applied.")
+  x
+  
+}

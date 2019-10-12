@@ -22,6 +22,3 @@ should receive a failure outcome due to two drugs being ceased within a designat
 \seealso{
 \code{\link{tbgeneratr}}
 }
-\author{
-Jay Achar
-}

@@ -1,11 +1,6 @@
-#' Finalise TB treatment outcome
-#'
-#' Finalise TB outcome variable to align with WHO definitions
-#' @inheritParams finalise_outcome
-#' @author Jay Achar
+#' @inherit finalise_outcome
 #' @importFrom assertthat assert_that
 #' @importFrom forcats fct_collapse fct_recode
-#' @seealso \code{\link{tbgeneratr}}
 #' @export
 
 finalise_outcome.koch6 <- function(x,

@@ -1,19 +1,7 @@
-#' Drug duration calculator
-#'
-#' This function calculates the number of days a specific drug was prescribed
-#' to a patient. It uses information from the admission data set to establish 
-#' the baseline treatment regimen, then adds days based on treatment adjustments
-#' documented in the change data set. 
-#' 
-#' @param adm admission data set cleaned using `tbcleanr`
-#' @param change change data set cleaned using `tbcleanr`
-#' @param drug define which drug to calculate
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit drug_timer
 #' @importFrom rlang enquo .data sym :=
 #' @importFrom dplyr filter distinct %>% bind_rows semi_join group_by ungroup left_join case_when n last
 #' @importFrom tidyr gather
-#' @return admission data frame with additional drug days variable added
 #' @export
 #'
 

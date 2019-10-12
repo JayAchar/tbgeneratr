@@ -27,12 +27,7 @@ fail_no_culture_conversion <- function(adm_lab,
 }
 
 
-#' Fail - no culture conversion
-#'
-#' @param adm_lab data frame of individual patient records cleaned 
-#' with `tbcleanr` and combined with laboratory data using `tbgeneratr::adm_lab_generator()`
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit fail_no_culture_conversion
 
 fail_no_culture_conversion.default <- function(adm_lab) {
   

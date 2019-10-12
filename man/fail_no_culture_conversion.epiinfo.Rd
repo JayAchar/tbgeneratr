@@ -22,6 +22,3 @@ time-point to be 8 months after treatment commencement.
 \seealso{
 \code{\link{tbgeneratr}}
 }
-\author{
-Jay Achar
-}

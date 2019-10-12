@@ -1,16 +1,4 @@
-#' Baseline DST calculator
-#'
-#' Takes a TB DST laboratory dataset with information on 
-#' treatment start time to output the baseline DST according
-#' to specific rules designed to reduce missingness
-#' @param adm data frame containing TB admission data cleaned and allocated object
-#' class by tbcleanr package
-#' @param lab data frame containing TB laboratory data cleaned and allocated object
-#' class by tbcleanr package
-#' @param dst_time absolute historical limit for including specimens
-#' @param dst_days additional criteria for including non-rif results
-#' @author Jay Achar 
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit dst_baseliner
 #' @importFrom dplyr filter mutate select rename group_by slice
 #' ungroup arrange left_join distinct bind_cols right_join case_when top_n
 #' @importFrom stringr str_which

@@ -1,11 +1,4 @@
-#' Calculate BMI from height and weight
-#'
-#' Use numerical height and weight variables to calculate BMI
-#' @param x data frame containing height and weight variables
-#' @param rm_orig remove original variables - TRUE or FALSE
-#' @param ... further arguments passed to or from other methods
-#' @author Jay Achar 
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit bmi_generator
 #' @importFrom assertthat assert_that
 #' @importFrom naniar replace_with_na
 #' @export

@@ -24,11 +24,7 @@ fail_amplify <- function(adm,
 }
 
 
-#' Fail - culture reversion
-#'
-#' @inheritParams fail_amplify
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit fail_amplify
 
 fail_amplify.default <- function(adm, lab) {
   

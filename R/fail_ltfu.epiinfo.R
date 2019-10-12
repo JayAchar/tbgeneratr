@@ -1,11 +1,4 @@
-#' Fail - LTFU 
-#'
-#' This function detects whether a record diagnosed with DR-TB
-#' should receive a failure outcome due to fulfilling the criteria for loss to follow-up.
-#' 
-#' @inheritParams fail_ltfu
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit fail_ltfu
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr group_by mutate n filter bind_rows anti_join left_join select arrange top_n lag %>% desc
 #' @importFrom purrr map

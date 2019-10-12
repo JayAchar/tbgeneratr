@@ -16,9 +16,19 @@
 \description{
 Finalise TB outcome variable to align with WHO definitions
 }
+\details{
+This is a generic function. Methods for EpiInfo and Koch6 data have been defined 
+within this package. They are designed to standardise outcome factor levels
+according to \href{https://www.who.int/tb/publications/definitions/en/}{WHO (2013) TB definitions}.
+
+If \code{bin_outcome} is \code{TRUE}, an additional simplified factor outcome variable is generated with 
+levels \code{Successful}, \code{Unsuccessful} and \code{Not evaluated}, corresponding to definitions
+in the WHO document.
+
+The original data frame with generated variables appended is returned.
+
+Any original data not represented in the WHO definitions are converted to \code{NA}.
+}
 \seealso{
 \code{\link{tbgeneratr}}
-}
-\author{
-Jay Achar
 }

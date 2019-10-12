@@ -26,3 +26,16 @@ age_generator <- function(x,
   UseMethod("age_generator", x)
 
 }
+
+
+#' @inherit age_generator
+
+age_generator.default <- function(x,
+                                  categorise = FALSE,
+                                  paediatric = FALSE,
+                                  rm_orig = TRUE) {
+  
+  message("No adm object class detected: age_generator() not applied.")
+  x  
+  
+}

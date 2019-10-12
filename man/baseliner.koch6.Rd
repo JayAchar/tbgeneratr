@@ -2,7 +2,7 @@
 % Please edit documentation in R/baseliner.koch6.R
 \name{baseliner.koch6}
 \alias{baseliner.koch6}
-\title{Baseline culture or smear status}
+\title{Calculate baseline culture or smear status}
 \usage{
 \method{baseliner}{koch6}(adm, lab, baseline_test = c("culture",
   "smear"), baseline_days = 90)
@@ -14,12 +14,12 @@ class by tbcleanr package}
 \item{lab}{data frame containing TB laboratory data cleaned and allocated object
 class by tbcleanr package}
 
-\item{baseline_test}{define which baseline test result to check}
+\item{baseline_test}{string to define which baseline test result to check}
 
 \item{baseline_days}{criteria for using pre-treatment samples}
 }
 \description{
-This function takes a list, including nested data frames of TB admission and 
+This function takes two data frames, including TB admission and 
 laboratory programme data, uses a unique patient identifier, dates of 
 treatment start and sample submission and sample results to calculate baseline 
 culture or smear status. The function requires admission and laboratory data to 
@@ -29,4 +29,3 @@ class of either "epiinfo" or "koch6"
 \seealso{
 \code{\link{tbgeneratr}}
 }
-\keyword{TB}

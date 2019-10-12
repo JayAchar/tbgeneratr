@@ -44,6 +44,3 @@ or whether a new regimen was initiated.
 \seealso{
 \code{\link{tbgeneratr}}
 }
-\author{
-Jay Achar
-}

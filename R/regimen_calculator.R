@@ -27,12 +27,7 @@ regimen_calculator <- function(adm,
 }
 
 
-#' @inherit regimen_calculator title
-#' @inherit regimen_calculator description
-#'
-#' @inheritParams regimen_calculator
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit regimen_calculator
 
 regimen_calculator.default <- function(adm, change, days = 0L) {
   

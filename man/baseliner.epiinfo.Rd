@@ -2,7 +2,7 @@
 % Please edit documentation in R/baseliner.epiinfo.R
 \name{baseliner.epiinfo}
 \alias{baseliner.epiinfo}
-\title{Baseline culture or smear status}
+\title{Calculate baseline culture or smear status}
 \usage{
 \method{baseliner}{epiinfo}(adm, lab, baseline_test = c("culture",
   "smear"), baseline_days = 90)
@@ -16,8 +16,7 @@ class by tbcleanr package}
 
 \item{baseline_test}{string to define which baseline test result to check}
 
-\item{baseline_days}{number of days prior to treatment start to define baseline 
-acceptable period}
+\item{baseline_days}{criteria for using pre-treatment samples}
 }
 \description{
 This function takes two data frames, including TB admission and 
@@ -30,4 +29,3 @@ class of either "epiinfo" or "koch6"
 \seealso{
 \code{\link{tbgeneratr}}
 }
-\keyword{TB}

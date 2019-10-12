@@ -1,11 +1,4 @@
-#' Fail - amplify resistance
-#'
-#' This function detects whether a record diagnosed with DR-TB
-#' should receive a failure outcome due to amplification of resistance. 
-#' 
-#' @inheritParams fail_amplify
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit fail_amplify
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr left_join arrange group_by slice inner_join
 #' @importFrom purrr map map_int

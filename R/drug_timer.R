@@ -25,3 +25,13 @@ drug_timer <- function(adm, change, drug) {
   UseMethod("drug_timer", adm)
   
 }
+
+
+#' @inherit drug_timer
+
+drug_timer.default <- function(adm, change, drug) {
+  
+  message("No adm object class detected: drug_timer() not applied.")
+  adm
+  
+}

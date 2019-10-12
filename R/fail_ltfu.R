@@ -24,11 +24,7 @@ fail_ltfu <- function(adm,
 }
 
 
-#' Fail - LTFU
-#'
-#' @inheritParams fail_ltfu
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit fail_ltfu
 
 fail_ltfu.default <- function(adm, adhere) {
   

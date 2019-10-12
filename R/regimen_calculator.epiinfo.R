@@ -1,7 +1,4 @@
-#' @inherit regimen_calculator title
-#' @inherit regimen_calculator description
-#'
-#' @inheritParams regimen_calculator
+#' @inherit regimen_calculator
 #' @importFrom dplyr mutate %>% select left_join filter bind_rows group_by slice ungroup
 #' @importFrom tidyr gather
 #' @importFrom purrr modify_at

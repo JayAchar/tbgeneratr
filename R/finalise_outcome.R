@@ -36,13 +36,7 @@ finalise_outcome <- function(x,
 }
 
 
-#' Finalise TB treatment outcome
-#'
-#' Finalise TB outcome variable to align with WHO definitions
-#' @inheritParams finalise_outcome
-#' @author Jay Achar 
-#' @seealso \code{\link{tbgeneratr}}
-#' @export
+#' @inherit finalise_outcome
 
 finalise_outcome.default <- function(x,
                                      bin_outcome = TRUE,

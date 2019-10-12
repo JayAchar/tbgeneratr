@@ -1,11 +1,4 @@
-#' Fail - 2 drugs changed 
-#'
-#' This function detects whether a record diagnosed with DR-TB
-#' should receive a failure outcome due to two drugs being ceased within a designated interval.
-#' 
-#' @inheritParams fail_drugs
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit fail_drugs
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr left_join group_by mutate arrange lag filter slice 
 #' @importFrom stats complete.cases

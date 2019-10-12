@@ -1,16 +1,4 @@
-#' Fail - no culture conversion
-#'
-#' This function detects with a record diagnosed with DR-TB
-#' should receive a failure outcome due to lack of culture conversion
-#' before a defined time-point. The WHO 2014 definitions suggests this
-#' time-point to be 8 months after treatment commencement.
-#' 
-#' @param adm_lab data frame of individual patient records cleaned 
-#' with `tbcleanr` and combined with laboratory data using `tbgeneratr::adm_lab_generator()`
-#' @param no_cc_days time cut-off in days to define failure to culture convert. 
-#' Default value (240 days) taken from 2014 WHO definition of 8 months
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit fail_no_culture_conversion
 #' @importFrom assertthat assert_that is.date
 #' @importFrom dplyr left_join
 

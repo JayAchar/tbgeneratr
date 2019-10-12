@@ -11,11 +11,11 @@
 with `tbcleanr` and combined with laboratory data using `tbgeneratr::adm_lab_generator()`}
 }
 \description{
-Fail - no culture conversion
+This function detects with a record diagnosed with DR-TB
+should receive a failure outcome due to lack of culture conversion
+before a defined time-point. The WHO 2014 definitions suggests this
+time-point to be 8 months after treatment commencement.
 }
 \seealso{
 \code{\link{tbgeneratr}}
-}
-\author{
-Jay Achar
 }

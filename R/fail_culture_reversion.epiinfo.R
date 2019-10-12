@@ -1,15 +1,4 @@
-#' Fail - culture reversion
-#'
-#' This function detects whether a record diagnosed with DR-TB
-#' should receive a failure outcome due to culture reversion
-#' during the continuation phase. The WHO 2014 definitions suggests this
-#' time-point to be 8 months after treatment commencement.
-#' 
-#' @param adm data frame of individual patient admission records cleaned 
-#' with `tbcleanr` and combined with laboratory data using `tbgeneratr::adm_lab_generator()`
-#' @param lab data frame of laboratory TB data cleaned using `tbcleanr`
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit fail_culture_reversion
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr left_join arrange mutate ungroup group_by filter slice 
 #' @importFrom magrittr %>% 

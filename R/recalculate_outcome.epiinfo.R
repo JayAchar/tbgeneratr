@@ -1,13 +1,4 @@
-#' Recalculate outcome
-#'
-#' @inherit recalculate_outcome description
-#' 
-#' @inherit recalculate_outcome details
-#' 
-#' @inheritParams recalculate_outcome
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
-#' @inherit recalculate_outcome return
+#' @inherit recalculate_outcome
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr left_join 
 #' @importFrom purrr map_int modify_at reduce

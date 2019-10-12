@@ -24,3 +24,13 @@ converter <- function(adm, lab,
   
 }
 
+
+#' @inherit converter
+
+converter.default <- function(adm) {
+  
+  message("No adm object class detected: converter() not applied.")
+  adm  
+  
+}
+

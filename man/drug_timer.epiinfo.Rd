@@ -25,6 +25,3 @@ documented in the change data set.
 \seealso{
 \code{\link{tbgeneratr}}
 }
-\author{
-Jay Achar
-}

@@ -1,14 +1,4 @@
-#' Calculate age
-#'
-#' Use date of birth and date of starting treatment to calculate 
-#' age at baseline. Takes data frame with date of birth and start 
-#' of treatment date to generate age variable in years. 
-#' @param x data frame containing Koch 6 admission variables 
-#' @param categorise logical - generate additional factor age variable
-#' @param paediatric logical - generate additional paediatric age factor variable
-#' @param rm_orig remove original variables - TRUE or FALSE
-#' @author Jay Achar 
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit age_generator
 #' @importFrom lubridate years interval
 #' @importFrom assertthat assert_that
 #' @export

@@ -1,19 +1,4 @@
-#' Baseline culture or smear status
-#'
-#' This function takes a list, including nested data frames of TB admission and 
-#' laboratory programme data, uses a unique patient identifier, dates of 
-#' treatment start and sample submission and sample results to calculate baseline 
-#' culture or smear status. The function requires admission and laboratory data to 
-#' have been prepared with the tbcleanr package and for the admission data to have 
-#' class of either "epiinfo" or "koch6"
-#' @param adm data frame containing TB admission data cleaned and allocated object
-#' class by tbcleanr package
-#' @param lab data frame containing TB laboratory data cleaned and allocated object
-#' class by tbcleanr package
-#' @param baseline_test define which baseline test result to check
-#' @param baseline_days criteria for using pre-treatment samples
-#' @keywords TB
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit baseliner
 #' @importFrom lubridate is.Date
 #' @importFrom rlang enquo .data sym
 #' @importFrom dplyr filter distinct mutate group_by top_n ungroup select left_join right_join rename

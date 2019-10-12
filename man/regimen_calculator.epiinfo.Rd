@@ -19,3 +19,6 @@ to generate regimen string}
 This function will generate a string indicating the treatment regimen at any given 
 date following initiation based on baseline regimen and drug change data.
 }
+\seealso{
+\code{\link{tbgeneratr}}
+}

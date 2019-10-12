@@ -26,11 +26,7 @@ fail_drugs <- function(adm,
 }
 
 
-#' Fail - 2 drugs changed
-#'
-#' @inheritParams fail_drugs
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit fail_drugs
 
 fail_drugs.default <- function(adm, change, stop_days = 30) {
   

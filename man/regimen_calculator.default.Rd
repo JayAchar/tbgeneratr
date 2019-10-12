@@ -22,6 +22,3 @@ date following initiation based on baseline regimen and drug change data.
 \seealso{
 \code{\link{tbgeneratr}}
 }
-\author{
-Jay Achar
-}

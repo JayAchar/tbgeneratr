@@ -25,13 +25,7 @@ fail_culture_reversion <- function(adm,
 }
 
 
-#' Fail - culture reversion
-#'
-#' @param adm data frame of individual patient admission records cleaned 
-#' with `tbcleanr` and combined with laboratory data using `tbgeneratr::adm_lab_generator()`
-#' @param lab data frame of laboratory TB data cleaned using `tbcleanr`
-#' @author Jay Achar
-#' @seealso \code{\link{tbgeneratr}}
+#' @inherit fail_culture_reversion
 
 fail_culture_reversion.default <- function(adm, lab) {
   

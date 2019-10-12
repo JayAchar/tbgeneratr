@@ -2,13 +2,13 @@
 % Please edit documentation in R/age_generator.koch6.R
 \name{age_generator.koch6}
 \alias{age_generator.koch6}
-\title{Calculate age}
+\title{Calculate age from two dates}
 \usage{
 \method{age_generator}{koch6}(x, categorise = FALSE,
   paediatric = FALSE, rm_orig = TRUE)
 }
 \arguments{
-\item{x}{data frame containing Koch 6 admission variables}
+\item{x}{data frame containing TB admission variables}
 
 \item{categorise}{logical - generate additional factor age variable}
 
@@ -23,7 +23,4 @@ of treatment date to generate age variable in years.
 }
 \seealso{
 \code{\link{tbgeneratr}}
-}
-\author{
-Jay Achar
 }

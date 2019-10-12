@@ -2,7 +2,7 @@
 % Please edit documentation in R/fail_amplify.R
 \name{fail_amplify.default}
 \alias{fail_amplify.default}
-\title{Fail - culture reversion}
+\title{Fail - amplify resistance}
 \usage{
 \method{fail_amplify}{default}(adm, lab)
 }
@@ -14,11 +14,9 @@ Must also include baseline drug DST generated data from \code{tbgeneratr::dst_ba
 \item{lab}{data frame of laboratory TB data cleaned using `tbcleanr`}
 }
 \description{
-Fail - culture reversion
+This function detects whether a record diagnosed with DR-TB
+should receive a failure outcome due to amplification of resistance.
 }
 \seealso{
 \code{\link{tbgeneratr}}
-}
-\author{
-Jay Achar
 }

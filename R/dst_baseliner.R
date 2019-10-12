@@ -32,3 +32,15 @@ dst_baseliner <- function(adm, lab,
 
 }
 
+
+
+#' @inherit dst_baseliner
+
+dst_baseliner.default <- function(adm, lab, 
+                                  dst_time = 90, 
+                                  dst_days = 30) {
+  
+  message("No adm object class detected: dst_baseliner() not applied.")
+  adm
+  
+}

@@ -21,12 +21,24 @@ monthly drug-specific change data cleaned by `tbcleanr::change_cleanr()`}
 
 \item{stop_days}{define interval in days where two drugs being stopped would result in failure.}
 }
+\value{
+tibble with same class as input admission data with two columns. The first represents
+the unique record ID number and second "fail_date" identifies all dates where a failure criteria
+was detected within the treatment course.
+}
 \description{
-Recalculate outcome
+This function detects whether DR-TB failure criteria have been 
+encourntered during the course of a treatment episode.
+}
+\details{
+The purpose of this function is to detect whether failure criteria for DR-TB
+have occured during the course of a treatment record and to propose a new "failure" date.
+
+This proposed failure date may then be compared to the recorded failure date to see 
+whether a new treament episode should be defined for any ongoing treatment being provided. This 
+decision may depend upon, amongst other things, whether the ongoing treatment length was significant,
+or whether a new regimen was initiated.
 }
 \seealso{
 \code{\link{tbgeneratr}}
-}
-\author{
-Jay Achar
 }
