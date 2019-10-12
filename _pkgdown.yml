@@ -14,7 +14,7 @@ reference:
       - adm_lab_generator
   - title: Admission data functions
     desc: Functions used only for admission data sets
-    contents: 
+    contents:
       - age_generator
       - bmi_generator
       - finalise_outcome
@@ -28,13 +28,14 @@ reference:
       - reassign_lab_no
   - title: Admission and Change data functions
     desc: Functions requiring both admission and change data sets
-    contents:  
+    contents:
       - drug_timer
       - regimen_calculator
   - tile: Multi-dataset functions
-    des: Functions which require multiple different data sets
+    desc: Functions which require multiple different data sets
     contents:
       - recalculate_outcome
+
 navbar:
   title: ~
   type: default
